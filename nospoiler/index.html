@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ship Tools JSON Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="../css/site.css?v=<!-- VERSION -->">
+</head>
+<body>
+    <h1>SoH No Spoiler JSON Search</h1>
+    <div id="search-container">
+        <div class="upload-container">
+            <label for="jsonUpload">Upload Spoiler Log (e.g., 40-33-92-33-20.json):</label>
+            <input type="file" id="jsonUpload" accept=".json">
+        </div>
+        <div class="search-bar">
+            <input type="text" id="autocomplete" placeholder="Search here..." disabled>
+        </div>
+    </div>
+    <h3 id="ResultHeader"></h3>
+    <div id="ResultContainer" class="result-container">
+    </div>
+    <div id="GoModeItemContainer" class="items-container"></div>
+    <div id="KeyItemContainer" class="items-container"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="../scripts/site.js"></script>
+    <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+    <script>
+        kofiWidgetOverlay.draw('lloydsecret', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Support Me',
+            'floating-chat.donateButton.background-color': '#794bc4',
+            'floating-chat.donateButton.text-color': '#fff'
+        });
+    </script>
+</body>
+</html>

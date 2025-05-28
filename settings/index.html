@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="max-age=86400, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title>Randomizer Randomizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="../css/site.css?v=<!-- VERSION -->">
+    <link rel="stylesheet" href="./css/rando.css?v=<!-- VERSION -->">
+</head>
+<body>
+    <h1>Randomizer Randomizer</h1>
+    <h3><!-- VERSION --></h3>
+    <div>
+        Extra Modes*: <input type="checkbox" id="ExtraModes" /><label for="ExtraModes">
+        *Extra modes include: Mirrored World, Enemy Randomizer, Randomized Enemy Sizes, Shadow Tag, Additional Traps
+        </label>
+    </div>
+    <div>
+        <button id="generate" style="height: 50px; width: 500px;">Generate Randomizer Config</button>
+    </div>
+    <h2>These checkboxes don't do anything right now but you can see what is randomized</h2>
+    <div id="RandomContainer"></div>
+    <script src="./scripts/getConfig.js"></script>
+    <script src="./scripts/getExtraModes.js"></script>
+    <script src="./scripts/settingsrando.js"></script>
+    <script type="text/javascript">
+        let config = window.getConfig();
+        document.getElementById('RandomContainer').innerHTML = renderInputs(config);
+        
+        document.getElementById('generate').onclick = function () {
+            generateConfigForDownload(config);
+        };
+
+        document.getElementById('ExtraModes').onclick = function () {
+            if (this.checked) {
+                config = window.getExtraModes();
+            } else {
+                config = window.getConfig();
+            }
+            document.getElementById('RandomContainer').innerHTML = renderInputs(config);
+        };
+    </script>
+</body>
+</html>
