@@ -93,6 +93,47 @@ window.getTricks = function getTricks() {
                 
             },
             {
+                "name": "Zora Shop Clip Master Sword Shieldless",
+                "location": ZORAS_DOMAIN,
+                "description": `
+
+                                `,
+                "tags": [MASTER_SWORD],
+                "age": ADULT,
+                "embed": "",
+            },
+            {
+                "name": "Zora Shop Clip Master Sword Shielded",
+                "location": ZORAS_DOMAIN,
+                "description": `
+                                kill sign
+                                align with right side of red ice 1ess right
+                                shielded vertical slash
+                                left sidehop
+                                shielded horizontal slash
+                                jumpslash
+                                `,
+                "tags": [MASTER_SWORD],
+                "age": ADULT,
+                "embed": "",
+            },
+            {
+                "name": "Zora Shop Clip 2 Handed (not sticks)",
+                "location": ZORAS_DOMAIN,
+                "description": `
+                                tested with hammer, bgs, giants knife
+
+                                target ice, get into right corner while holding z
+                                1 ess left
+                                with Z: backflip, sidehop left, roll,
+                                roll with forward and bonk
+                                jumpslash
+                                `,
+                "tags": [TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/fTEsCG40gvM",
+            },
+            {
                 "name": "qpa hover into ice cavern",
                 "location": ZORAS_FOUNTAIN,
                 "description": `
@@ -548,7 +589,7 @@ window.getTricks = function getTricks() {
                 "description": "",
                 "tags": [HOVER_BOOTS, BOMBS],
                 "age": ADULT,
-                "embed": "https://www.youtube.com/shorts/L6R4GkOsHYM",
+                "embed": "",
             },
             {
                 "name": "Deku Tree B1 Skip",
@@ -579,10 +620,15 @@ window.getTricks = function getTricks() {
             {
                 "name": "Jabu Blue Switch Child Skip",
                 "location": JABUS_BELLY,
-                "description": "",
+                "description": `
+                                bonk the switch and then jumpslash
+                                hold R if cutscenes are off when landing on the switch
+                                frame to open door is first frame link's hand is off the ground, leaning left
+                                no need to hold z at any point
+                                buffer A- button on the final unpause`,
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
-                "embed": "https://www.youtube.com/shorts/cUw1sdlqUFA",
+                "embed": "",
                 
             },
             {
@@ -654,7 +700,7 @@ window.getTricks = function getTricks() {
                 "description": "",
                 "tags": [BOMBCHU, HOVER_BOOTS],
                 "age": ADULT,
-                "embed": "https://youtube.com/shorts/MqgM5zs8Xdc",
+                "embed": "",
             },
             {
                 "name": "Forest Temple First Green Block Skip",
@@ -948,7 +994,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOW, HOOKSHOT, WEIRDSHOT],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/IvQk6G__f2Q",
-                
             },
             {
                 "name": "BOTW As Adult w/ Hookshot and Master Sword",
@@ -978,7 +1023,7 @@ window.getTricks = function getTricks() {
                 `,
                 "tags": [MASTER_SWORD, HOOKSHOT],
                 "age": ADULT,
-                "embed": "https://youtube.com/embed/Y9DnpdHWLhs",
+                "embed": "https://youtube.com/embed/O4xELdc76PY",
             },
             {
                 "name": "Bottom of the Well Actor Deload",
@@ -991,6 +1036,86 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/Y9DnpdHWLhs",
+            },
+            {
+                "name": "Adult BotW Weirdshot Past Crawlspace Bombs Sticks",
+                "location": BOTW,
+                "description": `
+                                Bombs
+                                bonk
+                                swing to break stick
+                                turn around 
+                                jumpslash
+                                roll
+                                turn left 
+                                sidehop left
+
+                                weirdshot setup (see: how to weirdshot):
+                                backflip shield flick, roll, shield drop bomb over head, roll, backflip, hookshot/shield
+                                roll on big red
+                                damage frames 1-4: Z+R+Down 
+                                5: Z+Hookshot+Down 
+                                6: Z+Hookshot+Down 
+                                7: Z+Hookshot
+                                8: let go of everything
+                `,
+                "tags": [HOOKSHOT, BOMBS, DEKU_STICKS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/IulJd7P04z8",
+            },
+            {
+                "name": "Adult BotW Weirdshot Past Crawlspace Chus Sticks",
+                "location": BOTW,
+                "description": `
+                                2x Backflip
+                                Jumpslash
+                                3x Shielded Slash
+                                1ess right
+                                2 neutral slash
+                                1ess left
+                                turn right
+                                Sidehop
+
+                                weirdshot inputs:
+                                backflip shield flick, roll, roll, backflip, Z+hookshot then shield
+                                drop on 9th black, roll frame before explosion frame
+
+                                damage frames 1-4: Z+R+Down
+                                5: Z+Hookshot+Down
+                                6: Z+Hookshot+Down
+                                7: Z+Hookshot
+                                8: let go of everything
+
+                                with hookshot: 17 pauses hold left or start buffering when you're close
+                `,
+                "tags": [HOOKSHOT, BOMBCHU, DEKU_STICKS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/IulJd7P04z8",
+            },
+            {
+                "name": "Adult BotW Weirdshot Past Crawlspace Bombs Sticks",
+                "location": BOTW,
+                "description": `
+                                bonk
+                                swing to break stick
+                                turn around 
+                                jumpslash
+                                roll
+                                turn left 
+                                sidehop left
+
+                                weirdshot setup (see: how to weirdshot):
+                                backflip shield flick, roll, shield drop bomb over head, roll, backflip, hookshot/shield
+                                roll on big red
+                                damage frames 1-4: Z+R+Down 
+                                5: Z+Hookshot+Down 
+                                6: Z+Hookshot+Down 
+                                7: Z+Hookshot
+                                8: let go of everything
+                `,
+                "tags": [HOOKSHOT, BOMBS, DEKU_STICKS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/IulJd7P04z8",
             },
             {
                 "name": "Vine Clip to Deadhand",
