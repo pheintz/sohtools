@@ -1204,7 +1204,7 @@ window.getTricks = function getTricks() {
                                 inputs for skip:
                                 go to door, sidehop left, roll+retarget for angle
                                 roll into corner.
-                                while holding z. sidehop right, roll, sidehop right, sidehop left
+                                while holding z. sidehop right, roll, sidehop right, sidehop left, roll
                                 b+r unsheath, 1ess right, jumpslash
                 `,
                 "tags": [KOKIRI_SWORD, LUNGE_STORAGE],
