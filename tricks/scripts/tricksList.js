@@ -1210,7 +1210,7 @@ window.getTricks = function getTricks() {
                 `,
                 "tags": [BOMBS],
                 "age": ADULT,
-                "embed": "",
+                "embed": "https://youtube.com/embed/afbmH7fRt9o",
             },
             {
                 "name": "Ganon's Castle Barrier Skip Bombchu",
