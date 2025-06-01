@@ -186,10 +186,21 @@ window.getTricks = function getTricks() {
                 "description": `
                                 ISG, target wall, 2ess left, hold angle, get into corner
                                 Z+A+R on 9th red (frame before big blue)
-                                hold right and mash A                                `,
+                                hold Z + right and mash A                                `,
                 "tags": [BOMBS],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/Q7XjNM6AIog",
+            },
+            {
+                "name": " Bombchu Sidehop Into Zoras Domain Waterfall Skip",
+                "location": ZORAS_RIVER,
+                "description": `
+                                ISG, target wall, 2ess left, hold angle, get into corner
+                                On the same frame shield drop chu and roll
+                                hold Z + right and mash A                                `,
+                "tags": [BOMBCHU],
+                "age": ANY_AGE,
+                "embed": "",
             },
             {
                 "name": "Bombchu Mega Sidehop From Zoras Domain to Lost Woods",
@@ -666,7 +677,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://www.youtube.com/embed/D3RSZ1WyB5A",
             },
             {
-                "name": "Child Forest Temple BK Skip bombchu",
+                "name": "Child Forest Temple BK Skip Bombchu",
                 "location": FOREST_TEMPLE,
                 "description": `
                             vine clip frames:
@@ -768,7 +779,6 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": ANY_AGE,
                 "embed": "https://www.youtube.com/embed/kqV5v6fUIuk",
-                
             },
             {
                 "name": "Shadow Temple No Hovers to Boss Door",
@@ -801,7 +811,6 @@ window.getTricks = function getTricks() {
                 "tags": [MASTER_SWORD],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/buUV_5gnukM",
-                
             },
             {
                 "name": "Shadow Temple BK Skip",
@@ -817,7 +826,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/VOgoEvUMNBI",
-                
             },
             {
                 "name": "Setup for Boatkey",
@@ -833,7 +841,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/EIBctPHYEvE",
-                
             },
             {
                 "name": "OGC Fairy Strength Block Skip",
@@ -846,7 +853,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BOMBS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/CN0MsBqPfFM",
-                
             },
             {
                 "name": "DDC Backflip OI Push Block Skip",
@@ -864,7 +870,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BOMBS, OI],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/CN0MsBqPfFM",
-                
             },
             {
                 "name": "Volvagia Quick Kill Weirdshot w/ Bow",
@@ -874,7 +879,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOW, HAMMER, WEIRDSHOT],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/9zBMVo0dgEs",
-                
             },
             {
                 "name": "HESS Clip Into Child Side As Adult Spirit Temple",
@@ -893,7 +897,6 @@ window.getTricks = function getTricks() {
                 "tags": [HOVER_BOOTS, BOMBS, SUPERSLIDE],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/9zBMVo0dgEs",
-                
             },
             {
                 "name": "Pot Push Into DMC From Goron City",
@@ -1176,7 +1179,41 @@ window.getTricks = function getTricks() {
                 "embed": "https://clips.twitch.tv/embed?clip=FrigidDepressedTitanDoritosChip-yMZMygiNziiIz4e2",
             },
             {
-                "name": "Skip Ganon Trials Bombchu",
+                "name": "Adult Light Trial Block Skip Bombs",
+                "location": GC,
+                "description": `
+                                target wall
+                                back away
+                                3 ess right
+                                get into seam
+                                turn around
+                                re target
+                                A-drop bomb
+                                ess left
+                `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/1XOCs1ibRac",
+            },
+            {
+                "name": "Adult Light Trial Block Skip Bombchu",
+                "location": GC,
+                "description": `
+                                target wall
+                                back away
+                                1 ess right
+                                get into seam
+                                ess turn right until camera clicks after a second
+                                ess up
+                                1 ess right
+                                pull chu
+                `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "",
+            },
+            {
+                "name": "Ganon's Castle Barrier Skip Bombchu",
                 "location": GC,
                 "description": `
                                 get isg, line up roughly with the water trial door, turn around and go to the wall
