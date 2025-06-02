@@ -1225,27 +1225,51 @@ window.getTricks = function getTricks() {
             {
                 "name": "Bottom of the Well Actor Deload",
                 "location": BOTW,
-                "description": `open the door as fast as possible after exiting crawlspace
+                "description": `
+                                open the door as fast as possible after exiting crawlspace
                                 you should come out of the door into the same room you entered from
                                 go back through the crawlspace you came from
                                 water will be deloaded and you can go crawl to deadhand room
                 `,
                 "tags": [ITEMLESS],
-                "age": ADULT,
+                "age": CHILD,
                 "embed": "https://youtube.com/embed/Y9DnpdHWLhs",
             },
             {
-                "name": "Adult BotW Weirdshot Past Crawlspace Bombs Sticks",
+                "name": "Blank A For Bottom of the Well Underwater Chests",
                 "location": BOTW,
                 "description": `
-                                Bombs
-                                bonk
-                                swing to break stick
-                                turn around 
+                    can't have kokiri sword equipped
+                    go to crawlspace where it says 'enter' and pull stick out
+
+                    frame 1: A (enter)
+                    frame 2: throw deku nut
+
+                    you should be glitched now
+                    reset again for 2nd chest
+
+                    note: you can't go to deadhand with blank a
+                `,
+                "tags": [DEKU_STICKS, "deku nuts"],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/Y9DnpdHWLhs",
+            },
+            {
+                "name": "[Alternate] Adult BotW Weirdshot Past Crawlspace Bombs Sticks",
+                "location": BOTW,
+                "description": `
+                                face wall
+                                backflip
+                                neutral slash
+                                turn around
+                                shielded slash
                                 jumpslash
+                                turn left
+                                sidehop
+                                walk to wall
+                                2x backflip
                                 roll
-                                turn left 
-                                sidehop left
+                                weirdshot with bombs
 
                                 weirdshot setup (see: how to weirdshot):
                                 backflip shield flick, roll, shield drop bomb over head, roll, backflip, hookshot/shield
@@ -1258,7 +1282,7 @@ window.getTricks = function getTricks() {
                 `,
                 "tags": [HOOKSHOT, BOMBS, DEKU_STICKS],
                 "age": ADULT,
-                "embed": "https://youtube.com/embed/IulJd7P04z8",
+                "embed": "https://youtube.com/embed/Ju1H81yONyE",
             },
             {
                 "name": "Adult BotW Weirdshot Past Crawlspace Chus Sticks",
@@ -1287,7 +1311,7 @@ window.getTricks = function getTricks() {
                 `,
                 "tags": [HOOKSHOT, BOMBCHU, DEKU_STICKS],
                 "age": ADULT,
-                "embed": "https://youtube.com/embed/IulJd7P04z8",
+                "embed": "https://youtube.com/embed/PillrC3YHTA",
             },
             {
                 "name": "Adult BotW Weirdshot Past Crawlspace Bombs Sticks",
