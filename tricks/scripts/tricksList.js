@@ -54,6 +54,7 @@ const DMC = "Death Mountain Crater";
 const GC = "Ganon's Castle";
 const BOTW = "Bottom of the Well";
 const TEMPLE_OF_TIME = "Temple of Time";
+const HAUNTED_WASTELAND = "Haunted Wasteland";
 
 // Ages
 const ADULT = "adult";
@@ -273,6 +274,25 @@ window.getTricks = function getTricks() {
                 
             },
             {
+                "name": "Ledge Clip Into Water Temple Entrance",
+                "location": LAKE_HYLIA,
+                "description": `
+                            the water has to be lowered
+
+                            To ledge clip:
+                            sidehop right then left again
+                            roll and release Z after roll
+                            repress z on the ledge grab frame shown to clip in
+
+                            swim towards the seam
+                            your camera should re adjust when you hit it
+                            once that happens turn left and swim into the temple entrance
+                                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/0i-tlC7SB7E",
+            },
+            {
                 "name": "Adult LH to ZD Bombchu Dive",
                 "location": LAKE_HYLIA,
                 "description": `
@@ -345,7 +365,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/pHanWnYieYc",
-                
             },
             {
                 "name": "Spirit Temple BK Skip Bombchu",
@@ -365,7 +384,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/HdzPVbpwoEI",
-                
             },
             {
                 "name": "Child Shadow Temple Gate Clip",
@@ -379,7 +397,6 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/tFbHGK8Wl6c",
-                
             },
             {
                 "name": "Child Water Temple Entry Superslide",
@@ -404,7 +421,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, SUPERSLIDE],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/_1fHdyn595U",
-                
             },
             {
                 "name": "Enter Jabu As Adult w/ Bombchu",
@@ -434,7 +450,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/xDLnTnV9UcY",
-                
             },
             {
                 "name": "Child Statue Climb From Child Side",
@@ -454,7 +469,6 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/TiTWNFPGImA",
-                
             },
             {
                 "name": "Bomb QPA Hover Into Forest",
@@ -469,7 +483,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/mZ41KgN2TF8",
-                
             },
             {
                 "name": "Adult Stick Nut QPA (Quick Putaway)",
@@ -486,7 +499,6 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/C5gYslOuxlU",
-                
             },
             {
                 "name": "GTG Gate Clip Bombs",
@@ -499,7 +511,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, GATE_CLIP],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/k-oAPiO8mPM",
-                
             },
             {
                 "name": "Distance Megaflip Gerudo Valley",
@@ -557,7 +568,22 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/OSGjX3cGAEU",
+            },
+            {
+                "name": "Lensless Wasteland w/ Fast Bunny Hood",
+                "location": HAUNTED_WASTELAND,
+                "description": `
+                            Cross the sand on the left side
+                            for the second portion:
 
+                            Watch the flags on the left, backwalk until the poles line up
+                            start side hopping to the right. Watch the flags on the right, when the two furthest right line up sidehop right 4 more times
+                            turn down left then backwalk
+                            when you see the third set of levers spawn turn around and run to the flags
+                `,
+                "tags": [ITEMLESS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/UAyj--7RGys",
             },
             {
                 "name": "Deku Adult BK (231) Skip",
@@ -570,7 +596,6 @@ window.getTricks = function getTricks() {
                 "tags": [TWOHW, ONEHW, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://www.youtube.com/embed/4jmnz6FM3kU",
-                
             },
             {
                 "name": "Bombchu Hover to Deku Basement GS",
@@ -677,6 +702,62 @@ window.getTricks = function getTricks() {
                 "embed": "https://www.youtube.com/embed/D3RSZ1WyB5A",
             },
             {
+                "name": "Forest Temple Skip 1st Key with Hover Boots and Chus",
+                "location": FOREST_TEMPLE,
+                "description": `
+                            backwalk off, climb up, and turn around
+                            move away from the corner half step or so after climbing up the ledge
+                            equip hoverboots after 2nd damage frame
+                            hold up-left after equipping
+                        `,
+                "tags": [HOVER_BOOTS, BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/g5lHRC8kaPw",
+            },
+            {
+                "name": "Forest Temple BK Skip",
+                "location": FOREST_TEMPLE,
+                "description": `
+                                Align with texture
+                                backflip
+                                pull yourself up
+                                with Z: Sidehop left, Roll
+                                during roll: release z and repress to clip
+                                A to drop
+                                face door and sidehop left once
+                                run forward
+                        `,
+                "tags": [ITEMLESS, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/GOBxO-VOJCY",
+            },
+            {
+                "name": "Forest Temple Skip 1st Key Hover Boots and Bombs",
+                "location": FOREST_TEMPLE,
+                "description": `
+                                backwalk off, climb up, and turn around
+                                Pause on 2nd damage frame (2nd frame that link moves)
+                                equip hoverboots
+                                Hold Up-Left
+                        `,
+                "tags": [HOVER_BOOTS, BOMBS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/TWyMT0S_duU",
+            },
+            {
+                "name": "Forest Temple Skip Song of Time Block",
+                "location": FOREST_TEMPLE,
+                "description": `
+                            To ledge clip:
+                            sidehop right then left again
+                            roll and release Z after roll
+                            repress z on the ledge grab frame shown to clip in
+                        `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/j98GnVeib8Q",
+            },
+            {
                 "name": "Child Forest Temple BK Skip Bombchu",
                 "location": FOREST_TEMPLE,
                 "description": `
@@ -689,7 +770,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP, VINE_CLIP],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/f0l6W0blyUw",
-                
             },
             {
                 "name": "Forest Temple Mega Backflip to Scarecrow",
@@ -703,7 +783,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, MEGAFLIP],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/dVfhIBN8Q7E",
-                
             },
             {
                 "name": "Skip First Key in Forest Temple",
@@ -720,7 +799,6 @@ window.getTricks = function getTricks() {
                 "tags": [ONEHW, TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/xqUVH-3T9Nw",
-                
             },
             {
                 "name": "Forest Temple Block Room to Courtyard",
@@ -739,7 +817,6 @@ window.getTricks = function getTricks() {
                 "tags": [HOOKSHOT, WEIRDSHOT],
                 "age": ADULT,
                 "embed": "https://www.youtube.com/embed/IPpPgkgMnPw",
-                
             },
             {
                 "name": "Child Statue Climb",
@@ -756,7 +833,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS],
                 "age": CHILD,
                 "embed": "https://www.youtube.com/embed/9llUpjaAUrI",
-                
             },
             {
                 "name": "Spirit/Water Temple Bombs BK Skip",
@@ -765,7 +841,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, BK_SKIP, WATER_TEMPLE],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/GJOHtcVqUQg",
-                
             },
             {
                 "name": "Child Skip King Zora Deku Sticks",
@@ -796,7 +871,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/G8ASlsOYLak",
-                
             },
             {
                 "name": "Shadow Temple Gate Clip to Boat",
@@ -841,6 +915,19 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/EIBctPHYEvE",
+            },
+            {
+                "name": "Distance Megaflip Across Start of Shadow Temple",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                                shield drop on 9th black
+                                when link brings the shield up:
+                                hold Z+R+Down on the control stick
+                                backflip the next frame
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/Hcqqj5o-icI",
             },
             {
                 "name": "OGC Fairy Strength Block Skip",
@@ -997,6 +1084,113 @@ window.getTricks = function getTricks() {
                 "tags": [BOW, HOOKSHOT, WEIRDSHOT],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/IvQk6G__f2Q",
+            },
+            {
+                "name": "Bombchu Megaflip Demonstration",
+                "location": GENERAL,
+                "description": `
+                                hold Z+R the whole time after shield drop
+                                Z+R with no stick input until the backflip:
+
+                                A couple of ways depending on comfort
+
+                                method 1: on 7th black shield drop and roll the next frame
+                                method 2: on 8th red shield drop and roll on the same frame
+
+                                backflip on the frame link is leaning back
+                `,
+                "tags": [BOMBCHU],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/Qxu9AYyk7rI",
+            },
+            {
+                "name": "Bombchu Distance Megaflip Demonstration",
+                "location": GENERAL,
+                "description": `
+                            on 9th black:
+                            Z+R+A with no input on control stick
+
+                            when link shields the explosion:
+                            frame 1: Z+R+Down on control stick
+                            frame 2: Backflip
+                `,
+                "tags": [BOMBCHU],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/BAFlskmKSZ8",
+            },
+            {
+                "name": "Bombs Megaflip Demonstration",
+                "location": GENERAL,
+                "description": `
+                                hold Z+R the whole time
+                                roll on big red
+                                hold down on control stick during the roll
+                                you can backflip the first or second frame link is inside the explosion
+                `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/-qzW1NNoc78",
+            },
+            {
+                "name": "Bombs Distance Megaflip Demonstration",
+                "location": GENERAL,
+                "description": `
+                            Z+R+Roll on big blue (no stick input)
+
+                            First frame links shields the damage:
+                            frame 1: Z+R+Down
+                            frame 2: Z+R+Backflip
+                `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/z9FNVvGRgdA",
+            },
+            {
+                "name": "Universal Weirdshot Bombchu",
+                "location": GENERAL,
+                "description": `
+                            keep holding Z until the end:
+
+                            shield drop chu on 9th red
+                            pull hookshot and cancel with shield
+                            roll on 1st explosion frame
+
+                            Exact inputs from unpause on explosion:
+                            Frame 1: Z+R+Roll
+                            Frame 2: Z+R
+                            Frame 3+: Z+R+Down on control stick until you hit the explosion
+
+                            On damage frame / hitting the explosion:
+                            Frame 1-4: Z+R+Down
+                            Frame 4-7: Z+Hookshot+Down
+                            Frame 8: Let go of everything
+                `,
+                "tags": [BOMBCHU, WEIRDSHOT, HOOKSHOT, BOW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/Cq51orFglUg",
+            },
+            {
+                "name": "Universal Weirdshot Bombs",
+                "location": GENERAL,
+                "description": `
+                                keep holding Z until the end:
+
+                                shield drop bomb, roll, backflip
+                                pull hookshot and cancel with shield
+                                roll on big red
+
+                                Exact inputs from unpause on big red:
+                                Frame 0: Z+R+Roll
+                                Frame 1+: Z+R+Down on control stick until you hit the explosion
+
+                                On damage frame / hitting the explosion:
+                                Frame 0-4: Z+R+Down
+                                Frame 5-7: Z+Hookshot+Down
+                                Frame 8: Let go of everything
+                `,
+                "tags": [BOMBS, WEIRDSHOT, HOOKSHOT, BOW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/V4DpneFDTjM",
             },
             {
                 "name": "BOTW As Adult w/ Hookshot and Master Sword",
@@ -1157,7 +1351,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "DMC Weirdslide Into Boulder Grotto",
                 "location": DMC,
-                "description": `target wall and roll into corner
+                "description": `
+                                target wall and roll into corner
                                 backflip, sidehop left, backflip, sidehop left
                                 drop bomb and backflip don't let go of z,
                                 roll, roll, shieldcancel hookshot or bow
