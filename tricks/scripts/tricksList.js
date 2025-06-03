@@ -91,7 +91,6 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/Hvq95fTEaGQ",
-                
             },
             {
                 "name": "Zora Shop Clip Master Sword Shieldless",
@@ -153,7 +152,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, BOMBCHU],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/Jg4vIiGzJCY",
-                
             },
             {
                 "name": "Skip Dampe Windmill SoT Block w/ bombs/chus",
@@ -243,11 +241,10 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, HOVER_BOOTS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/tDZH1-jFqh4",
-                
             },
             {
                 "name": "Fire Temple BK Skip 0 Keys Hovers Chus",
-                "location": SPIRIT_TEMPLE,
+                "location": FIRE_TEMPLE,
                 "description": `
                                 get isg
                                 target wall, turn left, sidehop right
@@ -259,7 +256,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, HOVER_BOOTS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/YkSziqIy2_k",
-                
             },
             {
                 "name": "Weirdshot Into Child Spirit Temple From Crates Room",
@@ -271,7 +267,42 @@ window.getTricks = function getTricks() {
                 "tags": [HOOKSHOT, BOMBS, WEIRDSHOT],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/c3FUQPX-qL8",
-                
+            },
+            {
+                "name": "Spirit Temple Triple Slash Silver Block Skip",
+                "location": SPIRIT_TEMPLE,
+                "description": `
+                                    line up with wall
+                                    backflip, roll and retarget
+                                    sidehop left, roll and retarget
+                                    line up roughly between the two columns
+                                    backwalk into corner
+
+                                    triple slash (if you mess up you can just try again, no need to re set up)
+                                    hold Z during the third slash
+                                    once the sword hits the right wall (blue sparks)
+                                    buffer 3 frames, links sword will be nearly vertical at this point
+                                    from here:
+                                    frame 1: pull first person item
+                                    2, 3, 4: hold Z
+                                    out of next unpause Z and shield
+
+                                    release everything
+                                    horizontal slash with shield cancel
+
+                                    you can turn right and backflip immediately, no need to step forward in the video but I found some distances make it easier in real time
+
+                                    hold Z and Down during the backflip. You'll see link snap up to the edge and then start falling, then snap up again. On this second snap up you can release all inputs.
+
+                                    turn around and jump across the gap
+
+                                    alternatively, after the shielded horizontal slash, hold z and take half a sidestep away from the block
+                                    c-up and aim to the left of the corner, if you're just barely to the left it's not good enough. aim more to the left like the video
+                                    forward roll and hold up and you'll make it
+                                `,
+                "tags": [MASTER_SWORD, BOW, HOOKSHOT],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/1yTzv6i6X_M",
             },
             {
                 "name": "Ledge Clip Into Water Temple Entrance",
