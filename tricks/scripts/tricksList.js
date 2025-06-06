@@ -1014,7 +1014,7 @@ window.getTricks = function getTricks() {
                 `,
                 "tags": [HOVER_BOOTS, BOMBS, SUPERSLIDE],
                 "age": ADULT,
-                "embed": "https://youtube.com/embed/9zBMVo0dgEs",
+                "embed": "https://youtube.com/embed/AZhbxW-TCwg",
             },
             {
                 "name": "Pot Push Into DMC From Goron City",
@@ -1089,34 +1089,6 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/ElAAh5NIZk8",
             },
             {
-                "name": "How To Weirdshot",
-                "location": GENERAL,
-                "description": `z target wall
-                                bonk wall
-                                quick shield drop bomb
-                                backflip
-                                pull hookshot or bow and cancel with shield
-                                Buffer in Z+R roll on big blue, big red, or first explosion frame
-                                hold down during the roll
-                                damage frame: it looks like link is getting pushed back and you'll see hook or bow in hand
-
-                                from damage frame:
-                                1 Z+R+Down
-                                2 Z+R+Down
-                                3 Z+R+Down
-                                4 Z+R+Down
-                                5 Z+Down*  Should see link move forward on this frame. If he moves backwards most likely you're not holding exactly down on control stick even a few degrees will mess it up.
-                                6 *Release down* Z+Bow
-
-                                Let go of Z and unpause when fully underground
-
-                                for weirdslide never let go of Z
-                `,
-                "tags": [BOW, HOOKSHOT, WEIRDSHOT],
-                "age": ADULT,
-                "embed": "https://youtube.com/embed/IvQk6G__f2Q",
-            },
-            {
                 "name": "Bombchu Megaflip Demonstration",
                 "location": GENERAL,
                 "description": `
@@ -1185,16 +1157,16 @@ window.getTricks = function getTricks() {
                             shield drop chu on 9th red
                             pull hookshot and cancel with shield
                             roll on 1st explosion frame
+                            hold down during the roll
 
-                            Exact inputs from unpause on explosion:
+                            Exact inputs from unpause on big red:
                             Frame 1: Z+R+Roll
-                            Frame 2: Z+R
-                            Frame 3+: Z+R+Down on control stick until you hit the explosion
+                            Frame 2+: Z+R+Down on control stick until you hit the explosion
 
-                            On damage frame / hitting the explosion:
-                            Frame 1-4: Z+R+Down
-                            Frame 4-7: Z+Hookshot+Down
-                            Frame 8: Let go of everything
+                            On unpause from hitting the explosion frame:
+                            Frame 1-3: Z+R+Down
+                            Frame 4-6: Z+Hookshot+Down
+                            Frame 7: Let go of everything
                 `,
                 "tags": [BOMBCHU, WEIRDSHOT, HOOKSHOT, BOW],
                 "age": ADULT,
@@ -1211,13 +1183,13 @@ window.getTricks = function getTricks() {
                                 roll on big red
 
                                 Exact inputs from unpause on big red:
-                                Frame 0: Z+R+Roll
-                                Frame 1+: Z+R+Down on control stick until you hit the explosion
+                                Frame 1: Z+R+Roll
+                                Frame 2+: Z+R+Down on control stick until you hit the explosion
 
-                                On damage frame / hitting the explosion:
-                                Frame 0-4: Z+R+Down
-                                Frame 5-7: Z+Hookshot+Down
-                                Frame 8: Let go of everything
+                                On unpause from hitting the explosion frame:
+                                Frame 1-3: Z+R+Down
+                                Frame 4-6: Z+Hookshot+Down
+                                Frame 7: Let go of everything
                 `,
                 "tags": [BOMBS, WEIRDSHOT, HOOKSHOT, BOW],
                 "age": ADULT,
