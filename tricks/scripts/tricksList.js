@@ -269,6 +269,24 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/c3FUQPX-qL8",
             },
             {
+                "name": "Spirit Temple Silver Block Clip ISG and Bombs",
+                "location": SPIRIT_TEMPLE,
+                "description": `
+                                get isg
+                                line up with wall
+                                sidehop right, 2ess left
+                                get into corner
+                                shield drop 2 bombs overhead
+                                roll, backflip with Z and R and wait for bombs to blow up
+                                you should be clipped through the wall here, back up to the ledge
+                                cancel isg
+                                line up with block at the edge of the drawing and run forward
+                                `,
+                "tags": [BOMBS, ONEHW, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/C6A5pH_G0_k",
+            },
+            {
                 "name": "Spirit Temple Triple Slash Silver Block Skip",
                 "location": SPIRIT_TEMPLE,
                 "description": `
@@ -415,6 +433,49 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/HdzPVbpwoEI",
+            },
+            {
+                "name": "Spirit Temple 0 Keys Unloaded Statue Climb",
+                "location": SPIRIT_TEMPLE,
+                "description": `
+                                to get here see: "HESS Clip Into Child Side As Adult Spirit Temple""
+                                Boost with hovers on to fence
+                                unequip hovers and backflip immediately when you climb up to get into lobby
+
+                                try to take a hit from the keese so it gets bugged out trying to re light itself on the torch
+
+                                get QPA on the wall to the left from where you backflipped up
+
+                                the climbable wall (on child side lobby spirit temple) is directly behind where you backflipped up
+                                get keese aggro and climb up, ISG on keese
+
+                                keep walking forward relative from where you climbed up into the wall
+                                align with wall and sidehop left until you hit the left wall
+                                walk all the way forward, you're now halfway up the child side ramp in the corner
+                                turn right 3 QPA hovers and then backflip OR chus: sidehop right 2x and downroll into twisted hover 4x
+                                you're now on the adult side ramp
+                                turn around and run forward to the wall
+                                cancel isg, turn left and put on hovers
+
+                                run forward (where the hammer switch is) across the gap
+                                run all the way to the wall
+
+                                remove hoverboots, backflip, roll, roll, turn left
+                                put on hoverboots, run forward and land
+                                remove hoverboots, turn right and get up against the statue shoulder
+
+                                do statue climb: (for sticks setup is sidehop left, roll, gainer, shielded jumpslash, 2x shielded slashes)
+
+                                for the hoverboots method to clip into the head:
+                                don't move when you land from the jumpslash
+                                turn down-right
+                                backflip and backflip again on the first frame you can do the second backflip
+                                about halfway through the second backflip hold down left without z
+                                you'll run to the boss door and you can do bk skip
+                                `,
+                "tags": [BOMBS, BK_SKIP, DEKU_STICKS],
+                "age": ADULT,
+                "embed": https://youtube.com/embed/BbNn0zLLwNE",
             },
             {
                 "name": "Child Shadow Temple Gate Clip",
