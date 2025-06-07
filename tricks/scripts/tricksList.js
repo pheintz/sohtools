@@ -816,14 +816,6 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/dVfhIBN8Q7E",
             },
             {
-                "name": "Skip First Key in Forest Temple",
-                "location": FOREST_TEMPLE,
-                "description": "",
-                "tags": [BOMBCHU, HOVER_BOOTS],
-                "age": ADULT,
-                "embed": "",
-            },
-            {
                 "name": "Forest Temple First Green Block Skip",
                 "location": FOREST_TEMPLE,
                 "description": "sidehop, roll, get into corner, crouchstab 2x, jumpslash",
@@ -843,7 +835,7 @@ window.getTricks = function getTricks() {
             {
                 "name": "Weirdshot Fire Temple BK Chest",
                 "location": FIRE_TEMPLE,
-                "description": `see: "How To Weirdshot"
+                "description": `see: "Universal Weirshot"
                 `,
                 "tags": [HOOKSHOT, WEIRDSHOT],
                 "age": ADULT,
@@ -853,13 +845,13 @@ window.getTricks = function getTricks() {
                 "name": "Child Statue Climb",
                 "location": SPIRIT_TEMPLE,
                 "description": `
-                Get ISG. align facing the head on the shoulder, turn left
-                z, take a few side steps down to drop bomb. get back up
-                backflip on big blue.
-                shield drop+2nd backflip on second exhale (watch link's feet or bottom of tunic movement)
-                *make sure weapon is out* side hop up, 3 sidehops left and hold up+jumpslash and shield the landing.
-                (see video, but a few frames worked for me for the jumpslash)
-                get link's head in the wall as much as you can, then backflip
+                    Get ISG. align facing the head on the shoulder, turn left
+                    z, take a few side steps down to drop bomb. get back up
+                    backflip on big blue.
+                    shield drop+2nd backflip on second exhale (watch link's feet or bottom of tunic movement)
+                    *make sure weapon is out* side hop up, 3 sidehops left and hold up+jumpslash and shield the landing.
+                    (see video, but a few frames worked for me for the jumpslash)
+                    get link's head in the wall as much as you can, then backflip
                 `,
                 "tags": [BOMBS],
                 "age": CHILD,
@@ -868,7 +860,12 @@ window.getTricks = function getTricks() {
             {
                 "name": "Spirit/Water Temple Bombs BK Skip",
                 "location": SPIRIT_TEMPLE,
-                "description": `Get ISG on door. Z target door. (drop as fast as you can) Shield drop sidehop shield drop. Backflip on big blue then backflip again. Pull bomb and press a to drop. If 2handed weapon pull out. On big red either unsheath or swing your two hander.`,
+                "description": `
+                Get ISG on door. Z target door. (drop as fast as you can) Shield drop, sidehop, shield drop.
+                With shield: backflip on big blue then backflip again. You should be hovering at this point.
+                Pull bomb and press a to drop. If 2handed weapon unsheath.
+                On big red either unsheath master sword or swing your two hander.
+                `,
                 "tags": [BOMBS, BK_SKIP, WATER_TEMPLE],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/GJOHtcVqUQg",
@@ -935,7 +932,9 @@ window.getTricks = function getTricks() {
             {
                 "name": "Setup for Boatkey",
                 "location": SHADOW_TEMPLE,
-                "description": `in hoverboots room get into back right corner
+                "description": `
+                                deadhand room
+                                get into back right corner
                                 2 left sidehop
                                 backflip
                                 shield/ess turn right
@@ -963,8 +962,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "OGC Fairy Strength Block Skip",
                 "location": OGC,
-                "description": `Get into corner, turn right, 
-                                DONT let that extra camera click happen when turning right
+                "description": `
+                                Get into corner, turn right
                                 1 ess right for bomb
                                 2 for chu
                 `,
@@ -975,7 +974,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "DDC Backflip OI Push Block Skip",
                 "location": DODONGOS_CAVERN,
-                "description": `get bottle out for OI
+                "description": `
+                                get bottle out for OI
                                 backwalk down from door on the right wall
                                 drop down and target the wall where you dropped
                                 z+downroll retarget for angle
@@ -992,7 +992,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "Volvagia Quick Kill Weirdshot w/ Bow",
                 "location": FIRE_TEMPLE,
-                "description": `see: "How To Weirdshot"
+                "description": `
+                            see: "Universal Weirdshot"
                 `,
                 "tags": [BOW, HAMMER, WEIRDSHOT],
                 "age": ADULT,
@@ -1001,7 +1002,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "HESS Clip Into Child Side As Adult Spirit Temple",
                 "location": SPIRIT_TEMPLE,
-                "description": `break the pots because they will mess up your slide
+                "description": `
+                                break the pots because they will mess up your slide
 
                                 from between the pillars:
                                 shield drop bomb, sidehop left shield, drop bomb
@@ -1062,7 +1064,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "Bombs Mega Sidehop Into Darunia's Room",
                 "location": GORON_CITY,
-                "description": `Target wall, turn right, sidehop, roll and retarget.
+                "description": `
+                                Target wall, turn right, sidehop, roll and retarget.
                                 Press forward to move along fence for angle.
                                 Turn around, Roll 2x, shield drop, roll, backflip, z+r+roll on big blue
                                 hold down the whole time
@@ -1199,8 +1202,6 @@ window.getTricks = function getTricks() {
                 "name": "BOTW As Adult w/ Hookshot and Master Sword",
                 "location": BOTW,
                 "description": `
-                                bless @agreenspoon the goat for this:
-
                                 go to corner
                                 turn around
                                 4 rolls
@@ -1368,7 +1369,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "DMC Fairy Boulder Skip w/ Bombchu",
                 "location": DMC,
-                "description": `target wall turn left shield drop chu while backwalking
+                "description": `
+                    target wall turn left shield drop chu while backwalking
                 `,
                 "tags": [BOMBCHU],
                 "age": CHILD,
@@ -1454,7 +1456,8 @@ window.getTricks = function getTricks() {
             {
                 "name": "Door of Time Skip w/ Lunge Storage",
                 "location": TEMPLE_OF_TIME,
-                "description": `inputs for lunge storage:
+                "description": `
+                                inputs for lunge storage:
                                 crouch stab
                                 Z+A+R (jumpslash with shield landing)
                                 let go of everything
