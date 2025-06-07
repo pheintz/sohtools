@@ -209,8 +209,8 @@ window.getTricks = function getTricks() {
                                 2x sidehop right, sidehop left, sidehop right
                                 2ess right
                                 from 10th red:
-                                frame 0: shield drop
-                                frame 1: roll
+                                frame 1: shield drop
+                                frame 2: roll
                                 hold right during roll until link is standing
                                 sidehop right
                                 `,
@@ -715,9 +715,9 @@ window.getTricks = function getTricks() {
                 "name": "Megaflip w/ bombs to Jabu Switch",
                 "location": JABUS_BELLY,
                 "description": `Roll, backflip, shieldflick/retarget
-                                On big red -
-                                Frame 0: A+Z+R
-                                Frame 1: Z+R+Hold down the entire rest of the way
+                                on big red - from unpause:
+                                Frame 1: A+Z+R
+                                Frame 2: Z+R+Hold down the entire rest of the way
                                 On the 2nd frame that link is entirely inside the explosion: A+Z+R+Down`,
                 "tags": [BOMBS, MEGAFLIP],
                 "age": ANY_AGE,
