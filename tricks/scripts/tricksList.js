@@ -475,7 +475,7 @@ window.getTricks = function getTricks() {
                                 `,
                 "tags": [BOMBS, BK_SKIP, DEKU_STICKS],
                 "age": ADULT,
-                "embed": https://youtube.com/embed/BbNn0zLLwNE",
+                "embed": "https://youtube.com/embed/BbNn0zLLwNE",
             },
             {
                 "name": "Child Shadow Temple Gate Clip",
