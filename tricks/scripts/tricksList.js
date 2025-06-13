@@ -55,6 +55,7 @@ const GC = "Ganon's Castle";
 const BOTW = "Bottom of the Well";
 const TEMPLE_OF_TIME = "Temple of Time";
 const HAUNTED_WASTELAND = "Haunted Wasteland";
+const KAKARIKO_VILLAGE = "Kakariko Village";
 
 // Ages
 const ADULT = "adult";
@@ -261,7 +262,7 @@ window.getTricks = function getTricks() {
                 "name": "Weirdshot Into Child Spirit Temple From Crates Room",
                 "location": SPIRIT_TEMPLE,
                 "description": `
-                                see: how to weirdshot,
+                                see: universal weirdshot,
                                 you can hookshot the torch to get in
                                 `,
                 "tags": [HOOKSHOT, BOMBS, WEIRDSHOT],
@@ -358,6 +359,24 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/G6XVwXbBo8s",
+            },
+            {
+                "name": "Water Temple Entry Jumpslash Clip",
+                "location": LAKE_HYLIA,
+                "description": `
+                                line up with sun side of slate
+                                sidehop right, side roll, turn left
+                                roll up to slate
+                                backflip, 3ess right, 3 sidehop right
+                                have weapon out
+                                backwalk (keep holding down until jumpslash),
+                                pause around where you hit the ledge below(links head will be coming back on screen),
+                                keep holding z and down and waiting for link to leave the screen again
+                                5th frame links head is off the screen again: jumpslash out of the unpause rotate the stick from down to up
+                                `,
+                "tags": [WATER_TEMPLE],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/XXGKidCP1pg",
             },
             {
                 "name": "Hookshot Jump Tree Skultulla Lake Hylia",
@@ -491,6 +510,49 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/tFbHGK8Wl6c",
             },
             {
+                "name": "Shadow Temple Gate Clip Deku Stick",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                            align with gate wall in the corner, move to the left a bit
+                            downroll and retarget for angle
+                            turn left, 1ess right
+                            sidehop right, sideroll to get into corner
+                            3x sidehop left
+                            z+swing
+                            spam jumpslash and hold up during slash
+                                `,
+                "tags": [DEKU_STICKS, GATE_CLIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/CuVYxwIHsPM",
+            },
+            {
+                "name": "Shadow Temple Gate Clip Crouch Stab Method",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                for two handers including sticks
+                above ledge align with the left wall and turn right
+                walk forward and jump off
+                make sure you're against wall
+                sidehop left, sideroll and let go of target
+                2x crouch stab
+                jumpslash
+                                `,
+                "tags": [DEKU_STICKS, GATE_CLIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/86SkMxtQEO8",
+            },
+            {
+                "name": "Weirdshot Shadow Temple LikeLike Chest",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                                some positions you won't go underground but next to the wall facing right seems to work
+                                see: universal weirdshot
+                                `,
+                "tags": [DEKU_STICKS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/YuANSzTuDDE",
+            },
+            {
                 "name": "Child Water Temple Entry Superslide",
                 "location": LAKE_HYLIA,
                 "description": `
@@ -539,9 +601,45 @@ window.getTricks = function getTricks() {
 
                                 note: (ship setting on input viewer: analog angle values or dev tools: value viewer)
                 `,
-                "tags": [BOMBCHU],
+                "tags": [BOMBCHU, JABUS_BELLY],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/xDLnTnV9UcY",
+            },
+            {
+                "name": "Adult Jabu Entry Master Sword Bombs and Hovers",
+                "location": ZORAS_FOUNTAIN,
+                "description": `
+                            line up with wall
+                            get to sidehop right, roll+retarget angle however you want and hold that angle
+                            walk up and let fence push you to the left
+                            link's right foot halfway on the ice
+
+                            have hoverboots equipped
+
+                            pull bomb
+                            out of unpause from big blue
+                            Z+R+Roll
+                            hold right during the roll
+
+                            1st damage frame: link is standing up and toes pointing up-right
+                            2nd damage frame: feet in neutral position: sidehop right with Z+R
+
+                            let go of R after the explosion clears because you need to jumpslash soon
+
+                            watch link's momentum:
+                            link will look like he's falling straight down like normal,
+                            then one frame you get pushed/slide - pause here
+
+                            unequip hovers
+
+                            frame 1: jumpslash
+                            frame 2: equip hovers
+
+                            note: if you're blowing up instead of side hopping you're probably too far forward on the ice
+                `,
+                "tags": [MASTER_SWORD, BOMBS, HOVER_BOOTS, JABUS_BELLY],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/TmVpDyLiXrk",
             },
             {
                 "name": "Child Statue Climb From Child Side",
@@ -807,6 +905,24 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/g5lHRC8kaPw",
             },
             {
+                "name": "Forest Temple BK Skip First Person Items",
+                "location": FOREST_TEMPLE,
+                "description": `
+                                Get on the stairs and turn right and face wall
+                                easier if you're higher up the stairs
+
+                                master sword setup : shielded horizontal slash
+                                sticks: bonk the wall, turn around, swing stick, turn around
+
+                                quickdraw first person item
+                                on the same frame: backflip and first person item
+                                walk left to clip
+                        `,
+                "tags": [BOW, HOOKSHOT, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/nFFwVpiELh0",
+            },
+            {
                 "name": "Forest Temple BK Skip",
                 "location": FOREST_TEMPLE,
                 "description": `
@@ -962,7 +1078,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/G8ASlsOYLak",
             },
             {
-                "name": "Shadow Temple Gate Clip to Boat",
+                "name": "Shadow Temple Gate Clip to Boat Master Sword",
                 "location": SHADOW_TEMPLE,
                 "description": `from corner:
                                 target wall 
@@ -1080,6 +1196,16 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/AZhbxW-TCwg",
             },
             {
+                "name": "Bow Shoot Bombs From LW to GC",
+                "location": GORON_CITY,
+                "description": `
+                                arrows can clip through the left boulder and shoot the bomb
+                `,
+                "tags": [BOW, LOST_WOODS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/qIDecQi_Qwc",
+            },
+            {
                 "name": "Pot Push Into DMC From Goron City",
                 "location": GORON_CITY,
                 "description": `
@@ -1087,7 +1213,7 @@ window.getTricks = function getTricks() {
                                 7 frames walking forward, let go of control stick and come to a stop
                                 7 frames backwalk, out of the unpause Z+R+Down
                 `,
-                "tags": [ITEMLESS],
+                "tags": [ITEMLESS, DMC],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/un_s31uOhlM",
             },
@@ -1102,7 +1228,7 @@ window.getTricks = function getTricks() {
                                 Shield drop chu on 8th red
                                 R+Z+Roll on black chu to the right
                 `,
-                "tags": [BOMBCHU],
+                "tags": [BOMBCHU, DMC],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/yZcLZ4H6biY",
             },
@@ -1118,7 +1244,7 @@ window.getTricks = function getTricks() {
                                 R+Z+Roll on explosion frame
                                 R+Z+down on control stick for the rest
                 `,
-                "tags": [BOMBS],
+                "tags": [BOMBS, DMC],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/BGQS_VSnrtw",
             },
@@ -1276,9 +1402,11 @@ window.getTricks = function getTricks() {
 
                                 weirdshot inputs
                                 roll on big red
+
+                                out of unpause from hitting the explosion:
                                 Z+R+Down 3 frames
-                                Z+Down+Hookshot for 2 or 3 frames
-                                release control stickrelease z when underground
+                                Z+Down+Hookshot for 3 frames
+                                release everything
 
                                 17 frames holding left on control stick | link yaw value: 0x7ae
                                 steady and release hookshot
@@ -1286,6 +1414,31 @@ window.getTricks = function getTricks() {
                 "tags": [MASTER_SWORD, HOOKSHOT],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/O4xELdc76PY",
+            },
+            {
+                "name": "Clip Into Bottom of the Well Master Sword",
+                "location": KAKARIKO_VILLAGE,
+                "description": `
+                           align with well (one segment counter clockwise to the ladder)
+                            keep angle and get into the front corner of the left post
+
+                            horizontal slash
+                            2x sidehop right
+                            turn right
+
+                            Z+B+Right on control stick for horizontal slash
+                            Z+Down during the swing to backwalk
+                            Hold A during the ledge grab to queue up letting go
+
+                            first frame link falls, can't see link's hand - Z+UP
+                            the rest of the way: Down+Shield
+                            after landing:
+                            5ess left or c-up to the second line on the wall
+                            sidehop left, jumpslash to land
+                `,
+                "tags": [MASTER_SWORD, BOTW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/_rKyUrn6txk",
             },
             {
                 "name": "Bottom of the Well Actor Deload",
@@ -1335,15 +1488,7 @@ window.getTricks = function getTricks() {
                                 2x backflip
                                 roll
                                 weirdshot with bombs
-
-                                weirdshot setup (see: how to weirdshot):
-                                backflip shield flick, roll, shield drop bomb over head, roll, backflip, hookshot/shield
-                                roll on big red
-                                damage frames 1-4: Z+R+Down 
-                                5: Z+Hookshot+Down 
-                                6: Z+Hookshot+Down 
-                                7: Z+Hookshot
-                                8: let go of everything
+                                let go of everything as soon as you are underground
                 `,
                 "tags": [HOOKSHOT, BOMBS, DEKU_STICKS],
                 "age": ADULT,
@@ -1364,13 +1509,13 @@ window.getTricks = function getTricks() {
 
                                 weirdshot inputs:
                                 backflip shield flick, roll, roll, backflip, Z+hookshot then shield
-                                drop on 9th black, roll frame before explosion frame
+                                drop on 9th black then
+                                frames for hookshot quickdraw:
+                                1: Z+Hookshot 
+                                2: Z+Shield
 
-                                damage frames 1-4: Z+R+Down
-                                5: Z+Hookshot+Down
-                                6: Z+Hookshot+Down
-                                7: Z+Hookshot
-                                8: let go of everything
+                                4 frames until roll, the frame before the explosion where bombchu doesn't move
+
 
                                 with hookshot: 17 pauses hold left or start buffering when you're close
                 `,
@@ -1389,15 +1534,10 @@ window.getTricks = function getTricks() {
                                 roll
                                 turn left 
                                 sidehop left
-
-                                weirdshot setup (see: how to weirdshot):
-                                backflip shield flick, roll, shield drop bomb over head, roll, backflip, hookshot/shield
-                                roll on big red
-                                damage frames 1-4: Z+R+Down 
-                                5: Z+Hookshot+Down 
-                                6: Z+Hookshot+Down 
-                                7: Z+Hookshot
-                                8: let go of everything
+                                walk to wall
+                                backflip
+                                roll
+                                weirdshot with bombs (see: universal weirdshot)
                 `,
                 "tags": [HOOKSHOT, BOMBS, DEKU_STICKS],
                 "age": ADULT,
@@ -1411,12 +1551,12 @@ window.getTricks = function getTricks() {
 
                                 feet above the brick line (2 climbs up after grabbing the wall)
                                 hold Z the whole time:
-                                frame 1: A + Z
-                                frame 2: Down + Z
+                                frame 1: A+Z
+                                frame 2: Down+Z
                                 frame 3: Z
                                 frame 4: Z
                                 frame 5: Z + Bombchu
-                                frame 6 and on: Z + R + UP
+                                frame 6 and on: Z+R+UP
 
                                 there's not a lot of time for:
                                 Up-leftish and retarget in the water
@@ -1436,7 +1576,32 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/OrFZVADl1O8",
-                
+            },
+            {
+                "name": "DMC Pot Push To Bolero",
+                "location": DMC,
+                "description": `
+                climb down the bridge on the right, back up, hold angle and walk forward,
+                let the right post push you to the left
+                backwalk off again
+                2 rolls holding up during the roll
+                2 sidehops left
+                pick up pot
+                25 frames sidewalk right or use mark on the wall as a reference
+
+                reference:
+                during the sidewalk the mark looks like a T,
+                the post part of the T should be on the left lip of the pot
+
+                backwalk from here until the first frame you can see the boards on the ground
+                from that frame unpause:
+
+                frame 1: Z+R+Down
+                frame 2+ release everything and hold down until you grab, then climb up
+                `,
+                "tags": [BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/5qZGcaPYKOU",
             },
             {
                 "name": "DMC Weirdslide Into Boulder Grotto",
@@ -1452,7 +1617,6 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, HOOKSHOT, BOW, WEIRDSHOT, WEIRDSLIDE],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/UtxxHi8Ox0s",
-                
             },
             {
                 "name": "Child Light Trial Block Skip",
