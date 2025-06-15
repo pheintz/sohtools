@@ -737,6 +737,21 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/nxLp15RctiQ",
             },
             {
+                "name": "Skip Gerudo Valley Gate Megaflip",
+                "location": GERUDO_VALLEY,
+                "description": `
+                    Line up in the right corner, move a little to the left so the camera doesn't get weird.
+
+                    Buffer inputs or you'll talk to guard if you're in range
+
+                    Bombs: Backflip, turn around, roll, shield drop bomb, backflip, megaflip
+                    Chus: Backflip, turn around, megaflip
+                `,
+                "tags": [BOMBS, BOMBCHU],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/i2At5Fg1Hz8",
+            },
+            {
                 "name": "Gerudo Valley Cucko Jump w/ Sticks",
                 "location": GERUDO_VALLEY,
                 "description": `
