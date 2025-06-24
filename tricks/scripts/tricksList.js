@@ -408,7 +408,8 @@ window.getTricks = function getTricks() {
 
                                 keep holding Z and Left and you'll fall off, and keep holding Z and Left until:
 
-                                watch the top of the screen where the angle of the water texture changes (there's a 'peak'). the first frame that corner goes off screen switch to holding Z and Right and hold until you hit the water
+                                watch the top of the screen where the angle of the water texture changes (check video @ 32 seconds, the water texture near the glitch tick).
+                                the first frame that corner goes off screen switch to holding Z and Right and hold until you hit the water
 
                                 swim
                                 `,

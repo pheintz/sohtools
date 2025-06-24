@@ -49,29 +49,11 @@ const baseShareUrl = window.location.href.split('?')[0] + '?trick=';
 
 
 $(document).ready(function () {
-    $('#search').autocomplete({
-        source: function (request, response) {
-            const results = autocompleteFuse.search(request.term);
-            const suggestions = results.map(r => r.item).slice(0, 8);
-            response(suggestions);
-        },
-        select: function (event, ui) {
-            handleSearch(ui.item.value.toLowerCase());
-        }
+    listTricksAsDirectory();
+    $('#search').on('input', function () {
+        const query = $(this).val().toLowerCase();
+        filterDirectory(query);
     });
-
-    $('#search').keypress(function (event) {
-        if (event.key === "Enter") {
-            const query = $(this).val().toLowerCase();
-            handleSearch(query);
-        }
-    });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const trickParam = urlParams.get('trick');
-    if (trickParam) {
-        handleSearch(trickParam.toLowerCase());
-    }
 });
 
 function CreateEmbedIframe(embedUrl) {
@@ -204,10 +186,11 @@ function handleSearch(query) {
 }
 
 
-function listTricksAsDirectory() {
-    // Group tricks by location
+function listTricksAsDirectory(filteredTricks = null) {
+    const tricks = filteredTricks || tricksJson.tricks;
+
     const tricksByLocation = {};
-    tricksJson.tricks.forEach(trick => {
+    tricks.forEach(trick => {
         const location = trick.location || 'Unknown';
         if (!tricksByLocation[location]) {
             tricksByLocation[location] = [];
@@ -215,21 +198,19 @@ function listTricksAsDirectory() {
         tricksByLocation[location].push(trick);
     });
 
-    // Sort locations alphabetically
     const sortedLocations = Object.keys(tricksByLocation).sort((a, b) => a.localeCompare(b));
 
-    // Build HTML with headers for each location
     let html = '<div id="directory">';
     sortedLocations.forEach(location => {
         html += `<h3>${location}</h3>
         <div class="directory-list">
             <ul>`;
-            tricksByLocation[location]
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .forEach(trick => {
-                    html += `<li class="directory-item">${trick.name}</li>`;
-                });
-            html += `</ul>
+        tricksByLocation[location]
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .forEach(trick => {
+                html += `<li class="directory-item">${trick.name}</li>`;
+            });
+        html += `</ul>
         </div>`;
     });
     html += '</div>';
@@ -238,14 +219,10 @@ function listTricksAsDirectory() {
 
     $('.directory-item').click(function () {
         const trickName = $(this).text().toLowerCase();
-        // Find the exact trick by name (case-insensitive)
         const trick = tricksJson.tricks.find(t => t.name.toLowerCase() === trickName);
         if (trick) {
-
-            // Show the result in a modal
             const $modal = $('#trick-modal');
             if ($modal.length === 0) {
-                // Create modal if it doesn't exist
                 $('body').append(`
                     <div id="trick-modal" class="modal">
                         <div class="modal-content">
@@ -271,4 +248,14 @@ function listTricksAsDirectory() {
             bindShareButtons();
         }
     });
+}
+
+function filterDirectory(query) {
+    if (!query.trim()) {
+        listTricksAsDirectory();
+        return;
+    }
+    const fuseResults = trickFuse.search(query);
+    const filteredTricks = fuseResults.map(result => result.item);
+    listTricksAsDirectory(filteredTricks);
 }
