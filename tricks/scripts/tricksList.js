@@ -70,13 +70,45 @@ window.getTricks = function getTricks() {
                 "name": "Ice Cavern Red Ice Bomb Push",
                 "location": ICE_CAVERN,
                 "description": `
-                                4 frames backwalk after dropping bombs
-                                turn around and backwalk
-                                backflip when the camera re centers
+                            line up to the wall left of the red ice
+                            sidehop right, roll and retarget after the roll is finished
+                            shield drop 2 bombs overhead
+                            hold z and backwalk 4 frames
+                            let go of z but hold down 1 frame, link turns around
+                            re press Z and keep holding down at least 5 frames
+                            backflip and backwalk
                                 `,
                 "tags": [BOMBS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/dU9R5smlQfc", 
+            },
+            {
+                "name": "Freezard Room Skip Hookshot",
+                "location": ICE_CAVERN,
+                "description": `
+                                line up with the gate
+                                have hookshout third person ready
+                                when the freezard charges and pushes you:
+                                aim down and move left a bit and hookshot
+                                `,
+                "tags": [HOOKSHOT],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/dU9R5smlQfc",
+            },
+            {
+                "name": "Reverse Ice Cavern w/ Iron Boots",
+                "location": ICE_CAVERN,
+                "description": `
+                                target wall and turn around
+                                line up between the X of the shard and the wall
+                                backflip and hold left while you fall and for about a second after hitting water
+                                let go of everything and float up
+                                swim to clip into the last room
+                                put on iron boots and open door
+                                `,
+                "tags": ["Iron Boots"],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/Q0Ff25N6JTI",
             },
             {
                 "name": "King Zora Itemless Skip",
@@ -181,7 +213,20 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/Nl9dUk5E9jA",
             },
             {
-                "name": "Bombs Sidehop Into Zoras Domain Waterfall Skip",
+                "name": "Itemless Frestanding Heart Near Domain",
+                "location": ZORAS_RIVER,
+                "description": `
+                                align with wall, turn right
+                                backwalk off edge, climb up while holding Z
+                                once up, 2x sidehop right, sidehop left
+                                run forward
+                                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/Sg6RxMqyIcs",
+            },
+            {
+                "name": "Bombs Sidehop Into Zoras Domain Waterfall",
                 "location": ZORAS_RIVER,
                 "description": `
                                 ISG, target wall, 2ess left, hold angle, get into corner
@@ -192,7 +237,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/Q7XjNM6AIog",
             },
             {
-                "name": " Bombchu Sidehop Into Zoras Domain Waterfall Skip",
+                "name": "Bombchu Sidehop Into Zoras Domain Waterfall",
                 "location": ZORAS_RIVER,
                 "description": `
                                 ISG, target wall, 2ess left, hold angle, get into corner
@@ -704,6 +749,52 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/k-oAPiO8mPM",
             },
             {
+                "name": "GTG Block Skip",
+                "location": GERUDO_TRAINING_GROUNDS,
+                "description": `
+                                facing the invisible wall, get into left corner facing the left wall
+                                backflip, shield flick, roll
+                                turn left, backflip, turn right
+                                2 ess left, roll, z target the wall
+                                5 ess left (dont z target or change camera angle)
+                                crouch stab wall with hammer,
+                                equip hover boots when link starts moving back
+                                hold right                `,
+                "tags": [HAMMER, HOVER_BOOTS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/8BmiHuD0BE8",
+            },
+            {
+                "name": "GTG Block Skip",
+                "location": GERUDO_TRAINING_GROUNDS,
+                "description": `
+                                left corner near door
+                                down roll and retarget
+                                2 ess right
+
+                                ! important ! DO NOT PRE HOLD Z
+                                inverse camera angle left: (z, no inputs 3 frames, left, z)
+
+                                frame 1: no inputs
+                                frame 2: Z
+                                frame 3, 4, 5: no inputs
+                                frame 6: left
+                                frame 7: hold z to keep angle
+
+                                don't forget to shield flick during the setup
+                                bombs: backflip, sidehop right, megaflip
+                                chus: 2x backflip, sidehop right, shieldflick, megaflip
+
+                                equip hoverboots in the air
+                                hold right
+
+                                if you're coming up short it's because you forgot to flick shield before rolling on the megaflip
+                                `,
+                "tags": [HAMMER, BOMBCHU, BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/dD_pubh4Hbw",
+            },
+            {
                 "name": "Distance Megaflip Gerudo Valley",
                 "location": GERUDO_VALLEY,
                 "description": `
@@ -858,6 +949,25 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ANY_AGE,
                 "embed": "",
+            },
+            {
+                "name": "DDC Lobby Switch Beamos Recoil Jump",
+                "location": DODONGOS_CAVERN,
+                "description": `
+                            get to wall with beamos beam as close to the ledge as you can
+
+                            start ess shuffle: during ess turn in any direction hold Z and keep holding ESS direction
+
+                            minimum 4 frames holding ESS and Z to be in the shuffle
+
+                            once you're in shuffle state and the beam is close enough:
+                            frame 1: Z and Down
+                            frame 2: Z and R
+                            Frame 3: Z R and Backflip (control stick up-left)
+                                `,
+                "tags": [ITEMLESS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/iTuFxTjvuq8",
             },
             {
                 "name": "Jabu Blue Switch Child Skip",
@@ -1035,14 +1145,31 @@ window.getTricks = function getTricks() {
                 "embed": "https://www.youtube.com/embed/IPpPgkgMnPw",
             },
             {
+                "name": "Glitchless Skip Fire Temple Push Block",
+                "location": FIRE_TEMPLE,
+                "description": `
+                            climb up
+                            targeted horizontal slash (z+b+right)
+                            shield cancel the slash
+                            sidehop left, turn right
+                            c-up and move the camera right a bit
+                            forward roll and hold left
+                `,
+                "tags": [MASTER_SWORD],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/1zJCmzz2fkA",
+            },
+            {
                 "name": "Child Statue Climb",
                 "location": SPIRIT_TEMPLE,
                 "description": `
                     Get ISG. align facing the head on the shoulder, turn left
                     z, take a few side steps down to drop bomb. get back up
                     backflip on big blue.
-                    shield drop+2nd backflip on second exhale (watch link's feet or bottom of tunic movement)
-                    *make sure weapon is out* side hop up, 3 sidehops left and hold up+jumpslash and shield the landing.
+                    do one more vertical hover
+                    side hop up to the platform
+                    *make sure weapon is out*
+                    3 sidehops left and hold up+jumpslash and shield the landing
                     (see video, but a few frames worked for me for the jumpslash)
                     get link's head in the wall as much as you can, then backflip
                 `,
@@ -1121,6 +1248,29 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/VOgoEvUMNBI",
+            },
+            {
+                "name": "Shadow Temple BK Skip Nut Bombchu",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                            get ISG
+                            get into left corner and align with door
+                            turn around, 1ess right
+
+                            cancel isg
+
+                            frame 1: shield drop chu
+                            frame 2: nut
+
+                            wait for explosion
+
+                            explosion frame 1 and 2: do nothing
+                            explosion frame 3, 4, 5: down-right notch
+                            explosion frame 6: press Z to ledge clip
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/gDaSYaw-zOE",
             },
             {
                 "name": "Setup for Boatkey",
@@ -1402,7 +1552,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/V4DpneFDTjM",
             },
             {
-                "name": "BOTW As Adult w/ Hookshot and Master Sword",
+                "name": "BOTW Backshot Master Sword Setup",
                 "location": BOTW,
                 "description": `
                                 go to corner
@@ -1455,6 +1605,25 @@ window.getTricks = function getTricks() {
                 "tags": [MASTER_SWORD, BOTW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/_rKyUrn6txk",
+            },
+            {
+                "name": "Clip Into BotW Bombchu Ledge Clip",
+                "location": KAKARIKO_VILLAGE,
+                "description": `
+                            backwalk off ledge and climb up
+                            2ess right
+                            2 sidehop left
+
+                            pull bombchu and start backwalking one frame later
+                            backwalk off ledge
+                            climb back up and turn left
+                            sidehop right, left, and roll
+                            Z on ledge grab frame to ledge clip
+                            keep Z held to retain the angle
+                `,
+                "tags": [BOMBCHU, BOTW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/Hk0dRNLgTLw",
             },
             {
                 "name": "Bottom of the Well Actor Deload",
