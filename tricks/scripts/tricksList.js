@@ -919,10 +919,27 @@ window.getTricks = function getTricks() {
             {
                 "name": "Enter Closed Deku As Adult",
                 "location": KOKIRI_FOREST,
-                "description": "",
-                "tags": [HOVER_BOOTS, BOMBS],
+                "description": `
+                    ISG, target stump right of twins house doorway
+                    hop into the corner behind the house
+
+                    backflip, sidehop left, backwalk until you stop
+                    sidehop left and immediately release Z before you land
+                    down left turn and backflip
+                    turn around and z target the left stump and sidewalk all the way left
+                    two sidehops right, turn around, 1ess left
+
+                    the second backflip and the roll take some timing
+                    I count "one oneth" and cut off there
+                    megaflip off skul damage
+
+                    sidehop near the right turn headed to deku tree
+                    cancel isg
+                    target the angled wall on the left and turn left and backwalk
+                `,
+                "tags": [MASTER_SWORD, TWOHW],
                 "age": ADULT,
-                "embed": "",
+                "embed": "https://youtube.com/embed/5m5F8ortxM0",
             },
             {
                 "name": "Deku Tree B1 Skip",
@@ -1016,6 +1033,23 @@ window.getTricks = function getTricks() {
                 "tags": [ONEHW, TWOHW],
                 "age": CHILD,
                 "embed": "https://www.youtube.com/embed/D3RSZ1WyB5A",
+            },
+            {
+                "name": "Lost Woods Aqua Escape",
+                "location": LOST_WOODS,
+                "description": `
+                    align with the pillar as left as possible
+                    climb up, turn right
+                    swing and hold ess up while falling
+                    as soon as the ripples are gone press A then swing one frame later
+
+                    don't press A too early or late or it won't work
+
+                    works with master sword
+                `,
+                "tags": [ONEHW, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/x9TPHd1YhDE",
             },
             {
                 "name": "Forest Temple Skip 1st Key with Hover Boots and Chus",
