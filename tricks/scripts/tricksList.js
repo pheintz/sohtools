@@ -51,6 +51,7 @@ const LOST_WOODS = "Lost Woods";
 const OGC = "Outside Ganon's Castle";
 const SACRED_FOREST_MEADOW = "Sacred Forest Meadow";
 const DMC = "Death Mountain Crater";
+const DMT = "Death Mountain Trail";
 const GC = "Ganon's Castle";
 const BOTW = "Bottom of the Well";
 const TEMPLE_OF_TIME = "Temple of Time";
@@ -749,7 +750,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/k-oAPiO8mPM",
             },
             {
-                "name": "GTG Block Skip",
+                "name": "GTG Block Skip Hammer",
                 "location": GERUDO_TRAINING_GROUNDS,
                 "description": `
                                 facing the invisible wall, get into left corner facing the left wall
@@ -765,7 +766,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/8BmiHuD0BE8",
             },
             {
-                "name": "GTG Block Skip",
+                "name": "GTG Block Skip Inverted Camera",
                 "location": GERUDO_TRAINING_GROUNDS,
                 "description": `
                                 left corner near door
@@ -790,7 +791,7 @@ window.getTricks = function getTricks() {
 
                                 if you're coming up short it's because you forgot to flick shield before rolling on the megaflip
                                 `,
-                "tags": [HAMMER, BOMBCHU, BOMBS],
+                "tags": [BOMBCHU, BOMBS, HOVER_BOOTS],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/dD_pubh4Hbw",
             },
@@ -895,6 +896,27 @@ window.getTricks = function getTricks() {
                 "embed": "https://www.youtube.com/embed/4jmnz6FM3kU",
             },
             {
+                "name": "Child BK (231) Skip",
+                "location": DEKU_TREE,
+                "description": `
+                    from the upper door in deku
+                    align on the left side of the left wall near the corner
+                    2x sidehop right, walkforward a bit and roll
+                    sidehop left, sideroll
+                    sidehop right, sidehop left, sideroll
+                    backflip, sidehop left, backflip
+                    megaflip
+
+                    in the air:
+                    hold right the whole time
+                    pull stick out
+                    when the edge of links left hand lines up with the edge of the water texture
+                    let go of everything and jumpslash`,
+                "tags": [BK_SKIP],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/LLoVxPkepD4",
+            },
+            {
                 "name": "Bombchu Hover to Deku Basement GS",
                 "location": DEKU_TREE,
                 "description": `
@@ -987,6 +1009,44 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/iTuFxTjvuq8",
             },
             {
+                "name": "Jabu Map Chest w/ QPA and Hovers",
+                "location": JABUS_BELLY,
+                "description": `
+                                You can get QPA on the teeth in the start of jabu or on a chest
+                                get QPA and ISG
+
+                                from the first corner on the left:
+                                2x sidehop right, turn right, sidehop right
+
+                                staircase setup for chus:
+                                start sidehop and then pull chu 1 frame later and shield drop as soon as possible
+                                when links feet hit the ground backflip with Z and R
+                                release R while link appears to be frozen so you can drop the next chu immediately when links feet are upright
+                                as soon as next chu drops backflip with Z and R again
+
+                                Z target the tentacle to unlock your turning, turn facing parallel to the wall and z target
+
+                                the first chu to start the side hovers cannot be dropped on the first frame available, buffer at least one frame to avoid throwing it on the wall
+
+                                turn parallel with wall, do twisted hovers until you're on top of the tentacle
+                                it might be a different number of hovers than the video depending on what frames you drop your chus
+                                `,
+                "tags": [DEKU_STICKS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/MEFXWAWeAJ0",
+            },
+            {
+                "name": "Jabu Octo QPA for Cubes or Tentacles",
+                "location": JABUS_BELLY,
+                "description": `
+                                press A on the same frame the rock hits to get putaway interrupted
+                                jump slash on the teeth, if you lose your stick you have glitched damage value
+                                `,
+                "tags": [DEKU_STICKS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/MEFXWAWeAJ0",
+            },
+            {
                 "name": "Jabu Blue Switch Child Skip",
                 "location": JABUS_BELLY,
                 "description": `
@@ -998,7 +1058,19 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "",
-                
+            },
+            {
+                "name": "Biri Hover to Lower the Platform in JJB",
+                "location": JABUS_BELLY,
+                "description": `
+                            get isg and get into the corner
+                            Z and R
+                            after the biri hits the shield spam backflips with Z and R held
+                            the camera will reset automatically once you're high enough
+                        `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/j7azpD8x_is",
             },
             {
                 "name": "Jabu Blue Switch Adult Skip",
@@ -1011,7 +1083,6 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://www.youtube.com/embed/G9cNyW5K8Vc",
-                
             },
             {
                 "name": "Megaflip w/ bombs to Jabu Switch",
@@ -1024,10 +1095,9 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, MEGAFLIP],
                 "age": ANY_AGE,
                 "embed": "https://www.youtube.com/embed/T7A5vm4iXJw",
-                
             },
             {
-                "name": "Lost Woods Aqua Escape",
+                "name": "Lost Woods Aqua Escape Child",
                 "location": LOST_WOODS,
                 "description": "Target around texture shown, 1 ess right, Sidehop left, Backflip, (Slash stick and sidehop)for position, time jumpslash to clip",
                 "tags": [ONEHW, TWOHW],
@@ -1035,7 +1105,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://www.youtube.com/embed/D3RSZ1WyB5A",
             },
             {
-                "name": "Lost Woods Aqua Escape",
+                "name": "Lost Woods Aqua Escape Adult",
                 "location": LOST_WOODS,
                 "description": `
                     align with the pillar as left as possible
@@ -1253,6 +1323,20 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/G8ASlsOYLak",
+            },
+            {
+                "name": "Shadow Boat GS With Ground Jump",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                                gate clip using your preferred method, try to align with wall
+                                back away from wall and quick shield drop a bomb and get a ground jump stored
+                                turn around and go to the boat side of the fence against the wall, turn left
+                                3ess right, ground jump and hold up,
+                                when you climb up you'll be floating on the right, so just walk to the left
+                `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/jheVehYusb8",
             },
             {
                 "name": "Shadow Temple Gate Clip to Boat Master Sword",
@@ -1787,6 +1871,61 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/SGmPuPiSFLo",
             },
             {
+                "name": "DMT Wall GS Lunge Storage",
+                "location": DMT,
+                "description": `
+                        for sticks get a broken stick
+                        get lunge storage (swing + up on the same frame next to a ledge, notice link looks like he's falling backwards)
+                        align with left side of the bombable wall
+                        side hop right, left, right, left,
+                        jumpslash
+                        `,
+                "tags": [MASTER_SWORD, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/ByAsSAozcU0",
+            },
+            {
+                "name": "DMT Chest Jumpslash Clip",
+                "location": DMT,
+                "description": `
+                    go above the bombable wall and backwalk off the edge, can be finicky make sure you have enough backwards velocity
+                    climb back up, sidehop right and jumpslash
+                    a ton of locations will clip you through,
+                    make sure if using sticks to hold shield the landing or you'll get knocked out if you hit the chest or wall
+                `,
+                "tags": [MASTER_SWORD, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/_N6I1gyorDE",
+            },
+            {
+                "name": "DMT Lower Boulder GS Jumpslash Clip",
+                "location": DMT,
+                "description": `
+                    kill the GS
+                    get into left corner, sidehop right and sideroll, releasing target
+                    swing weapon
+                    z target the item and jumpslash
+
+                    doesn't work with sticks
+                `,
+                "tags": [MASTER_SWORD, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/8Cvix--ClTE",
+            },
+            {
+                "name": "DMT Chest Hookshot Clip",
+                "location": DMT,
+                "description": `
+                    get into the left corner between where the two boulders are above the bombable wall
+
+                    backflip, 3ess left, sidehop right
+                    pull hookshot and you'll be able to see through the ground
+                `,
+                "tags": [HOOKSHOT],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/cdRp1Q_hdk0",
+            },
+            {
                 "name": "DMC Fairy Boulder Skip w/ Bombchu",
                 "location": DMC,
                 "description": `
@@ -1836,6 +1975,24 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, HOOKSHOT, BOW, WEIRDSHOT, WEIRDSLIDE],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/UtxxHi8Ox0s",
+            },
+            {
+                "name": "Light Trial Block Skip Superslide",
+                "location": GC,
+                "description": `
+                            align with wall left of the strength block
+                            sidehop right and roll releasing target
+                            let the roll fully finish before retargeting
+
+                            backwalk far enough away, past the stairs and enough room to do sidehops
+                            superslide with 2 bombs (roll on big blue on the first bomb and mash A)
+                            while sliding release z and hold Up and R
+
+                            for child: after clipped, roll and sidehop left out of the roll
+                `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/-mxbSjpOHFU",
             },
             {
                 "name": "Child Light Trial Block Skip",
