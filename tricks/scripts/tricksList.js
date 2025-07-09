@@ -127,16 +127,6 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/Hvq95fTEaGQ",
             },
             {
-                "name": "Zora Shop Clip Master Sword Shieldless",
-                "location": ZORAS_DOMAIN,
-                "description": `
-
-                                `,
-                "tags": [MASTER_SWORD],
-                "age": ADULT,
-                "embed": "",
-            },
-            {
                 "name": "Zora Shop Clip Master Sword Shielded",
                 "location": ZORAS_DOMAIN,
                 "description": `
@@ -196,12 +186,12 @@ window.getTricks = function getTricks() {
                                 chus: 2ess right
                                 `,
                 "tags": [BOMBS, BOMBCHU],
-                "age": CHILD,
+                "age": ADULT,
                 "embed": "https://youtube.com/embed/jUvkmsHJLaY",
                 
             },
             {
-                "name": "child clip into lake hylia from zoras domain with sticks",
+                "name": "ZD to LH Jumpslash Clip Sticks",
                 "location": ZORAS_DOMAIN,
                 "description": `
                                 align with wall, turn right
@@ -212,6 +202,50 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/Nl9dUk5E9jA",
+            },
+            {
+                "name": "ZD to LH Unloaded Water",
+                "location": ZORAS_DOMAIN,
+                "description": `
+                        zora clip, turn around, sidehop left and jumpslash
+                        take a second to jumpslash if you need more time to swim
+
+                        come up from the water under the torches in front of zora
+                        turn left at the second torch and fall down off the ledge
+                        run into the entrance (south/southwest-ish, video shows unloaded area)                                `,
+                "tags": [ONEHW, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/BsAvkchECjY",
+            },
+            {
+                "name": "Alternate ZR Lower Freestanding Itemless (no octo)",
+                "location": ZORAS_RIVER,
+                "description": `
+                        align wall
+                        5 backflips
+                        turn right
+                        backflip
+                        roll + retarget
+                        2x sidehop left
+                        forward roll (up and a on the same frame)
+                                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/6pheqOCSwLw",
+            },
+            {
+                "name": "ZR Lower Freestanding Itemless",
+                "location": ZORAS_RIVER,
+                "description": `
+                            jump onto the corner of the left pillar
+                            backwalk off to ledge grab
+                            climb up, 2 rolls
+                            c-up and align with left side of corner next platform
+                            roll and jump
+                                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/rcKcEpwXTZI",
             },
             {
                 "name": "Itemless Frestanding Heart Near Domain",
@@ -225,6 +259,31 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/Sg6RxMqyIcs",
+            },
+            {
+                "name": "ZR Boulders Skip Child Jumpslash Clip",
+                "location": ZORAS_RIVER,
+                "description": `
+                                get into corner
+                                backflip
+                                sidehop left, roll + retarget
+                                2x sidehop left
+
+                                position such that the grass behind you will push you to the left when you backwalk
+                                backwalk off the ledge and climb back up
+                                retarget
+                                2x sidehop left
+                                2ess left
+                                unsheath
+                                sidehop left
+                                jumpslash on the frame the bottom of links hand touches the corner of the grass
+
+                                swim forward and cut the corner of the waterfall to fall down a bit
+                                follow the river on the minimap so you can swim upstream far enough
+                                `,
+                "tags": [ONEHW, DEKU_STICKS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/KrJUuOkbA0c",
             },
             {
                 "name": "Bombs Sidehop Into Zoras Domain Waterfall",
@@ -332,6 +391,23 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, ONEHW, TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/C6A5pH_G0_k",
+            },
+            {
+                "name": "Spirit Temple Silver Block Clip Bombchu Mega Sidehop",
+                "location": SPIRIT_TEMPLE,
+                "description": `
+                                align with block
+                                backflip and roll without retarget, ess turn right
+                                retarget and backwalk into corner
+
+                                shield drop chu on 9th black
+                                roll next frame, hold right during the roll
+                                sidehop right when you hit the bomb
+
+                                turn left, backup a bit and then run forward                                `,
+                "tags": [BOMBCHU, ONEHW, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/mbCzNn1BdZE",
             },
             {
                 "name": "Spirit Temple Triple Slash Silver Block Skip",
@@ -576,13 +652,13 @@ window.getTricks = function getTricks() {
                 "name": "Shadow Temple Gate Clip Crouch Stab Method",
                 "location": SHADOW_TEMPLE,
                 "description": `
-                for two handers including sticks
-                above ledge align with the left wall and turn right
-                walk forward and jump off
-                make sure you're against wall
-                sidehop left, sideroll and let go of target
-                2x crouch stab
-                jumpslash
+                    for two handers including sticks
+                    above ledge align with the left wall and turn right
+                    walk forward and jump off
+                    make sure you're against wall
+                    sidehop left, sideroll and let go of target
+                    2x crouch stab
+                    jumpslash
                                 `,
                 "tags": [DEKU_STICKS, GATE_CLIP],
                 "age": ADULT,
@@ -722,6 +798,32 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/mZ41KgN2TF8",
             },
             {
+                "name": "Forest Temple Entry Bombchu Shuffle Method",
+                "location": SACRED_FOREST_MEADOW,
+                "description": `
+                            get isg
+                            get into gossip stone corner and align with right wall
+                            5x sidehop right, backflip, turn right
+                            4x sidehop right
+                            2ess right
+
+                            start ess shuffle
+
+                            c-down out of the shuffle
+                            backflip and wait a frame and shield drop chu
+
+                            5 more hovers
+
+                            you can ess shuffle or do the regular turn method for all the next hovers
+                            (pull chu, walk up-right, 3 frames idle, hold down on control stick, backflip + R)
+
+                            do one more except just backflip out of it without a bombchu
+                `,
+                "tags": [BOMBCHU],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/GNYdiQWnoGs",
+            },
+            {
                 "name": "Adult Stick Nut QPA (Quick Putaway)",
                 "location": GENERAL,
                 "description": `target wall
@@ -762,7 +864,7 @@ window.getTricks = function getTricks() {
                                 equip hover boots when link starts moving back
                                 hold right                `,
                 "tags": [HAMMER, HOVER_BOOTS],
-                "age": ANY_AGE,
+                "age": ADULT,
                 "embed": "https://youtube.com/embed/8BmiHuD0BE8",
             },
             {
@@ -792,11 +894,11 @@ window.getTricks = function getTricks() {
                                 if you're coming up short it's because you forgot to flick shield before rolling on the megaflip
                                 `,
                 "tags": [BOMBCHU, BOMBS, HOVER_BOOTS],
-                "age": ANY_AGE,
+                "age": ADULT,
                 "embed": "https://youtube.com/embed/dD_pubh4Hbw",
             },
             {
-                "name": "Distance Megaflip Gerudo Valley",
+                "name": "Distance Megaflip Gerudo Valley Bridge",
                 "location": GERUDO_VALLEY,
                 "description": `
                             align on pillar black line
@@ -813,7 +915,27 @@ window.getTricks = function getTricks() {
                             2nd frame link has shield out, backflip: Z+R+Down+A
                 `,
                 "tags": [BOMBS],
-                "age": ANY_AGE,
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/sdOLkSfFevY",
+            },
+            {
+                "name": "GV Bridge Sideroll Megaflip Bombchu",
+                "location": GERUDO_VALLEY,
+                "description": `
+                            it's rough and you can eyeball it but here's a setup
+
+                            get isg
+                            align with pillar, 4ess left
+
+                            hold angle and walk on the right side of the post and let it push you right
+                            4x downroll, backwalk all the way
+                            sidehop left, sideroll without retarget, backwalk all the way
+                            sidehop left, backwalk all the way,
+                            pull chu and walk downright (somewhere between 30 and 50 on stick to get a sideroll)
+                            shield drop and roll on 8th black, megaflip like normal
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
                 "embed": "https://youtube.com/embed/sdOLkSfFevY",
             },
             {
@@ -1223,6 +1345,19 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/dVfhIBN8Q7E",
             },
             {
+                "name": "Sideroll Megaflip Forest Balcony to Scarecrow",
+                "location": FOREST_TEMPLE,
+                "description": `
+                                get isg
+                                climb up balcony, turn right, without retargeting 1ess right
+                                pull chu, hold Z, walk downleft enough to down-sideroll, around 30-50 stick value
+                                shield drop and roll on 8th black
+                                `,
+                "tags": [BOMBCHU, MEGAFLIP],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/G0TCBAVcdxo",
+            },
+            {
                 "name": "Forest Temple First Green Block Skip",
                 "location": FOREST_TEMPLE,
                 "description": "sidehop, roll, get into corner, crouchstab 2x, jumpslash",
@@ -1500,6 +1635,22 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS, DMC],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/un_s31uOhlM",
+            },
+            {
+                "name": "Darunia Pot Push Shuffle Method",
+                "location": GORON_CITY,
+                "description": `
+                        line up with wall + get a pot
+                        sidewalk left
+                        stop in the corner, turn left
+                        start ess shuffle
+                        right on control stick
+                        roll and hold right the next frame
+                        jumpslash when clipped through the wall
+                        `,
+                "tags": [ITEMLESS, DMC],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/h2jYyYhCzkk",
             },
             {
                 "name": "Clip into DMC from Goron City Chus",
