@@ -852,6 +852,25 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/k-oAPiO8mPM",
             },
             {
+                "name": "GTG Block Skip Bombchu Death Clip",
+                "location": GERUDO_TRAINING_GROUNDS,
+                "description": `
+                            get isg, low health, and a fairy
+                            backflip onto box and walk forward a bit so you dont roll off
+                            2 twisted hovers
+                            2 ess hovers
+                            reset camera with first person item or by targeting the bombchu
+
+                            frame 1: shield drop 10th black
+                            frame 2: Z + B
+                            frame 3, 4: Wait
+                            frame 5: Press A to jumpslash
+                `,
+                "tags": [BOMBS, GATE_CLIP],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/wzF3y5CYsUg",
+            },
+            {
                 "name": "GTG Block Skip Hammer",
                 "location": GERUDO_TRAINING_GROUNDS,
                 "description": `
@@ -1110,6 +1129,29 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ANY_AGE,
                 "embed": "",
+            },
+            {
+                "name": "Explosiveless Clip Into Dodongo Head",
+                "location": DODONGOS_CAVERN,
+                "description": `
+                            backwalk, climb up, turn right, backwalk
+                            jumpslash, sidehop left, 2ess left
+                            sidehop right
+                            climb up, walk up to the curb and target it
+
+                            jumpslash, turn left, backflip (dont release Z)
+                            downroll and hold right during the roll with Z held
+
+                            for the easy open (turn right then open the door):
+                            hold right for the first 2 frames link's feet aren't touching the ground, then switch to neutral stick
+
+                            pull stick/bgs in the air, then jumpslash 2nd frame links head is clipped in the door
+
+                            if you don't get the easy open you can wiggle to try to get position
+                                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/Q3bNq_az6aM",
             },
             {
                 "name": "DDC Lobby Switch Beamos Recoil Jump",
@@ -1430,6 +1472,37 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/GJOHtcVqUQg",
             },
             {
+                "name": "Spirit Temple 2nd Crawlspace as Adult EPG",
+                "location": SPIRIT_TEMPLE,
+                "description": `
+                        to get EPG:
+
+                        from torches room align on the door
+                        frame 1: shield drop chu
+                        frame 2: do nothing
+                        frame 3: vertical slash
+
+                        open the door the first frame you take damage
+
+                        put away sword (you can pull first person item)
+                        turn around, then z target, sidehop left and roll
+
+                        EPG is set.
+
+                        void out with torch clip. on respawn turn and aim on the corner.
+                        Up + Roll
+                        watch links feet
+                        the first frame BOTH of links feet are touching the void zone:
+                        jumpslash
+
+                        with bomb, get as far away from door as possible where you can still open it
+                        A-Drop bomb and open on the first damage frame
+                `,
+                "tags": [BOMBS, BOMBCHU, HOOKSHOT],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/Q3bNq_az6aM",
+            },
+            {
                 "name": "Child Skip King Zora Deku Sticks",
                 "location": ZORAS_DOMAIN,
                 "description": `Z target right wall on staircase
@@ -1524,6 +1597,40 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/gDaSYaw-zOE",
+            },
+            {
+                "name": "[Alternate] Faster Boatkey",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                        back left corner
+                        backflip
+                        3x sidehop right
+                        roll + retarget
+                        turn right
+                        1ess left
+                        megaflip
+                        down+z in the air
+
+                        let go of everything after clip
+
+                        after landing
+                        hold z and walk down-left notch off ledge
+
+                        climb back up, turn right, sidehop left
+
+                        up+a roll to jump
+                        roll 2x
+                        2ess left, turn around
+
+                        megaflip:
+                        bombs: drop, roll, backflip
+                        chus: roll backflip shieldflick
+
+                        turn downleft, run forward
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/CTcKAwgbigA",
             },
             {
                 "name": "Setup for Boatkey",
