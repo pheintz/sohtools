@@ -140,7 +140,7 @@ function listTricksAsDirectory(filteredTricks = null) {
     const tricks = filteredTricks || tricksJson.tricks;
 
     let html = '<div id="directory"><ul>';
-    tricks.sort((a, b) => a.title.localeCompare(b.title)).forEach(trick => {
+    tricks.forEach(trick => {
         html += `<li class="directory-item">${trick.title}</li>`;
     });
     html += '</ul></div>';
@@ -186,6 +186,8 @@ function filterDirectory(query) {
         return;
     }
     const fuseResults = trickFuse.search(query);
-    const filteredTricks = fuseResults.map(result => result.item);
+    const filteredTricks = fuseResults
+        .sort((a, b) => a.score - b.score)
+        .map(result => result.item);
     listTricksAsDirectory(filteredTricks);
 }
