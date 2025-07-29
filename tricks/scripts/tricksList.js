@@ -4,6 +4,7 @@ const BOMBS = "bombs";
 const BOMBCHU = "bombchu";
 const ITEMLESS = "itemless";
 const HOVER_BOOTS = "hover boots";
+const IRON_BOOTS = "iron boots";
 const HOOKSHOT = "hookshot";
 const BOW = "bow";
 const HAMMER = "megaton hammer";
@@ -68,7 +69,7 @@ window.getTricks = function getTricks() {
     return {
         "tricks": [
             {
-                "name": "Ice Cavern Red Ice Bomb Push",
+                "name": "Ice Cavern West Red Ice Bomb Push",
                 "location": ICE_CAVERN,
                 "description": `
                             line up to the wall left of the red ice
@@ -82,6 +83,20 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/dU9R5smlQfc", 
+            },
+            {
+                "name": "Ice Cavern East Ice Wall Clip Jumpslash Bomb Push",
+                "location": ICE_CAVERN,
+                "description": `
+                        C-Up a little right of the seam
+                        you can check if your angle is right by jumpslashing - link will clip into the wall a little bit
+                        sidehop right, overhead shield drop bomb
+                        get into seam
+                        jumpslash on big blue
+                                `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/8R1Fnn2zTiM",
             },
             {
                 "name": "Freezard Room Skip Hookshot",
@@ -156,6 +171,43 @@ window.getTricks = function getTricks() {
                 "tags": [TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/fTEsCG40gvM",
+            },
+            {
+                "name": "qpa hover into ice cavern",
+                "location": ZORAS_FOUNTAIN,
+                "description": `
+                                get QPA and ISG
+                                Align with pillar and turn around
+                                without retargeting: sidehop left, roll, roll
+                                pull stick
+                                frame 1: Z+R+Down
+                                frame 2: Bomb+Z+R
+                                keep holding Z+R
+                                frame link is standing: backflip again onto railing
+                                align with landing zone from on railing
+                                qpa hover like before until you make it:
+                                pull stick, 1 frame backflip, Unpause with  Bomb+Z+R
+                                `,
+                "tags": [BOMBS, BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/Jg4vIiGzJCY",
+            },
+            {
+                "name": "5 Chu Hover Into Ice Cavern",
+                "location": ZORAS_FOUNTAIN,
+                "description": `
+                        from right pillar near the sign
+                        2x backflip, roll, get isg
+                        target the sign, then c-up to set the camera
+                        walk forward to break sign
+
+                        hold angle and get into corner
+                        backflip, sidehop left, sidhop right, sideroll
+                        downroll and start twisted hover until you're on the ledge
+                                `,
+                "tags": [BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/tizMvSnis_c",
             },
             {
                 "name": "qpa hover into ice cavern",
@@ -1299,6 +1351,93 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/g5lHRC8kaPw",
             },
             {
+                "name": "Forest Temple Shuffle Sidehop Jumpslash to Courtyard Chest and GS",
+                "location": FOREST_TEMPLE,
+                "description": `
+                            climb up on the left
+                            C-Up and aim toward first brick from the top wall
+                            start ESS shuffle
+                            turn down-right from shuffle
+                            sidehop up out of shuffle and hold up
+                            jumpslash 2nd frame you can see the corner of the upper ledge
+                        `,
+                "tags": [ONEHW, TWOHW],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/dFa6wSTjzx4",
+            },
+            {
+                "name": "Forest Temple Courtyard Hookshot Vines Near Well Switch",
+                "location": FOREST_TEMPLE,
+                "description": `
+                            A nice time save. Position is very rough.
+                            backflip, flick, roll, aim up
+                        `,
+                "tags": [HOOKSHOT],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/CyhTYaKWmzY",
+            },
+            {
+                "name": "Forest Lobby GS Jumpslash",
+                "location": FOREST_TEMPLE,
+                "description": `
+                            if you're broke you can use this method
+
+                            turn right after targeting the wall
+                            2 ess left
+                            keep Z held and walk up left to grab vines and retain angle
+                        `,
+                "tags": [ONEHW, TWOHW],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/uiwUNBKW3jw",
+            },
+            {
+                "name": "Forest Skip to Basement w/ Hoverboots Megasidehop Deku Stick",
+                "location": FOREST_TEMPLE,
+                "description": `
+                            target wall, sidehop left sideroll releasing target, 3 ess left
+                            jumpslash clip through, turn around
+                            3 frames backwalk, 4ess right
+                            inverted camera*
+                            equip hoverboots, pull bomb,
+                            roll on big blue
+                            hold right mash A during the roll and  to mega sidehop
+
+                            unequip hoverboots frame link's head is below the balcony floor
+                            release everything and start to pull stick out
+                            wait 10 frames or so (big window), link needs to be below the ground of upstairs
+
+                            visual cue: elevator shaft will load in the bottom of the screen
+
+                            equip hoverboots and jumpslash on the same frame
+
+                            *for inverted camera:
+
+                            1 frame z
+                            3 frames nothing
+                            1 frame down
+                            re press Z and hold
+
+                            with master sword do one horizontal slash interrupted by shield instead of the 3 backwalk frames
+                            `,
+                "tags": [BOMBS, HOVER_BOOTS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/qbVh-BVVWOc",
+            },
+            {
+                "name": "Forest Temple Courtyard Moon Jump Skip 1st Key",
+                "location": FOREST_TEMPLE,
+                "description": `
+                        equip iron boots 1 frame before grabbing vines
+                        setup is not required but do 1ess right
+
+                        hold up-right to get around the corner then just up
+                        you have tons of time so it doesn't really matter
+                        `,
+                "tags": [IRON_BOOTS, HOOKSHOT],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/7tEdOkPHjnk",
+            },
+            {
                 "name": "Forest Temple BK Skip First Person Items",
                 "location": FOREST_TEMPLE,
                 "description": `
@@ -1501,6 +1640,30 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, BOMBCHU, HOOKSHOT],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/Q3bNq_az6aM",
+            },
+            {
+                "name": "Spirit 1st Child Crawlspace as Adult w/ Bombchu",
+                "location": SPIRIT_TEMPLE,
+                "description": `
+                        target pillar right of the crawlspace on the left side
+                        3x sidehop sideroll retarget
+                        sidehop right and backwalk into corner
+
+                        frame 1: Shield drop bombchu 9th black
+                        frame 2: Do nothing
+                        frame 3: Shield+A+Roll
+                        hold left during the roll
+
+                        first frame link's shield is out:
+                        Hold R Only
+
+                        line up glitch tick / hookshot with the top crease of the pillar
+                        megaflip with bombchu
+
+                        sidehop left after landing                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/gvtW6C5AVuc",
             },
             {
                 "name": "Child Skip King Zora Deku Sticks",
@@ -1730,6 +1893,31 @@ window.getTricks = function getTricks() {
                 "tags": [BOW, LOST_WOODS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/qIDecQi_Qwc",
+            },
+            {
+                "name": "Darunia Statue Clip A-Slide W/ Bombs",
+                "location": GORON_CITY,
+                "description": `
+                        target wall, turn left, and walk into corner
+                        instant drop bomb, backflip roll
+                        roll on big blue, red, or explosion frame
+                        roll with Z and R and hold down during the r
+                `,
+                "tags": [BOMBS, DMC],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/nNvnVbKBs0c",
+            },
+            {
+                "name": "Darunia Statue Clip Bombchu",
+                "location": GORON_CITY,
+                "description": `
+                        target wall, backflip into corner, 1 neutral roll
+                        shield drop chu and roll with Z and R
+                        hold left once link's shield is out
+                `,
+                "tags": [BOMBCHU, DMC],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/6BGX_u8c3oc",
             },
             {
                 "name": "Pot Push Into DMC From Goron City",
