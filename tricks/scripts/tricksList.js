@@ -401,7 +401,68 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/tDZH1-jFqh4",
             },
             {
-                "name": "Fire Temple BK Skip 0 Keys Hovers Chus",
+                "name": "Fire Temple Hookshot Jump Skip Zombie Walk Bunny Hood Edition",
+                "location": FIRE_TEMPLE,
+                "description": `
+                            Version for SoH with bunny hood speed
+                            Instructions taken from dotzo video https://www.youtube.com/watch?v=y9oKuPYwBGQ but i'll write them here too.
+
+                            this is to show the visual cues for bunny hood without Z targeting during the hookshot jump
+
+                            Get ledge cancel:
+                            Climb up 3rd step, roll, overhead drop bomb and backwalk off
+                            2nd fast red flash climb back up with Z and R
+
+                            Fix the camera:
+                            Drop a chu on the door on 7th black
+                            3rd Explosion Frame: Z + R + C-Up
+
+                            Get ISG.
+
+                            throw a bomb and side hop to hover across the first platform so you keep ledge cancel
+                            jump on big blue, red, or explosion frame. Other frames not tested
+
+                            sidehop over the second platform (walk up, turn left, ess left one to get a sidehop angle easily)
+
+                            hookshot across. You can hit the hookshot point by tapping down and letting the hookshot settle.
+                            hold z and down during the hookshot or you'll grab the ledge
+
+                            target the hookshot pillar, sidehop right, left and unsheath
+                            Z Up and B to forward stab and hold R during the swing to cancel
+
+                            do the steps relatively quickly or the camera will be off:
+                            turn right and z target to stick the angle to the pillar, ess left 2
+
+                            then you can wait for the camera to settle and crouch stab
+
+                            drop chu on the 7th red, 1 frame after the brightest flash
+                            keep Z held and hold the hookshot button until
+                            visual cue: the chu stops moving
+                            audio cue: the hookshot clicks
+
+                            keep everything held. now hold down on control stick for 7 Frames
+                            visual cue: hookshot lines up halfway up the ring drawn on the hookshot point
+
+                            move stick to neutral for 1 frame
+
+                            let go of everything and hold down on control stick only
+                            there's 3 frames where you can switch to up-left from holding down to automatically go in and die
+
+                            <img src="https://i.ibb.co/HDcyjHkP/fireshot.png" alt="fireshot" border="0" />
+                            audio cue for switching directions: flame jets from the upstairs room loading in
+
+                            notes:
+
+                            If you mess up and move too early, just run towards the hole you're supposed to die in, you can sidehop in or bonk the wall, or if you're running you'll just die in there and revive
+
+                            main thing is to make sure you touch the central pillar such that the room loads in
+                            the trick relies on camera manipulation so if the room is not loading, it's best to retry the setup from the hookshot platform                                `,
+                "tags": [BOMBCHU, HOVER_BOOTS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/wfT95HrrxK8",
+            },
+            {
+                "name": "Fire Temple BK Skip 0 Keys Hovers 25 Chus",
                 "location": FIRE_TEMPLE,
                 "description": `
                                 get isg
@@ -498,6 +559,55 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/1yTzv6i6X_M",
             },
             {
+                "name": "Water Temple Glitchless Jump Boulder Waterfall",
+                "location": WATER_TEMPLE,
+                "description": `
+                            from door open
+                            2 sidehops left, roll and retarget
+                            2 sidehops right, 1 left, roll and retarget
+                            2 sidehops right, start running forward
+                            keep holding up and roll`,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/RU1Y8ECQRWs",
+            },
+            {
+                "name": "Hookshotless Water Temple Moving Platforms Room HESS, Chus, Hoverboots",
+                "location": WATER_TEMPLE,
+                "description": `
+                            for angle backflip against the ledge, releasing Z in the air
+                            retarget, feet outside of the waterfall
+                            let camera reset
+                            as soon as entire moving platform (not counting the part inside the water) is on screen pull bombchu
+
+                            hess down-left angle
+                            retarget once or twice to turn during hess. don't go for a straight line
+
+                            Once against the platform
+                            put on hover boots
+                            frame 1: Z + Down Right
+                            frame 2: Down Right + A
+
+                            hold down right while climbing up
+
+                            after turning when you climb up:
+                            frame 1: C-UP
+                            frame 2-8: Right on control stick
+                            frame 9: A
+                            frame 10: Z + Up
+
+                            HESS Frames:
+                            1: shield drop 9th black
+                            2: Z + R
+                            3: Z + R  + Roll
+
+                            hold ess down-right during roll, releasing other inputs
+                            Z + R + ESS position first frame inside the explosion                            `,
+                "tags": [BOMBCHU, HOVER_BOOTS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/RU1Y8ECQRWs",
+            },
+            {
                 "name": "Ledge Clip Into Water Temple Entrance",
                 "location": LAKE_HYLIA,
                 "description": `
@@ -533,6 +643,17 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/G6XVwXbBo8s",
+            },
+            {
+                "name": "Open Water Temple With Hookshot Only",
+                "location": LAKE_HYLIA,
+                "description": `
+                            line up with pillar, hold forward and R
+                            when shield stops you from moving:
+                            turn around, 4 sidehops left, 1 right, roll without retargeting                                `,
+                "tags": [HOOKSHOT],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/RU1Y8ECQRWs",
             },
             {
                 "name": "Water Temple Entry Jumpslash Clip",
@@ -1660,7 +1781,8 @@ window.getTricks = function getTricks() {
                         line up glitch tick / hookshot with the top crease of the pillar
                         megaflip with bombchu
 
-                        sidehop left after landing                `,
+                        sidehop left after landing
+                        `,
                 "tags": [BOMBCHU],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/gvtW6C5AVuc",
@@ -2519,6 +2641,25 @@ window.getTricks = function getTricks() {
                 "tags": [KOKIRI_SWORD, LUNGE_STORAGE],
                 "age": CHILD,
                 "embed": "https://www.youtube.com/embed/XV1Bdq0MXNQ",
+            },
+            {
+                "name": "Itemless Child Door of Time Skip",
+                "location": TEMPLE_OF_TIME,
+                "description": `
+                                target corner
+                                sidehop right, roll and retarget
+                                downroll and retarget
+                                get into door corner and backflip
+                                downroll to the left and hold down
+                                frame link's head is barely on the bottom left (same as twisted hover frame):
+                                 Down + A to sidehop
+                                keep holding Z and down until link's hand
+                                release everything and buffer 2 frames (visual cue: door of time corner and clipped)
+                                hold Z for three frames (visual cue: black out of bounds on bottom of screen)
+                                hold Z and left for the rest                `,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/RG1-rqV0OjU",
             },
         ]
     };
