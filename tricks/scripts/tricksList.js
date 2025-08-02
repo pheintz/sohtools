@@ -2356,10 +2356,18 @@ window.getTricks = function getTricks() {
                                 turn left
                                 sidehop
                                 walk to wall
-                                2x backflip
+                                backflip
+                                shield flick
                                 roll
-                                weirdshot with bombs
-                                let go of everything as soon as you are underground
+                                weirdshot with bombs, dropping the bomb overhead for the weirdshot
+
+                                out of unpause from hitting the explosion:
+                                Z+R+Down 3 frames
+                                Z+Down+Hookshot for 3 frames
+                                release everything
+
+                                17 frames holding left on control stick | link yaw value: 0x7ae
+                                steady and release hookshot
                 `,
                 "tags": [HOOKSHOT, BOMBS, DEKU_STICKS],
                 "age": ADULT,
@@ -2393,26 +2401,6 @@ window.getTricks = function getTricks() {
                 "tags": [HOOKSHOT, BOMBCHU, DEKU_STICKS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/PillrC3YHTA",
-            },
-            {
-                "name": "Adult BotW Weirdshot Past Crawlspace Bombs Sticks",
-                "location": BOTW,
-                "description": `
-                                bonk
-                                swing to break stick
-                                turn around 
-                                jumpslash
-                                roll
-                                turn left 
-                                sidehop left
-                                walk to wall
-                                backflip
-                                roll
-                                weirdshot with bombs (see: universal weirdshot)
-                `,
-                "tags": [HOOKSHOT, BOMBS, DEKU_STICKS],
-                "age": ADULT,
-                "embed": "https://youtube.com/embed/IulJd7P04z8",
             },
             {
                 "name": "Vine Clip to Deadhand",
