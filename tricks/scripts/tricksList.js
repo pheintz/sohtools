@@ -1487,7 +1487,11 @@ window.getTricks = function getTricks() {
                             start ESS shuffle
                             turn down-right from shuffle
                             sidehop up out of shuffle and hold up
-                            jumpslash 2nd frame you can see the corner of the upper ledge
+
+                            master sword: jumpslash 2nd frame you can see the corner of the upper ledge
+                            others: 6th frame (visual cue: first frame the closed chest is on the screen)
+
+                            if you release z and up too early after landing you'll fall
                         `,
                 "tags": [ONEHW, TWOHW],
                 "age": ANY_AGE,
