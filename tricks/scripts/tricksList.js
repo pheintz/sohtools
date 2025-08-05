@@ -180,13 +180,21 @@ window.getTricks = function getTricks() {
                                 Align with pillar and turn around
                                 without retargeting: sidehop left, roll, roll
                                 pull stick
+
                                 frame 1: Z+R+Down
                                 frame 2: Bomb+Z+R
                                 keep holding Z+R
-                                frame link is standing: backflip again onto railing
+                                frame link is standing: Z+R+Backflip again and you'll land on railing
                                 align with landing zone from on railing
+
                                 qpa hover like before until you make it:
                                 pull stick, 1 frame backflip, Unpause with  Bomb+Z+R
+
+                                once you're on the ledge:
+                                walk up to the seam, turn up-left, and then sidehop right
+                                hold up while you fall
+
+                                <img src="./img/sidehop_into_ice_cavern.png" alt="sidehop into entrance image" border="0" />
                                 `,
                 "tags": [BOMBS, BOMBCHU],
                 "age": CHILD,
@@ -204,30 +212,16 @@ window.getTricks = function getTricks() {
                         hold angle and get into corner
                         backflip, sidehop left, sidhop right, sideroll
                         downroll and start twisted hover until you're on the ledge
-                                `,
+
+                        once you're on the ledge:
+                        walk up to the seam, turn up-left, and then sidehop right
+                        hold up while you fall
+
+                        <img src="./img/sidehop_into_ice_cavern.png" alt="sidehop into entrance image" border="0" />
+                        `,
                 "tags": [BOMBCHU],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/tizMvSnis_c",
-            },
-            {
-                "name": "qpa hover into ice cavern",
-                "location": ZORAS_FOUNTAIN,
-                "description": `
-                                get QPA and ISG
-                                Align with pillar and turn around
-                                without retargeting: sidehop left, roll, roll
-                                pull stick
-                                frame 1: Z+R+Down
-                                frame 2: Bomb+Z+R
-                                keep holding Z+R
-                                frame link is standing: backflip again onto railing
-                                align with landing zone from on railing
-                                qpa hover like before until you make it:
-                                pull stick, 1 frame backflip, Unpause with  Bomb+Z+R
-                                `,
-                "tags": [BOMBS, BOMBCHU],
-                "age": CHILD,
-                "embed": "https://youtube.com/embed/Jg4vIiGzJCY",
             },
             {
                 "name": "Skip Dampe Windmill SoT Block w/ bombs/chus",
@@ -1387,14 +1381,21 @@ window.getTricks = function getTricks() {
                 "name": "Jabu Blue Switch Child Skip",
                 "location": JABUS_BELLY,
                 "description": `
+                                from the door:
                                 bonk the switch and then jumpslash
-                                hold R if cutscenes are off when landing on the switch
-                                frame to open door is first frame link's hand is off the ground, leaning left
-                                no need to hold z at any point
-                                buffer A- button on the final unpause`,
+                                cutscenes off: Hold R during the jumpslash to stop yourself at the right spot
+
+                                UP+A to start the roll
+                                11 more pauses holding up only
+                                hold A out of the last unpause
+
+                                you can have Z held or not it doesn't matter
+                                <img src="./img/jabu_child_switch.png" alt="frame to open the door"></img>
+
+                                `,
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
-                "embed": "",
+                "embed": "https://youtube.com/embed/nT9z1y4G9C0",
             },
             {
                 "name": "Biri Hover to Lower the Platform in JJB",
@@ -1413,13 +1414,19 @@ window.getTricks = function getTricks() {
                 "name": "Jabu Blue Switch Adult Skip",
                 "location": JABUS_BELLY,
                 "description": `
-                                frame to open door is first frame link's hand is off the ground, leaning left
-                                no need to hold z at any point
-                                buffer A-button on the final unpause
-                                `,
+                            target the door and run backwards onto the switch
+                            if cutscenes are off: hold r as you're jumping onto the switch
+
+                            UP+A to start the roll
+                            11 more pauses holding up only
+                            hold A out of the last unpause
+
+                            you can have Z held or not it doesn't matter
+                            <img src="./img/jabu_adult_switch.png" alt="frame to open the door"></img>
+                            `,
                 "tags": [ITEMLESS],
                 "age": ADULT,
-                "embed": "https://www.youtube.com/embed/G9cNyW5K8Vc",
+                "embed": "https://youtube.com/embed/7ty2GnZH3MI",
             },
             {
                 "name": "Megaflip w/ bombs to Jabu Switch",
