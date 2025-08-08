@@ -20,6 +20,10 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 16px; /* Adjust gap as needed */
 }
+    #RandomContainer > * {
+        outline: 1px solid gray;
+        padding: 16px;
+    }
 
 #generate {
     background-color: var(--secondary-color);
@@ -35,4 +39,5 @@ input[type="checkbox"] {
     height: 24px;
     width: 24px;
 }
+
 

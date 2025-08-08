@@ -31,12 +31,26 @@ function renderInputs(obj, parentKey = '') {
             var minMax = value.split('-');
             var min = minMax[0];
             var max = minMax.length > 1 ? minMax[1] : "";
+            var id = putSpacesInCamelCase(fullKey);
+            var name = putSpacesInCamelCase(key);
+
             html += '<div style="margin-left: 20px;">';
-            html += `<label for="${putSpacesInCamelCase(fullKey)}">${putSpacesInCamelCase(key)}: </label>`;
-            html += `<input data-min="${min}" data-max="${max}" type="checkbox" id="${fullKey}" class='randomize-check' name="${fullKey}" ${value ? 'checked' : ''}><br>`;
+            html += `<label for="${fullKey}">${name}: </label>`;
+            html += `<input style="display:none" name="${fullKey}" name="${id}" data-min="${min}" data-max="${max}" type="checkbox" class='randomize-check'" ${value ? 'checked' : ''}><br>`;
+            if (min == 0 && max == 1) {
+                html += `<label for="${id}">Randomized: </label>`;
+                html += `<input type="checkbox" id="${id}" class='randomize-check' name="${fullKey}" ${value ? 'checked' : ''}>`;
+            }
+            else {
+                html += `<label>min: </label>`;
+                html += `<input type="number" min="${min}" max="${max}" value="${min}"}>`;
+                html += `<label>max: </label>`;
+                html += `<input type="number" min="${min}" max="${max}" value="${max}"}>`;
+            }
+
+            html += `<br>`
             html += '</div>';
         }
-        
     }
     return html;
 }
