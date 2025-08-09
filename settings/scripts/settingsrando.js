@@ -1,5 +1,4 @@
-var outputJSON = {};
-const topRowSongs = [
+﻿const topRowSongs = [
     "CVars.gRandoSettings.StartingEponasSong",
     "CVars.gRandoSettings.StartingSariasSong",
     "CVars.gRandoSettings.StartingSongOfStorms",
@@ -21,45 +20,151 @@ function renderInputs(obj, parentKey = '') {
     for (const key in obj) {
         const fullKey = parentKey ? `${parentKey}.${key}` : key;
         const value = obj[key];
-        
+
         if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
             if (key !== 'InjectItemCounts' && key !== 'CVars' && key !== 'gEnhancements' && key !== 'ExtraTraps') {
                 html += `<strong>${key}</strong>`;
             }
             html += renderInputs(value, fullKey);
-        } else if (typeof value === 'string') {
-            var minMax = value.split('-');
-            var min = minMax[0];
-            var max = minMax.length > 1 ? minMax[1] : "";
-            var id = putSpacesInCamelCase(fullKey);
-            var name = putSpacesInCamelCase(key);
+            continue;
+        }
 
-            html += '<div style="margin-left: 20px;">';
-            html += `<label for="${fullKey}">${name}: </label>`;
-            html += `<input style="display:none" name="${fullKey}" name="${id}" data-min="${min}" data-max="${max}" type="checkbox" class='randomize-check'" ${value ? 'checked' : ''}><br>`;
-            if (min == 0 && max == 1) {
-                html += `<label for="${id}">Randomized: </label>`;
-                html += `<input type="checkbox" id="${id}" class='randomize-check' name="${fullKey}" ${value ? 'checked' : ''}>`;
-            }
-            else {
-                html += `<label>min: </label>`;
-                html += `<input type="number" min="${min}" max="${max}" value="${min}"}>`;
-                html += `<label>max: </label>`;
-                html += `<input type="number" min="${min}" max="${max}" value="${max}"}>`;
+        if (typeof value === 'string') {
+            const parts = value.split('-');
+            const min = parts[0] ?? '';
+            const max = parts.length > 1 ? parts[1] : '';
+            const name = putSpacesInCamelCase(key);
+
+            const isNum = s => /^-?\d+$/.test(String(s));
+            const isBooleanRange = min === '0' && max === '1';
+            const isNumericRange = isNum(min) && isNum(max) && !isBooleanRange;
+
+            html += `<div class="setting-row" style="margin-left:20px;">`;
+
+            // hidden data node (the single source of truth)
+            html += `
+        <input style="display:none"
+               id="${fullKey}"
+               name="${fullKey}"
+               data-min="${min}"
+               data-max="${max}"
+               type="hidden"
+               class="randomize-data">`;
+
+            // label
+            html += `<label for="${fullKey}">${name}:</label>`;
+
+            if (isBooleanRange) {
+                // Boolean: Randomized + Enabled pair
+                const randomizedId = `${fullKey}-rand`;
+                const enabledId = `${fullKey}-enabled`;
+                const isRandom = (min === '0' && max === '1');
+                const isPinned1 = (min === max && min === '1');
+
+                html += `
+          <div class="bool-row">
+            <div class="check-container">
+                <input type="checkbox"
+                       id="${randomizedId}"
+                       class="rand-toggle"
+                       data-target="${fullKey}"
+                       ${isRandom ? 'checked' : ''}
+                       onchange="onRandomToggle('${fullKey}', this)">
+                <label for="${randomizedId}">Randomized</label>
+
+            </div>
+            <div class="check-container">
+                <input type="checkbox"
+                       id="${enabledId}"
+                       class="enabled-toggle"
+                       data-target="${fullKey}"
+                       ${isPinned1 ? 'checked' : ''}
+                       ${isRandom ? 'disabled' : ''}
+                       onchange="onEnabledToggle('${fullKey}', this)">
+                <label for="${enabledId}">Enabled</label>
+
+            </div>
+          </div>`;
+            } else if (isNumericRange) {
+                // Non-bool numeric: show min/max inputs again ✅
+                html += `
+          <div class="range-row">
+            <label>min:</label>
+            <input type="number"
+                   step="1"
+                   min="${min}"
+                   max="${max}"
+                   value="${min}"
+                   onchange="UpdateMin('${fullKey}', this.value)">
+
+            <label>max:</label>
+            <input type="number"
+                   step="1"
+                   min="${min}"
+                   max="${max}"
+                   value="${max}"
+                   onchange="UpdateMax('${fullKey}', this.value)">
+          </div>`;
+            } else {
+                // Non-numeric strings (no range): just echo current value (optional)
+                html += `<div class="help-text">No numeric range for this field.</div>`;
             }
 
-            html += `<br>`
-            html += '</div>';
+            html += `</div>`;
         }
     }
     return html;
 }
 
+function SwitchOnOff(fullKey) {
+    const hidden = document.getElementById(fullKey); const isChecked = checkbox.checked;
+    const max = checkbox.getAttribute('data-max');
+
+    if (max == 0) {
+        hidden.setAttribute('data-max', '1');
+    }
+    else {
+        hidden.setAttribute('data-max', '0');
+    }
+}
+
+function onRandomToggle(fullKey, el) {
+    const hidden = document.getElementById(fullKey);
+    const enabledEl = document.querySelector(`.enabled-toggle[data-target="${fullKey}"]`);
+
+    if (el.checked) {
+        // Randomization: allow 0..1
+        hidden.setAttribute('data-min', '0');
+        hidden.setAttribute('data-max', '1');
+        if (enabledEl) enabledEl.disabled = true;
+    } else {
+        // Deterministic: pin to enabled checkbox
+        if (enabledEl) {
+            enabledEl.disabled = false;
+            const v = enabledEl.checked ? '1' : '0';
+            hidden.setAttribute('data-min', v);
+            hidden.setAttribute('data-max', v);
+        }
+    }
+}
+
+function onEnabledToggle(fullKey, el) {
+    const hidden = document.getElementById(fullKey);
+    const randEl = document.querySelector(`.rand-toggle[data-target="${fullKey}"]`);
+
+    // Only apply when not randomized
+    if (!randEl || !randEl.checked) {
+        const v = el.checked ? '1' : '0';
+        hidden.setAttribute('data-min', v);
+        hidden.setAttribute('data-max', v);
+    }
+}
+
+
 function RollExtraLogic() {
     RandomizeTriforcePieces();
     RandomizeSongs();
     RollItemPoolForStartingHearts();
-    RandomizeStartingHearts()
 }
 
 function generateConfigForDownload(objectToReplace) {
@@ -67,32 +172,17 @@ function generateConfigForDownload(objectToReplace) {
     RollExtraLogic();
     const outputJSON = structuredClone(objectToReplace);
 
-    const checkboxes = document.querySelectorAll('.randomize-check');
-
-    checkboxes.forEach(checkbox => {
-        const path = checkbox.getAttribute('name'); 
+    const knobs = document.querySelectorAll('input.randomize-data[data-min][data-max][name]');
+    knobs.forEach(checkbox => {
+        const path = checkbox.getAttribute('name');
         const min = checkbox.getAttribute('data-min');
         const max = checkbox.getAttribute('data-max');
-
         let value;
-        if (min && max) {
+
+        if (value === undefined) {
             value = Math.floor(Math.random() * (parseInt(max) - parseInt(min) + 1)) + parseInt(min);
         }
-        else if (path) { 
-            if (path.includes('EnabledTricks')) {
-                // Do nothing. Keep all tricks in logic.
-                value = min;
-            }
-            else if (path.includes('ExcludedLocations')) {
-                // frogs in the rain coin toss
-                if (coinToss()) {
-                    value = min;
-                }
-                else {
-                    value = "";
-                }
-            }
-        }
+
         const keys = path.split('.');
         let current = outputJSON;
         for (let i = 0; i < keys.length - 1; i++) {
@@ -101,8 +191,9 @@ function generateConfigForDownload(objectToReplace) {
         }
         current[keys[keys.length - 1]] = value;
     });
+
     // validate triforce hunt
-    
+
     downloadJsonAsFile(outputJSON, 'settingsrando.json');
 }
 
@@ -161,38 +252,16 @@ function RandomizeSongs() {
 }
 
 function RandomizeTriforcePieces() {
-    const triforceHuntMin = document.querySelector(`[id="CVars.gRandoSettings.TriforceHuntRequiredPieces"]`);
-    const triforceHuntMax = document.querySelector(`[id="CVars.gRandoSettings.TriforceHuntTotalPieces"]`);
-    
-    const maxpieces = Math.floor(Math.random() * 100);
-    triforceHuntMax.setAttribute('data-min', maxpieces);
-    triforceHuntMax.setAttribute('data-max', maxpieces);
-
-    const minpieces = Math.floor(Math.random() * maxpieces);
-    while (minpieces > maxpieces) {
-        console.log(`rerolling triforce hunt min: ${minpieces}, max: ${maxpieces}`);
-    }
-    triforceHuntMin.setAttribute('data-min', minpieces);
-    triforceHuntMin.setAttribute('data-max', minpieces);
+    const max = Math.floor(Math.random() * 100);
+    const min = Math.floor(Math.random() * (max + 1)); // 0..max inclusive
+    const maxEl = document.getElementById("CVars.gRandoSettings.TriforceHuntTotalPieces");
+    const minEl = document.getElementById("CVars.gRandoSettings.TriforceHuntRequiredPieces");
+    maxEl.setAttribute('data-min', max); maxEl.setAttribute('data-max', max);
+    minEl.setAttribute('data-min', min); minEl.setAttribute('data-max', min);
 }
 
 function coinToss() {
     return Math.floor(Math.random() * 2) == 0;
-}
-
-const deepSearch = (target, value) => {
-    if (typeof target === 'object') {
-        for (let key in target) {
-            if (typeof target[key] === 'object') {
-                deepSearch(target[key]);
-            } else {
-                if (key === 'name') {
-                    target[key] = value;
-                }
-            }
-        }
-    }
-    return target
 }
 
 // had hearts it set to a yes/no on whether to roll for extra hearts, then
@@ -208,7 +277,7 @@ function RollItemPoolForStartingHearts() {
     let rolledValue = Math.floor(Math.random() * 4);
     itemPoolType.setAttribute('data-min', rolledValue);
     itemPoolType.setAttribute('data-max', rolledValue);
-    numStartingHearts = RandomizeStartingHearts(rolledValue);
+    const numStartingHearts = RandomizeStartingHearts(rolledValue);
     const startingHearts = document.querySelector(`[id="CVars.gRandoSettings.StartingHearts"]`);
     startingHearts.setAttribute('data-min', numStartingHearts);
     startingHearts.setAttribute('data-max', numStartingHearts);
@@ -232,4 +301,11 @@ function RandomizeStartingHearts(itemPoolType) {
         }
     }
     return startingHearts;
+}
+
+function UpdateMin(fullKey, v) {
+    document.getElementById(fullKey).setAttribute('data-min', v);
+}
+function UpdateMax(fullKey, v) {
+    document.getElementById(fullKey).setAttribute('data-max', v);
 }

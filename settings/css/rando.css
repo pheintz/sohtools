@@ -16,13 +16,15 @@
 }
 
 #RandomContainer {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px; /* Adjust gap as needed */
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
 }
+
     #RandomContainer > * {
         outline: 1px solid gray;
         padding: 16px;
+        border-radius: 12px;
     }
 
 #generate {
@@ -34,10 +36,33 @@
     font-size: 24px;
 }
 
-/* Custom Checkbox Styles */
 input[type="checkbox"] {
     height: 24px;
     width: 24px;
+    vertical-align: middle;
 }
 
+.check-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
 
+    .check-container label {
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+        line-height: 1;
+    }
+
+input[type="number"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-size: 16px;
+}
