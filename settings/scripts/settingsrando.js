@@ -71,7 +71,6 @@ function renderInputs(obj, parentKey = '') {
                        ${isRandom ? 'checked' : ''}
                        onchange="onRandomToggle('${fullKey}', this)">
                 <label for="${randomizedId}">Randomized</label>
-
             </div>
             <div class="check-container">
                 <input type="checkbox"
@@ -106,14 +105,28 @@ function renderInputs(obj, parentKey = '') {
                    onchange="UpdateMax('${fullKey}', this.value)">
           </div>`;
             } else {
-                // Non-numeric strings (no range): just echo current value (optional)
-                html += `<div class="help-text">No numeric range for this field.</div>`;
+                html += `
+                      <div class="string-row">
+                        <label>Enter value:</label>
+                        <input type="text" style="max-width: 200px;"
+                               class="string-input"
+                               id="${fullKey}-string"
+                               data-target="${fullKey}"
+                               value="${min}"
+                               onchange="UpdateString('${fullKey}', this.value)">
+                      </div>`;
             }
 
             html += `</div>`;
         }
     }
     return html;
+}
+
+function UpdateString(fullKey, value) {
+    const hidden = document.getElementById(fullKey);
+    hidden.setAttribute('data-min', value);
+    hidden.setAttribute('data-max', value);
 }
 
 function SwitchOnOff(fullKey) {
@@ -168,7 +181,6 @@ function RollExtraLogic() {
 }
 
 function generateConfigForDownload(objectToReplace) {
-
     RollExtraLogic();
     const outputJSON = structuredClone(objectToReplace);
 
@@ -177,10 +189,14 @@ function generateConfigForDownload(objectToReplace) {
         const path = checkbox.getAttribute('name');
         const min = checkbox.getAttribute('data-min');
         const max = checkbox.getAttribute('data-max');
+
+        const isNum = s => /^-?\d+$/.test(String(s));
         let value;
 
-        if (value === undefined) {
+        if (isNum(min) && isNum(max)) {
             value = Math.floor(Math.random() * (parseInt(max) - parseInt(min) + 1)) + parseInt(min);
+        } else {
+            value = min;
         }
 
         const keys = path.split('.');
@@ -191,8 +207,6 @@ function generateConfigForDownload(objectToReplace) {
         }
         current[keys[keys.length - 1]] = value;
     });
-
-    // validate triforce hunt
 
     downloadJsonAsFile(outputJSON, 'settingsrando.json');
 }
