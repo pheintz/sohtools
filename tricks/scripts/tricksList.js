@@ -336,7 +336,7 @@ window.getTricks = function getTricks() {
                 "location": ZORAS_RIVER,
                 "description": `
                                 ISG, target wall, 2ess left, hold angle, get into corner
-                                Z+A+R on 9th red (frame before big blue)
+                                Z+A+R on 9th red or big blue
                                 hold Z + right and mash A                                `,
                 "tags": [BOMBS],
                 "age": ANY_AGE,
@@ -365,6 +365,7 @@ window.getTricks = function getTricks() {
                                 frame 2: roll
                                 hold right during roll until link is standing
                                 sidehop right
+                                hold right the entire time in the air
                                 `,
                 "tags": [BOMBCHU],
                 "age": CHILD,
