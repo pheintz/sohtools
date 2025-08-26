@@ -951,11 +951,19 @@ window.getTricks = function getTricks() {
                 "name": "Bomb QPA Hover Into Forest",
                 "location": SACRED_FOREST_MEADOW,
                 "description": `
-                                get QPA and ISG (see: "Adult Stick Nut QPA"))
+                                get QPA and ISG
                                 get into corner
                                 3 sidehop left and roll with target held
                                 turn right. 4 sidehops right, turn left, 2 ess left
                                 9 bomb hovers, backflip, jump to main ledge
+
+                                for the QPA hovers:
+                                do not drop bomb until after second frame of the backflip
+
+                                angle for adult QPA:
+                                face wall, turn right, 3ess left
+                                putaway stick then nut 1 frame after, then jumpslash
+                                you can test if you have QPA by crouch stabbing a bomb
                 `,
                 "tags": [BOMBS],
                 "age": ADULT,
