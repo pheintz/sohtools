@@ -990,6 +990,8 @@ window.getTricks = function getTricks() {
                             (pull chu, walk up-right, 3 frames idle, hold down on control stick, backflip + R)
 
                             do one more except just backflip out of it without a bombchu
+
+                            for ess shuffle: hold ess turn for one frame, maintain ess position and hold Z
                 `,
                 "tags": [BOMBCHU],
                 "age": ANY_AGE,
