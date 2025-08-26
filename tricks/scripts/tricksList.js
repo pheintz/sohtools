@@ -816,7 +816,7 @@ window.getTricks = function getTricks() {
                 "name": "Shadow Temple Gate Clip Crouch Stab Method",
                 "location": SHADOW_TEMPLE,
                 "description": `
-                    for two handers including sticks
+                    works with all weapons except maybe hammer
                     above ledge align with the left wall and turn right
                     walk forward and jump off
                     make sure you're against wall
@@ -2197,6 +2197,33 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/z9FNVvGRgdA",
+            },
+            {
+                "name": "Universal Boulder Grotto Weirdslide Bombchu Method",
+                "location": GENERAL,
+                "description": `
+                            works with any first person item
+
+                            line up with center of the boulder
+                            7 frames backwalk then let go of control stick and interrupt with shield
+
+                            once fully stopped:
+                            shield drop chu at any time
+
+                            with Z still held: pull first person item then shield
+                            on explosion frame:
+                            frame 0: Z and roll
+                            frame 1: Z
+                            frame 2+ until hit the explosion frame: Z R and Down on control stick
+                            4 damage frames: Z R and Down
+
+                            visual cue for 4th damage frame: link slides back a bit out of the explosion
+
+                            from here unpause with: Z + FP Item + Down
+                `,
+                "tags": [BOMBCHU, WEIRDSHOT, HOOKSHOT, BOW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/GbQ6CiWMWB0",
             },
             {
                 "name": "Universal Weirdshot Bombchu",
