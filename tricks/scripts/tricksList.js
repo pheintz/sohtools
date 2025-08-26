@@ -624,19 +624,15 @@ window.getTricks = function getTricks() {
                 "name": "Adult LH to ZD Bombchu Dive",
                 "location": LAKE_HYLIA,
                 "description": `
-                                climb up
-                                2 ess right
-                                backflip
-                                turn around
-                                3x hold up while rolling
-                                for chus: roll, backflip, shieldflick, megaflip
-                                hold left in the air
+                            climb up next to the pillar
+                            2 left sidehop, 5 backflip, 2ess right, turn around
 
-                                *for bombs: shield drop bomb, roll, backflip, megaflip
+                            chu: roll, backflip, retarget, megaflip, hold left in the air
+                            bombs: instant shield drop bomb, roll, backflip, flick,  roll on 3rd fast red flash to megaflip, hold left in the air
                                 `,
                 "tags": [BOMBCHU],
                 "age": ADULT,
-                "embed": "https://youtube.com/embed/G6XVwXbBo8s",
+                "embed": "https://youtube.com/embed/dO50461iOAc",
             },
             {
                 "name": "Open Water Temple With Hookshot Only",
