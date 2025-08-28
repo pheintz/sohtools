@@ -41,6 +41,7 @@ const GRAVEYARD = "Graveyard";
 const SPIRIT_TEMPLE = "Spirit Temple";
 const DESERT_COLOUSUS = "Desert Colossus";
 const LAKE_HYLIA = "Lake Hylia";
+const HYRULE_FIELD = "Hyrule Field";
 const GERUDO_VALLEY = "Gerudo Valley";
 const GERUDO_TRAINING_GROUNDS = "Gerudo Training Grounds";
 const FOREST_TEMPLE = "Forest Temple";
@@ -140,6 +141,27 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/Hvq95fTEaGQ",
+            },
+            {
+                "name": "KZ Skip Glitchless Jumpslash Setup",
+                "location": ZORAS_DOMAIN,
+                "description": `
+                            works with master sword
+
+                            backwalk off the waterfall ledge
+                            turn right, backwalk off again
+                            climb up and sidehop left
+                            turn right, jumpslash with shield cancel
+                            turn around
+
+                            C-Up Method: right half of the middle triangle. A big range of angles works.
+                            ESS Method: 3ess left
+
+                            roll and up on the same frame and continue holding up
+
+                            note: if you have no shield you can hold ess direction during jumpslash to stop in place                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/XAUurE-ZF6Q",
             },
             {
                 "name": "Zora Shop Clip Master Sword Shielded",
@@ -2693,6 +2715,44 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/RG1-rqV0OjU",
+            },
+            {
+                "name": "Adult Tektite Grotto Heartpiece With Boomerang",
+                "location": TEMPLE_OF_TIME,
+                "description": `
+                            from grotto spawn:
+                            turn right, sidehop left, turn left, roll
+                            hold Z and let camera fully get into Z target angle
+
+                            Z + shield drop chu,
+                            release everything for 1 frame
+                            repress Z and quickdraw boomerang*
+                            wait for return button to line up just below center of tektite
+
+                            on the frame it lines up, up roll with Z A + UP
+                            on the first jump frame, Z + Left + Boomerang and keep it held until visual cue
+
+                            visual cue: link is turned 1 frame past directly to the right, so just slightly down-right
+
+                            release boomerang, keep Z held and switch to down on control stick until
+                            visual cue: boomerang leaves links hand
+
+                            Adult:
+                            release Z and hold down
+                            press A on the 3rd frame A button says "dive"
+
+                            Child:
+                            Keep Z held and press A on the 7th frame A button says "dive"
+
+                            ----
+
+                            for quickdraw:
+
+                            with Z held, press boomerang then immediately press R
+                            when links shield is out you can release R and boomerang will be drawn                            `,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/BRE1DlXOpFE",
             },
         ]
     };
