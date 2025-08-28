@@ -2722,36 +2722,37 @@ window.getTricks = function getTricks() {
                 "name": "Adult Tektite Grotto Heartpiece With Boomerang",
                 "location": TEMPLE_OF_TIME,
                 "description": `
-                            from grotto spawn:
-                            turn right, sidehop left, turn left, roll
-                            hold Z and let camera fully get into Z target angle
+                        from grotto spawn:
+                        turn right, sidehop left, turn left, roll
+                        hold Z and let camera fully get into Z target angle
 
-                            Z + shield drop chu,
-                            release everything for 1 frame
-                            repress Z and quickdraw boomerang*
-                            wait for return button to line up just below center of tektite
+                        Z + shield drop chu,
+                        release everything for 1 frame
+                        repress Z and quickdraw boomerang*
+                        wait for return button to line up just below center of tektite
 
-                            on the frame it lines up, up roll with Z A + UP
-                            on the first jump frame, Z + Left + Boomerang and keep it held until visual cue
+                        on the frame it lines up, up roll with Z A + UP
+                        on the first jump frame, Z + Left + Boomerang and keep it held until visual cue
 
-                            visual cue: link is turned 1 frame past directly to the right, so just slightly down-right
+                        visual cue: link is turned 1 frame past directly to the right, so just slightly down-right
 
-                            release boomerang, keep Z held and switch to down on control stick until
-                            visual cue: boomerang leaves links hand
+                        release boomerang, keep Z held and switch to down on control stick until
+                        visual cue: boomerang leaves links hand
 
-                            Adult:
-                            release Z and hold down
-                            press A on the 3rd frame A button says "dive"
+                        Adult:
+                        release Z and hold down
+                        mash A on the 3rd frame A button says "dive"
 
-                            Child:
-                            Keep Z held and press A on the 7th frame A button says "dive"
+                        Child:
+                        Keep Z held and mash A on the 7th frame A button says "dive"
+                        visual cue for mashing A: tektitke is fully on screen
 
-                            ----
+                        ----
 
-                            for quickdraw:
+                        for quickdraw:
 
-                            with Z held, press boomerang then immediately press R
-                            when links shield is out you can release R and boomerang will be drawn                            `,
+                        with Z held, press boomerang then immediately press R
+                        when links shield is out you can release R and boomerang will be drawn                            `,
                 "tags": [ITEMLESS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/BRE1DlXOpFE",
