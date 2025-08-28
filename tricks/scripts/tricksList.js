@@ -159,7 +159,9 @@ window.getTricks = function getTricks() {
 
                             roll and up on the same frame and continue holding up
 
-                            note: if you have no shield you can hold ess direction during jumpslash to stop in place                "tags": [ITEMLESS],
+                            note: if you have no shield you can hold ess direction during jumpslash to stop in place
+                            `,
+                "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/XAUurE-ZF6Q",
             },
