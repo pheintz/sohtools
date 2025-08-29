@@ -2729,22 +2729,25 @@ window.getTricks = function getTricks() {
                         Z + shield drop chu,
                         release everything for 1 frame
                         repress Z and quickdraw boomerang*
+
+                        adult:
                         wait for return button to line up just below center of tektite
+
+                        child:
+                        wait for return button to line up cetnered with tektite
 
                         on the frame it lines up, up roll with Z A + UP
                         on the first jump frame, Z + Left + Boomerang and keep it held until visual cue
 
                         visual cue: link is turned 1 frame past directly to the right, so just slightly down-right
+                        release boomerang, keep Z held and switch to down on control stick
 
-                        release boomerang, keep Z held and switch to down on control stick until
-                        visual cue: boomerang leaves links hand
-
-                        Adult:
-                        release Z and hold down
-                        mash A on the 3rd frame A button says "dive"
-
-                        Child:
                         Keep Z held and mash A on the 7th frame A button says "dive"
+
+                        adult:
+                        visual cue for mashing A: link lunges forward with left hand to start swim animation
+
+                        child:
                         visual cue for mashing A: tektitke is fully on screen
 
                         ----
@@ -2755,7 +2758,7 @@ window.getTricks = function getTricks() {
                         when links shield is out you can release R and boomerang will be drawn                            `,
                 "tags": [ITEMLESS],
                 "age": CHILD,
-                "embed": "https://youtube.com/embed/BRE1DlXOpFE",
+                "embed": "https://youtube.com/embed/7TmhA45JrDY",
             },
         ]
     };
