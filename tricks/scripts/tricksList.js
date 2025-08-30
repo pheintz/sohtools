@@ -1317,6 +1317,19 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/wuZiqjfhChQ",
             },
             {
+                "name": "Deku B1 Skip 1ESS Method",
+                "location": DEKU_TREE,
+                "description": `
+                        line up in the normal seam on the right side and roll into it
+                        backflip, roll and retarget during the roll
+                        backflip, turn left, 1ess left
+                        Up and A on the same frame and hold up during the roll
+                        `,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/7_f3A47ciX0",
+            },
+            {
                 "name": "Dodongo Eyes Early Boss Bombchu",
                 "location": DODONGOS_CAVERN,
                 "description": `
