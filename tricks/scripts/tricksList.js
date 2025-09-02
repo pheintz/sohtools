@@ -653,8 +653,7 @@ window.getTricks = function getTricks() {
                             2 left sidehop, 5 backflip, 2ess right, turn around
 
                             chu: roll, backflip, retarget, megaflip, hold left in the air
-                            bombs: instant shield drop bomb, roll, backflip, flick,  roll on 3rd fast red flash to megaflip, hold left in the air
-                                `,
+                            bombs: instant shield drop bomb, roll, backflip, flick,  roll on 3rd fast red flash to megaflip, hold left in the air                                `,
                 "tags": [BOMBCHU],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/dO50461iOAc",
