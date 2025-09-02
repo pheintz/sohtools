@@ -646,7 +646,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/0i-tlC7SB7E",
             },
             {
-                "name": "Adult LH to ZD Bombchu Dive",
+                "name": "Lake Hylia to Zora's Domain Clip | No Long Rolls | Bombs and Chus",
                 "location": LAKE_HYLIA,
                 "description": `
                             climb up next to the pillar
