@@ -2394,6 +2394,22 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/Hk0dRNLgTLw",
             },
             {
+                "name": "Ledge Clip Into BotW with Bombs",
+                "location": KAKARIKO_VILLAGE,
+                "description": `
+                        climb up ledge and turn left
+                        4x sidehop right, turn right
+                        sidehop left, roll and retarget
+                        backflip, 1ess left
+                        with Z: pull bomb and start sidewalking left on the same frame
+                        release Z and keep holding left either 1 or 2 frames before you hit the ledge
+                        repress Z on ledge clip frame and keep Z held
+                `,
+                "tags": [BOMBCHU, BOTW],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/psjzY2fXrCk",
+            },
+            {
                 "name": "Bottom of the Well Actor Deload",
                 "location": BOTW,
                 "description": `
