@@ -356,7 +356,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/KrJUuOkbA0c",
             },
             {
-                "name": "Bombs Sidehop Into Zoras Domain Waterfall",
+                "name": "Bombs Sidehop Past Sleeping Waterfall",
                 "location": ZORAS_RIVER,
                 "description": `
                                 ISG, target wall, 2ess left, hold angle, get into corner
@@ -367,7 +367,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/Q7XjNM6AIog",
             },
             {
-                "name": "Bombchu Sidehop Into Zoras Domain Waterfall",
+                "name": "Bombchu Sidehop Past Sleeping Waterfall",
                 "location": ZORAS_RIVER,
                 "description": `
                                 ISG, target wall, 2ess left, hold angle, get into corner
@@ -381,6 +381,8 @@ window.getTricks = function getTricks() {
                 "name": "Bombchu Mega Sidehop From Zoras Domain to Lost Woods",
                 "location": ZORAS_RIVER,
                 "description": `
+                                works both ages:
+
                                 backwalk off the edge,
                                 2x sidehop right, sidehop left, sidehop right
                                 2ess right
@@ -392,7 +394,7 @@ window.getTricks = function getTricks() {
                                 hold right the entire time in the air
                                 `,
                 "tags": [BOMBCHU],
-                "age": CHILD,
+                "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/bYZAdqDIHBY",
             },
             {
