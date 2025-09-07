@@ -15,15 +15,17 @@
 </head>
 <body>
     <h1>Randomizer Randomizer</h1>
-    <h3><!-- VERSION --></h3>
-    <div>
-        Extra Modes*: <input type="checkbox" id="ExtraModes" /><label for="ExtraModes">
-        *Extra modes include: Mirrored World, Enemy Randomizer, Randomized Enemy Sizes, Shadow Tag, Additional Traps
-        </label>
-    </div>
-    <div>
+    <strong>Randomized: Randomize the value</strong>
+    <strong>Enabled: When *not* randomized, decide if this is always on or off</strong>
+    <div style="margin: 16px 0px 16px 0px;">
         <button id="generate" style="height: 50px; width: 500px;">Generate Randomizer Config</button>
     </div>
+    <div>
+        Extra Modes*: <input type="checkbox" id="ExtraModes" /><label for="ExtraModes">
+            *Extra modes include: Mirrored World, Enemy Randomizer, Randomized Enemy Sizes, Shadow Tag, Additional Traps
+        </label>
+    </div>
+    <div style="border-top: 1px solid gray; margin-bottom: 16px"></div>
     <div id="RandomContainer"></div>
     <script src="./scripts/getConfig.js"></script>
     <script src="./scripts/getExtraModes.js"></script>
@@ -31,7 +33,7 @@
     <script type="text/javascript">
         let config = window.getConfig();
         document.getElementById('RandomContainer').innerHTML = renderInputs(config);
-        
+
         document.getElementById('generate').onclick = function () {
             generateConfigForDownload(config);
         };
