@@ -44,6 +44,7 @@ const LAKE_HYLIA = "Lake Hylia";
 const HYRULE_FIELD = "Hyrule Field";
 const GERUDO_VALLEY = "Gerudo Valley";
 const GERUDO_TRAINING_GROUNDS = "Gerudo Training Grounds";
+const GF = "Gerudo Fortress";
 const FOREST_TEMPLE = "Forest Temple";
 const FIRE_TEMPLE = "Fire Temple";
 const WATER_TEMPLE = "Water Temple";
@@ -248,6 +249,61 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/tizMvSnis_c",
             },
             {
+                "name": "adult superslide teleport into shadow temple",
+                "location": GRAVEYARD,
+                "description": `
+                            get isg
+                            from wall backflip, roll and retarget
+                            sidehop left, roll and retarget
+
+                            kill the grass shown in the video and get into the corner
+                            shielded backflip, releasing shield just before landing (this sets up the downroll after dropping chu, and prevents killing the grass with isg)
+
+                            keep Z held
+
+                            instant shield drop chu, rolling (Z+R+A) as soon as the chu drops on the ground
+
+                            retarget during the superslide or you won't grab
+`,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/gbNyDCFOK8c",
+            },
+            {
+                "name": "child superslide teleport into shadow temple",
+                "location": GRAVEYARD,
+                "description": `
+                        isg
+                        target right wall, backwalk downroll and retarget
+                        sidehop right sideroll and retarget
+                        right hop into corner
+                        shield flick, roll, sidehop left
+
+                        pull chu, backwalk until kill grass
+                        drop chu then roll next frame while still backwalking
+                        mash A to superslide                                `,
+                "tags": [BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/TTJT6c4Cy0s",
+            },
+            {
+                "name": "child superslide teleport into shadow temple",
+                "location": GRAVEYARD,
+                "description": `
+                        isg
+                        target right wall, backwalk downroll and retarget
+                        sidehop right sideroll and retarget
+                        right hop into corner
+                        shield flick, roll, sidehop left
+
+                        pull chu, backwalk until kill grass
+                        drop chu then roll next frame while still backwalking
+                        mash A to superslide                                `,
+                "tags": [BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/jUvkmsHJLaY",
+            },
+            {
                 "name": "Skip Dampe Windmill SoT Block w/ bombs/chus",
                 "location": GRAVEYARD,
                 "description": `
@@ -258,7 +314,26 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, BOMBCHU],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/jUvkmsHJLaY",
-                
+            },
+            {
+                "name": "child windmill heart piece w/ sticks",
+                "location": KAKARIKO_VILLAGE,
+                "description": `
+                    target wood left of music man
+                    backwalk into corner
+                    sidehop right 2x, keep Z and roll
+                    swing stick and walk forward
+                    on starting climb hold R only
+                    5ess left
+
+                    not necessary but it's easier for visual cue if you retarget and let the camera lower
+
+                    visual cue: glitch tick lining up with left corner of the platform
+
+                    forward roll, jumpslash at apex                                `,
+                "tags": [DEKU_STICKS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/U8Ul07Xiivc",
             },
             {
                 "name": "ZD to LH Jumpslash Clip Sticks",
@@ -918,6 +993,20 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/xDLnTnV9UcY",
             },
             {
+                "name": "Child Jabu Jumpslash Entry Left Side Bunny Hood",
+                "location": ZORAS_FOUNTAIN,
+                "description": `
+                            only works with bunny hood run speed
+                            climb up on the left corner, turn left, retarget,  then let the camera settle
+
+                            hold down on control stick until
+
+                            visual cue: link's sword is pointing slightly down from horizontal, look for the closest fence post to be fully visible                `,
+                "tags": [DEKU_STICKS, KOKIRI_SWORD],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/LypnDVbjTgE",
+            },
+            {
                 "name": "Adult Jabu Entry Master Sword Bombs and Hovers",
                 "location": ZORAS_FOUNTAIN,
                 "description": `
@@ -1037,6 +1126,49 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/C5gYslOuxlU",
+            },
+            {
+                "name": "Gate Clip to Wasteland Bombs Only",
+                "location": GF,
+                "description": `
+                    get isg, get into corner, 1ess left
+                    get inverse camera
+                    sidehop right, backflip
+                    insta shield drop bomb, sidehop left, shield flick
+                    roll, A-Drop bomb, Z R and Up and keep backwalking against the fence
+
+                    on big blue for the first bomb, backflip with shield,
+                    release everything but Z once you're shielding the damage
+
+                    when through the gate immedately sidehop right, release Z and run forward
+                    if you wait too long the guard will see you
+
+                    for inverse camera:
+                    do not have Z pre-held
+                    frame 1: Z
+                    frame 2,3,4: no input
+                    frame 5: down
+                    frame 6: Z and keep held
+                    `,
+                "tags": [BOMBS, GATE_CLIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/NO1eHljSloo",
+            },
+            {
+                "name": "Child GTG Entry No C-Up",
+                "location": GF,
+                "description": `
+                        Line up with the L shape texture
+                        3 left, 1 right, roll and retarget
+                        3 left
+
+                        unsheathed weapon: jumpslash on 5th or 6th frame, the first and second frames that you won't jumpslash back onto the ledge
+
+                        sheathed kokiri sword: jumpslash on 2nd frame
+                    `,
+                "tags": [KOKIRI_SWORD, DEKU_STICKS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/wfaQWQlglXY",
             },
             {
                 "name": "GTG Gate Clip Bombs",
@@ -1341,6 +1473,26 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ANY_AGE,
                 "embed": "",
+            },
+            {
+                "name": "Child DC Angled Hover to Bomb Bag From Lobby",
+                "location": DODONGOS_CAVERN,
+                "description": `
+                            It takes a few chus, but this way is easy and consistent.
+
+                            ground jump up to the right side switch, get isg, and align with wall
+                            turn right, sidehop right, downroll, do 1 twisted
+                            do the rest angled hovers
+
+                            the method for angled hover is holding up-right on control stick so that link is still walking animation, if you're in sidewalk animation you've gone too far. go as far right as possible without going into sidewalk.
+
+                            while holding that angle: shield drop chu, shielded backflip next frame
+
+                            depending on the angle you can backflip at the end and save a chu
+                            `,
+                "tags": [BOMBCHU],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/0oRZHRamqKo",
             },
             {
                 "name": "Explosiveless Clip Into Dodongo Head",
@@ -1938,6 +2090,21 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/gDaSYaw-zOE",
+            },
+            {
+                "name": "Shadow Temple BK Skip Bombchu Nut Shield Scoot",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                        climb up, turn around, shield scoot once towards the ledge
+                        turn right, backflip into the wall
+                        1ess right
+                        Z targeted shield drop chu, nut 1 frame later and release Z
+                        2 explosion frames: do nothing
+                        down-right for 3 frames then hold Z
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/3cbEl2sfIvE",
             },
             {
                 "name": "[Alternate] Faster Boatkey",
@@ -2630,6 +2797,27 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, HOOKSHOT, BOW, WEIRDSHOT, WEIRDSLIDE],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/UtxxHi8Ox0s",
+            },
+            {
+                "name": "Hover to Ganon's Castle Angled Hover Method",
+                "location": OGC,
+                "description": `
+                            this can be done with 7 chus
+
+                            get isg and to the ledge and c-up line up angle around where the wall angle changes (not precise)
+
+                            start hover. i drop bomb walk forward a until you can't grab bomb and backflip on big blue
+
+                            once you're in the air, pull a first person item and hold ess right and roll to change the camera angle. this isn't necessary but it makes the trick easier since you're holding more straight up for the angle
+
+                            for the angled hovers:
+                            in a perfect world you'll be able to hold straight up for the angled hovers, just hold stick mostly up, might be slightly up left, link will be walking "forward". You can move the stick around and see how the angle changes, if link is in sidewalking animation you've gone too far.
+
+                            backflip and shield drop chu on the same frame
+                            `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtube.com/embed/szzeyFoJ4K4",
             },
             {
                 "name": "Light Trial Block Skip Superslide",
