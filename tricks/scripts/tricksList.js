@@ -60,6 +60,7 @@ const BOTW = "Bottom of the Well";
 const TEMPLE_OF_TIME = "Temple of Time";
 const HAUNTED_WASTELAND = "Haunted Wasteland";
 const KAKARIKO_VILLAGE = "Kakariko Village";
+const HYRULE_MARKET = "Hyrule Market";
 
 // Ages
 const ADULT = "adult";
@@ -70,6 +71,31 @@ const ANY_AGE = "any age";
 window.getTricks = function getTricks() {
     return {
         "tricks": [
+            {
+                "name": "market bazaar at night",
+                "location": HYRULE_MARKET,
+                "description": `
+                align with wall, sidehop left, turn right and hold Z
+                climb up, sidehop up and sideroll,
+                sidehop up and sideroll again,
+                hold up on the second sideroll
+`,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/RcoEnEELrBo",
+            },
+            {
+                "name": "shooting gallery at night",
+                "location": HYRULE_MARKET,
+                "description": `
+                        hold straight up and get pushed by the guard
+                        after climbing, ess turn up
+                        bonk, turn left, sidehop up, sideroll and hold up
+`,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/DVy2JOqXkWE",
+            },
             {
                 "name": "Ice Cavern West Red Ice Bomb Push",
                 "location": ICE_CAVERN,
@@ -361,6 +387,16 @@ window.getTricks = function getTricks() {
                 "tags": [ONEHW, TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/BsAvkchECjY",
+            },
+            {
+                "name": "Another Lower Zoras Freestanding Setup",
+                "location": ZORAS_RIVER,
+                "description": `
+                    corner, 5x sidehop, sideroll, turn right, roll with up
+                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/SzF5Qu5zbP0",
             },
             {
                 "name": "Alternate ZR Lower Freestanding Itemless (no octo)",
@@ -655,6 +691,21 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/1yTzv6i6X_M",
             },
             {
+                "name": "water temple tektite dive",
+                "location": WATER_TEMPLE,
+                "description": `
+                        bait tektite
+                        run to haflway between hookshot anchor and far end
+                        align with wall and 1 shielded vertical slash
+                        turn left and sidehop left and keep Z held or you'll target the tektite
+                        with Z held, Up and B, releasing Z during the swing
+                        repress Z and talk to navi before the slash ends
+                    `,
+                "tags": [MASTER_SWORD],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/am3Nt_yIRO4",
+            },
+            {
                 "name": "Water Temple Glitchless Jump Boulder Waterfall",
                 "location": WATER_TEMPLE,
                 "description": `
@@ -747,6 +798,19 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/RU1Y8ECQRWs",
             },
             {
+                "name": "Lake Hylia to Zoras Domain Navi Dive",
+                "location": LAKE_HYLIA,
+                "description": `
+                            align pillar facing lake, sidehop right sideroll
+                            turn left, sidehop right sideroll, backflip
+                            3 shielded slashes
+                            jumpslash and talk to navi
+                `,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/9977_qVImgg",
+            },
+            {
                 "name": "Water Temple Entry Jumpslash Clip",
                 "location": LAKE_HYLIA,
                 "description": `
@@ -802,6 +866,22 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/rXNEoKCei-Y",
+            },
+            {
+                "name": "2 bomb water BK skip",
+                "location": WATER_TEMPLE,
+                "description": `
+                    it's easier if you flick direction vs ESS turns. seems like margin for error while flicking if you hold direction for an extra frame
+
+                    align with door and ISG
+                    insta drop bomb and turn left
+                    sidehop right, left, insta drop bomb, right again
+                    turn left and hold Z + R and backflip on big blue
+                    release inputs after you shield the first bomb damage to get pushed by the second explosion
+                    `,
+                "tags": [BOMBS, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/K8_vgAxoZgM",
             },
             {
                 "name": "Water Temple BK Skip Bombchu",
@@ -1062,6 +1142,19 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/TiTWNFPGImA",
             },
             {
+                "name": "5 Chu Sideflips Into Forest Temple Child Link",
+                "location": SACRED_FOREST_MEADOW,
+                "description": `
+                                    isg and into corner, turn right
+                                    5 sidehops right, shield flick, roll, backflip, roll without releasing Z
+                                    5 sideflip hovers
+                                    1 sideflip without chu
+                        `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/HgopEL7K4Og",
+            },
+            {
                 "name": "Bomb QPA Hover Into Forest",
                 "location": SACRED_FOREST_MEADOW,
                 "description": `
@@ -1153,6 +1246,19 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBS, GATE_CLIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/NO1eHljSloo",
+            },
+            {
+                "name": "damage hover boost jumpslash to gerudo fortress chest",
+                "location": GF,
+                "description": `
+                                3ess right, jumpslash to get to ledge hoding shield during jumpslash
+                                angle for bomb is rough, but I look to be 2 ess left of lined up with the fence
+                                pull bomb and hold
+                                equip hoverboots on 2nd damage frame and hold left
+                                `,
+                "tags": [HOVER_BOOTS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/BWfb5vN07GU",
             },
             {
                 "name": "Child GTG Entry No C-Up",
@@ -1431,9 +1537,25 @@ window.getTricks = function getTricks() {
                     cancel isg
                     target the angled wall on the left and turn left and backwalk
                 `,
-                "tags": [MASTER_SWORD, TWOHW],
+                "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/5m5F8ortxM0",
+            },
+            {
+                "name": "Bomb Damage Push Into Closed Deku",
+                "location": KOKIRI_FOREST,
+                "description": `
+                    align with wall near babas, turn left and get into corner
+                    sidehop left, then right, start backwalking
+                    once you're far enough up the tree sidehop right, if you hop too early you'll fall off
+                    backwalk until link slips and turn around,
+                    1ess left and walk forward
+                    look for link's shield to be nearly  completely obscured by the tree
+                    turn around, A-Drop bomb and hold shield
+                `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/olhveiDm-tc",
             },
             {
                 "name": "Deku Tree B1 Skip",
@@ -1606,6 +1728,20 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/j7azpD8x_is",
+            },
+            {
+                "name": "jabus belly biri megaflip",
+                "location": JABUS_BELLY,
+                "description": `
+                                align with bottom wall, turn around and walk to wall,
+                                4 sidehops right and backflip
+                                2ess left and start shuffle
+                                hold left out of the ess shuffle and roll
+                                neutral megaflip
+                                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/LgqO39UmiSs",
             },
             {
                 "name": "Jabu Blue Switch Adult Skip",
@@ -2069,38 +2205,16 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/VOgoEvUMNBI",
             },
             {
-                "name": "Shadow Temple BK Skip Nut Bombchu",
-                "location": SHADOW_TEMPLE,
-                "description": `
-                            get ISG
-                            get into left corner and align with door
-                            turn around, 1ess right
-
-                            cancel isg
-
-                            frame 1: shield drop chu
-                            frame 2: nut
-
-                            wait for explosion
-
-                            explosion frame 1 and 2: do nothing
-                            explosion frame 3, 4, 5: down-right notch
-                            explosion frame 6: press Z to ledge clip
-                `,
-                "tags": [BOMBCHU, BK_SKIP],
-                "age": ADULT,
-                "embed": "https://youtube.com/embed/gDaSYaw-zOE",
-            },
-            {
                 "name": "Shadow Temple BK Skip Bombchu Nut Shield Scoot",
                 "location": SHADOW_TEMPLE,
                 "description": `
-                        climb up, turn around, shield scoot once towards the ledge
-                        turn right, backflip into the wall
-                        1ess right
-                        Z targeted shield drop chu, nut 1 frame later and release Z
-                        2 explosion frames: do nothing
-                        down-right for 3 frames then hold Z
+                    climb up, turn around, shield scoot once towards the ledge
+                    turn right, backflip into the wall
+                    1ess right
+                    Z targeted shield drop chu, nut 1 frame later and release Z
+
+                    2 explosion frames: do nothing
+                    down-right for 3 frames then hold Z
                 `,
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
@@ -2228,6 +2342,19 @@ window.getTricks = function getTricks() {
                 "tags": [HOVER_BOOTS, BOMBS, SUPERSLIDE],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/AZhbxW-TCwg",
+            },
+            {
+                "name": "Bombchu Goron Pot Setup",
+                "location": GORON_CITY,
+                "description": `
+                            align with wall, turn left, get into corner,
+                            2x sidehop left, turn left
+                            roll 2x with bomb drop and nut immediately
+                            wait for the pot to come around before dropping the bomb
+                `,
+                "tags": [BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtube.com/embed/Lopo9koK5Pw",
             },
             {
                 "name": "Bow Shoot Bombs From LW to GC",
@@ -2838,13 +2965,16 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/-mxbSjpOHFU",
             },
             {
-                "name": "Child Light Trial Block Skip",
+                "name": "Ganon Quick Kill Setup",
                 "location": GC,
                 "description": `
+                        sidehop right sideroll, backflip ganon slam and unsheath
+                        turn left, A-drop bomb and get isg, then shield drop it
+                        pull bow
                 `,
-                "tags": [BOMBCHU],
-                "age": CHILD,
-                "embed": "https://clips.twitch.tv/embed?clip=FrigidDepressedTitanDoritosChip-yMZMygiNziiIz4e2",
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/WxJtgeGE6LE",
             },
             {
                 "name": "Adult Light Trial Block Skip Bombs",
