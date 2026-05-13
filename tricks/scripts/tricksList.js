@@ -706,6 +706,17 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/1yTzv6i6X_M",
             },
             {
+                "name": "Skip to Morpha Boss Door w/ Iron Boots",
+                "location": WATER_TEMPLE,
+                "description": `
+                    Press A to dive
+                    mash b while ascending from the dive
+                    Equip iron boots on the frame link is coming out of the water.                    `,
+                "tags": [IRON_BOOTS],
+                "age": ADULT,
+                "embed": "https://youtu.be/6V3Btmx1fS4",
+            },
+            {
                 "name": "water temple tektite dive",
                 "location": WATER_TEMPLE,
                 "description": `
