@@ -58,11 +58,27 @@ $(document).ready(function () {
 
 function CreateEmbedIframe(embedUrl) {
     const isTwitch = embedUrl.includes("twitch.tv");
+    let finalUrl = embedUrl;
+    if (!isTwitch && embedUrl.includes("youtube.com")) {
+        // Convert YouTube watch URLs to embed format
+        const watchMatch = embedUrl.match(/youtube\.com\/watch\?v=([\w-]+)/);
+        if (watchMatch) {
+            finalUrl = `https://www.youtube.com/embed/${watchMatch[1]}`;
+        } else if (embedUrl.includes("shorts/")) {
+            finalUrl = embedUrl.replace("shorts/", "embed/");
+        }
+    } else if (!isTwitch && embedUrl.includes("youtu.be/")) {
+        // Convert youtu.be short links to embed format
+        const shortMatch = embedUrl.match(/youtu\.be\/([\w-]+)/);
+        if (shortMatch) {
+            finalUrl = `https://youtube.com/embed/${shortMatch[1]}`;
+        }
+    }
     const parentParam = isTwitch ? "&parent=ootrjsonsearch.org" : "";
     return `
            <div class="video-container">
                <iframe
-                   src="${embedUrl.replace("shorts/", "embed/")}${parentParam}"
+                   src="${finalUrl}${parentParam}"
                    frameborder="0"
                    allowfullscreen
                    ${isTwitch ? 'scrolling="no"' : ''}
@@ -99,7 +115,7 @@ function initFilterButtons() {
     });
 }
 
-function filterTricks(query) {
+function filterTricks(query = '') {
     if (!query.trim()) return tricksJson.tricks;
 
     const fuseResults = trickFuse.search(query);
