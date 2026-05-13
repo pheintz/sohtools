@@ -96,6 +96,21 @@ window.getTricks = function getTricks() {
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/DVy2JOqXkWE",
             },
+                        {
+                "name": "Ice Cavern East Ice Lunge Storage",
+                "location": ICE_CAVERN,
+                "description": `
+                        tested with sticks, master sword, kokiri sword
+                        get lunge storage
+                        target left wall after the red ice
+                        hold up and mash z a few times to get the correct angle as the wall is not sticky
+                        1 ess left
+                        jumpslash while holding up
+                                `,
+                "tags": [TWOHW, ONEHW],
+                "age": ANY_AGE,
+                "embed": "https://www.youtube.com/embed/qfXlggL3wqg", 
+            },
             {
                 "name": "Ice Cavern West Red Ice Bomb Push",
                 "location": ICE_CAVERN,
@@ -509,7 +524,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/bYZAdqDIHBY",
             },
             {
-                "name": "Chu + Hoverboots up to Spirit Temple Hand Chest",
+                "name": "Chu + Hoverboots to Gauntlets Chest (Spirit Hover)",
                 "location": DESERT_COLOUSUS,
                 "description": `
                                 get isg
@@ -2737,7 +2752,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/Y9DnpdHWLhs",
             },
             {
-                "name": "[Alternate] Adult BotW Weirdshot Past Crawlspace Bombs Sticks",
+                "name": "Adult BotW Weirdshot Past Crawlspace Bombs Sticks (backshot)",
                 "location": BOTW,
                 "description": `
                                 face wall
@@ -2767,7 +2782,7 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/Ju1H81yONyE",
             },
             {
-                "name": "Adult BotW Weirdshot Past Crawlspace Chus Sticks",
+                "name": "Adult BotW Weirdshot Past Crawlspace Chus Sticks (backshot)",
                 "location": BOTW,
                 "description": `
                                 2x Backflip
