@@ -66,6 +66,12 @@ function CreateEmbedIframe(embedUrl) {
         } else if (embedUrl.includes("shorts/")) {
             finalUrl = embedUrl.replace("shorts/", "embed/");
         }
+    } else if (!isTwitch && embedUrl.includes("youtu.be/")) {
+        // Convert youtu.be short links to embed format
+        const shortMatch = embedUrl.match(/youtu\.be\/([\w-]+)/);
+        if (shortMatch) {
+            finalUrl = `https://youtube.com/embed/${shortMatch[1]}`;
+        }
     }
     const parentParam = isTwitch ? "&parent=ootrjsonsearch.org" : "";
     return `
