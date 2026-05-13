@@ -548,6 +548,30 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/tDZH1-jFqh4",
             },
             {
+                "name": "Weirdslide Into Desert Colossus Boulder Grotto Backflip Setup",
+                "location": DESERT_COLOUSUS,
+                "description": `
+                        If you allow yourself to sink into the sand for about 1 second you can backflip to get the proper distance to weirdshot. This method works with both bomb and bombchu.
+
+                        Bombs: insta shieldrop bomb then backflip
+                        Chus: Backflip then shield drop
+
+                        Quickdraw hookshot
+                        Z+R
+
+                        Bombs: Roll on big red
+                        Chus: Roll on explosion frame
+
+                        Z R and Down during the roll
+                        After hitting the explosion
+                        3 frames Z+R+Down
+                        Hold Z+Hookshot+Down until inside grotto
+                        `,
+                "tags": [BOMBCHU, HOOKSHOT, BOW],
+                "age": ADULT,
+                "embed": "https://youtu.be/gs-XQLW1SaA",
+            },
+            {
                 "name": "Fire Temple Hookshot Jump Skip Zombie Walk Bunny Hood Edition",
                 "location": FIRE_TEMPLE,
                 "description": `
