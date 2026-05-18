@@ -85,18 +85,66 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/RcoEnEELrBo",
             },
             {
+                "name": "Market Bazaar at Night Bonk Setup",
+                "location": HYRULE_MARKET,
+                "description": `
+                            bonk into the corner where the wall and the box is
+                            turn right and hold z and climb up with right on the control stick
+                            keep z held
+                            sidehop up, roll with Z held
+                            hold up during the roll and jump`,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtu.be/puf285l8ebo",
+            },
+            {
                 "name": "shooting gallery at night",
                 "location": HYRULE_MARKET,
                 "description": `
                         hold straight up and get pushed by the guard
                         after climbing, ess turn up
                         bonk, turn left, sidehop up, sideroll and hold up
-`,
+                `,
                 "tags": [ITEMLESS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/DVy2JOqXkWE",
             },
-                        {
+            {
+                "name": "Break Into Bombchu Bowling",
+                "location": HYRULE_MARKET,
+                "description": `
+                            Align with wall, backflip, 3ess left
+                            roll with up to clip
+                            walk into game. link will stay centered with the screen
+                        `,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtu.be/gUWmFIQXSZ0",
+            },
+            {
+                "name": "Break Into Treasure Chest Game",
+                "location": HYRULE_MARKET,
+                "description": `
+                                align with wall, backflip, 3ess left
+                                forward roll
+                                6 neutral rolls, 5 left sidehops, walk down
+                                `,
+                "tags": [ITEMLESS],
+                "age": CHILD,
+                "embed": "https://youtu.be/G5PSzyc0ymE",
+            },
+            {
+                "name": "Ice Cavern East Red Ice HESS",
+                "location": ICE_CAVERN,
+                "description": `
+                        Drop the bomb up on the stair and back up.
+                        When you z target for the hess it will give you a good angle
+                        `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtu.be/FMBGsSKzFmc",
+            },
+            {
                 "name": "Ice Cavern East Ice Lunge Storage",
                 "location": ICE_CAVERN,
                 "description": `
@@ -183,6 +231,18 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/Hvq95fTEaGQ",
+            },
+            {
+                "name": "break into zora shop itemless",
+                "location": ZORAS_DOMAIN,
+                "description": `
+                                climb up, sidehop left, roll and retarget
+                                1ess right, sidehop right and backwalk off
+                                align with the line on the ground where it meets the water and swim forward
+                                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/0iKDg9QEu0s",
             },
             {
                 "name": "KZ Skip Glitchless Jumpslash Setup",
@@ -311,6 +371,16 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/gbNyDCFOK8c",
             },
             {
+                "name": "Break Into Dampe's Hut Weirdshot",
+                "location": GRAVEYARD,
+                "description": `
+                            for locked door randomizer
+                            `,
+                "tags": [HOOKSHOT, BOMBS, BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtu.be/3o1GHLogyoI",
+            },
+            {
                 "name": "child superslide teleport into shadow temple",
                 "location": GRAVEYARD,
                 "description": `
@@ -375,6 +445,27 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/U8Ul07Xiivc",
+            },
+            {
+                "name": "break into archery weirdshot",
+                "location": KAKARIKO_VILLAGE,
+                "description": `
+                    here's the location for weirdshot into archery. you have to hit the backside of the box'
+`,
+                "tags": [HOOKSHOT, BOMBCHU, BOMBS],
+                "age": ADULT,
+                "embed": "https://youtu.be/_bMG-LwvStE",
+            },
+            {
+                "name": "Impa Cow Ledge Clip",
+                "location": KAKARIKO_VILLAGE,
+                "description": `
+                        target the wall and keep z held
+                        hold down right
+                        when in the corner roll the stick to down-downright`,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/2ExVx1NsPHg",
             },
             {
                 "name": "ZD to LH Jumpslash Clip Sticks",
@@ -745,7 +836,7 @@ window.getTricks = function getTricks() {
                 "location": WATER_TEMPLE,
                 "description": `
                         bait tektite
-                        run to haflway between hookshot anchor and far end
+                        run to halfway between hookshot anchor and far end
                         align with wall and 1 shielded vertical slash
                         turn left and sidehop left and keep Z held or you'll target the tektite
                         with Z held, Up and B, releasing Z during the swing
@@ -803,6 +894,20 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, HOVER_BOOTS],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/RU1Y8ECQRWs",
+            },
+            {
+                "name": "break into lakeside lab",
+                "location": LAKE_HYLIA,
+                "description": `
+                            simple way to clip into lab without much setup
+
+                            shield turn towards corner of lab after aligning with one of the walls
+                            line up on the corner and get into the wall
+                            turn around and backflip
+                            `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/TvOjCCOxPmk",
             },
             {
                 "name": "Ledge Clip Into Water Temple Entrance",
@@ -1027,22 +1132,6 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/tFbHGK8Wl6c",
             },
             {
-                "name": "Shadow Temple Gate Clip Deku Stick",
-                "location": SHADOW_TEMPLE,
-                "description": `
-                            align with gate wall in the corner, move to the left a bit
-                            downroll and retarget for angle
-                            turn left, 1ess right
-                            sidehop right, sideroll to get into corner
-                            3x sidehop left
-                            z+swing
-                            spam jumpslash and hold up during slash
-                                `,
-                "tags": [DEKU_STICKS, GATE_CLIP],
-                "age": ADULT,
-                "embed": "https://youtube.com/embed/CuVYxwIHsPM",
-            },
-            {
                 "name": "Shadow Temple Gate Clip Crouch Stab Method",
                 "location": SHADOW_TEMPLE,
                 "description": `
@@ -1068,6 +1157,28 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": CHILD,
                 "embed": "https://youtube.com/embed/YuANSzTuDDE",
+            },
+            {
+                "name": "HESS Shadow Boat Key Skip Hoverboots + Bombs",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                        get into corner
+                        sidehop right, turn left
+                        sidehop left, sideroll (keep Z held during roll)
+                        instant shield drop bomb, backflip
+                        overhead shield drop bomb, instant shield drop bomb, roll
+
+                        wait for HESS roll frames (big blue, red, or few frames before)
+                        HESS with control stick right (hold ess position during roll, press Z and R on 2nd bomb hit frame)
+                        equip hoverboots after hess starts, but before clip through wall
+
+                        after clip:
+                        pause and switch to ess left, release shield
+                        jumpslash when room is close to center screen (not precise)
+                `,
+                "tags": [HOVER_BOOTS, BOMBS],
+                "age": CHILD,
+                "embed": "https://youtu.be/HYhzZR8pgv4",
             },
             {
                 "name": "Child Water Temple Entry Superslide",
@@ -2193,6 +2304,19 @@ window.getTricks = function getTricks() {
                 "tags": [DEKU_STICKS],
                 "age": ANY_AGE,
                 "embed": "https://www.youtube.com/embed/kqV5v6fUIuk",
+            },
+            {
+                "name": "King Zora skip ledge cancel bombs",
+                "location": ZORAS_DOMAIN,
+                "description": `
+                            climb up, roll, shield drop bomb
+                            back off ledge then walk up to the ledge
+                            up on control stick on 2nd fast red flash
+                            hold Z and R while climbing.
+                            `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtu.be/rfbeUliQPlw",
             },
             {
                 "name": "Shadow Temple No Hovers to Boss Door",
