@@ -2299,7 +2299,9 @@ window.getTricks = function getTricks() {
                             sidehop left, roll and retarget, 1 ess left, hold angle
                             from corner(see video) 2x sidehop right, backflip, sidehop left
                             when stick starts burning out, hold left and walk off the edge
+                            keep holding left
                             jumpslash on first frame the top link's head is below the ledge
+                            hold left during the jumpslash, until clipped through the wall
                 `,
                 "tags": [DEKU_STICKS],
                 "age": ANY_AGE,
