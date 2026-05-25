@@ -23,11 +23,10 @@
         { href: 'nospoiler/', label: '\'spoiler free\' Log Search',     key: 'nospoiler' }
     ];
 
-    var path = window.location.pathname;
+    var pathSegments = window.location.pathname.split('/').filter(function (s) { return s.length > 0; });
 
     function isCurrent(key) {
-        return path.indexOf('/' + key + '/') !== -1
-            || path.indexOf('/' + key) === path.length - key.length - 1;
+        return pathSegments.indexOf(key) !== -1;
     }
 
     function escapeAttr(s) {
