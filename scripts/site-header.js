@@ -20,7 +20,7 @@
     var navLinks = [
         { href: 'tricks/',    label: 'Tricks',         key: 'tricks' },
         { href: 'settings/',  label: 'Settings Rando', key: 'settings' },
-        { href: 'nospoiler/', label: 'No Spoiler Log Search',     key: 'nospoiler' }
+        { href: 'nospoiler/', label: '\'spoiler free\' Log Search',     key: 'nospoiler' }
     ];
 
     var path = window.location.pathname;
