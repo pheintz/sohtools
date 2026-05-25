@@ -18,9 +18,9 @@
     if (base === '') base = './';
 
     var navLinks = [
-        { href: 'tricks/',    label: 'Tricks',         key: 'tricks' },
-        { href: 'settings/',  label: 'Settings Rando', key: 'settings' },
-        { href: 'nospoiler/', label: '\'spoiler free\' Log Search',     key: 'nospoiler' }
+        { href: 'tricks/',    label: 'tricks',         key: 'tricks' },
+        { href: 'settings/',  label: 'settings rando', key: 'settings' },
+        { href: 'nospoiler/', label: 'no-spoiler log search',     key: 'nospoiler' }
     ];
 
     var pathSegments = window.location.pathname.split('/').filter(function (s) { return s.length > 0; });
