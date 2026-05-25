@@ -50,6 +50,44 @@
         text-decoration: none;
     }
 
+.modal-share-btn {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: inherit;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    border-radius: 2px;
+    transition: background-color 0.15s ease;
+}
+
+    .modal-share-btn:hover {
+        background-color: var(--hover-color);
+    }
+
+.modal-share-icon {
+    width: 22px;
+    height: 22px;
+    opacity: 0.85;
+}
+
+/* The trick card carries its own share icon next to the title for the inline
+   search-results view. Inside the trick modal the modal-share-btn handles it,
+   so hide the in-card duplicate. */
+#trick-modal .trick-icon {
+    display: none;
+}
+
 @keyframes modal-fade-in {
     from {
         transform: translateY(-40px);
@@ -212,48 +250,120 @@
     align-items: center;
 }
 
+body.share-popup-open {
+    overflow: hidden;
+}
+
+.share-popup-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 10000;
+    animation: share-popup-fade-in 140ms ease-out;
+}
+
+@keyframes share-popup-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.share-popup-icon {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
 .popup-close-x {
     position: absolute;
-    top: 8px;
+    top: 6px;
     right: 8px;
     background: transparent;
     border: none;
     color: white;
     font-size: 22px;
+    line-height: 1;
     cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 2px;
+    transition: background-color 0.15s ease;
 }
 
+    .popup-close-x:hover {
+        background-color: var(--hover-color);
+    }
+
 input.share-url-input {
-    margin: 15px 0;
-    border: none;
+    margin: 0 0 20px 0;
     width: 100%;
-    max-width: 100%;
+    padding: 10px 12px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 2px;
     box-sizing: border-box;
-    border: 1px solid var(--input-border-color)
+    font-size: 0.95rem;
+    font-family: inherit;
 }
+
+    input.share-url-input:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 1px;
+        border-color: transparent;
+    }
 
 .popup-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    gap: 8px;
 }
 
 .popup-btn {
-    padding: 8px 14px;
+    padding: 8px 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: 2px;
     cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: inherit;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .copy-btn {
-    background: var(--input-action);
+    background-color: var(--primary-color);
     color: white;
 }
 
-.close-btn {
-    background: #636e72;
-    color: white;
+    .copy-btn:hover {
+        background-color: #7a4fc7;
+    }
+
+    .copy-btn.copied {
+        background-color: var(--input-action);
+    }
+
+    .copy-btn.failed {
+        background-color: #b00020;
+    }
+
+.share-btn {
+    background-color: transparent;
+    color: var(--primary-color);
 }
+
+    .share-btn:hover {
+        background-color: var(--hover-color);
+    }
 
 .trick-icon {
     stroke: var(--text-color);
@@ -272,29 +382,23 @@ input.share-url-input {
 }
 
 .share-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #222;
-    color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    padding: 24px;
-    z-index: 10000;
-    max-width: 600px;
-    width: 90%;
-    font-family: sans-serif;
+    position: relative;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    border-radius: 2px;
+    box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.6),
+                0 24px 38px 3px rgba(0, 0, 0, 0.45),
+                0 9px 46px 8px rgba(0, 0, 0, 0.4); /* Material 24dp */
+    padding: 48px 20px 20px 20px; /* extra top padding clears the corner icon + close-x */
+    max-width: 520px;
+    width: 100%;
     box-sizing: border-box;
+    font-family: inherit;
 }
 
-    .share-popup h3 {
-        margin-top: 0;
-    }
-
-    img{
-            max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-top: 16px;
-    }
+.description img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 16px;
+}

@@ -46,9 +46,18 @@ const $searchResults = $('#search-results');
 const $searchInput = $('#search');
 const baseShareUrl = window.location.href.split('?')[0] + '?trick=';
 
+function escapeHtml(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 
 $(document).ready(function () {
     listTricksAsDirectory();
+    openTrickFromUrl();
     $('#search').on('input', function () {
         const query = $(this).val().toLowerCase();
         filterDirectory(query);
@@ -99,19 +108,20 @@ function renderTrickCards(tricks) {
     return tricks.map(trick => {
         const embed = CreateEmbedIframe(trick.url);
         const shareUrl = `${baseShareUrl}${encodeURIComponent(trick.title)}`;
+        const descHtml = escapeHtml(trick.description).replace(/\n/g, '<br>');
 
         return `
         <div class="trick-card-container ${separator}">
             <article class="trick-card">
                 <h2 class="trick-header">
-                    ${trick.title}
-                    <img class="trick-icon" src="../img/copy-link.svg" data-url="${shareUrl}" title="Copy Share Link" />
+                    ${escapeHtml(trick.title)}
+                    <img class="trick-icon" src="../img/copy-link.svg" data-url="${escapeHtml(shareUrl)}" title="Copy Share Link" />
                 </h2>
-                <div class="description"><strong>How to do it:</strong> ${trick.description.replace(/\n/g, '<br>')}</div>
+                <div class="description"><strong>How to do it:</strong> ${descHtml}</div>
                 ${embed}
             </article>
         </div>
-        `;  
+        `;
     }).join('');
 }
 
@@ -134,7 +144,7 @@ function handleSearch(query) {
     }
 
     const resultsHtml = htmlParts.join('');
-    $searchResults.html(resultsHtml || `<p>No results found for "${query}"</p>`);
+    $searchResults.html(resultsHtml || `<p>No results found for "${escapeHtml(query)}"</p>`);
 
     if (filteredTricks.length > 0) {
         bindShareButtons(); // bind click events on .trick-icon
@@ -147,7 +157,7 @@ function listTricksAsDirectory(filteredTricks = null) {
 
     let html = '<div id="directory"><ul>';
     tricks.forEach(trick => {
-        html += `<li class="directory-item">${trick.title}</li>`;
+        html += `<li class="directory-item">${escapeHtml(trick.title)}</li>`;
     });
     html += '</ul></div>';
 
@@ -156,34 +166,59 @@ function listTricksAsDirectory(filteredTricks = null) {
     $('.directory-item').click(function () {
         const trickTitle = $(this).text().toLowerCase();
         const trick = tricksJson.tricks.find(t => t.title.toLowerCase() === trickTitle);
-        if (trick) {
-            const $modal = $('#trick-modal');
-            if ($modal.length === 0) {
-                $('body').append(`
-                    <div id="trick-modal" class="modal">
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <div id="modal-body"></div>
-                        </div>
-                    </div>
-                `);
-            }
-            $('#modal-body').html(renderTrickCards([trick]));
-            $('#trick-modal').show();
-            $('body').css('overflow', 'hidden');
-            $('#trick-modal .close').click(function () {
-                $('#trick-modal').hide();
-                $('body').css('overflow', 'auto');
-            });
-            $('#trick-modal').on('click', function (e) {
-                if (e.target === this) {
-                    $(this).hide();
-                    $('body').css('overflow', 'auto');
-                }
-            });
-            bindShareButtons();
-        }
+        if (trick) openTrickModal(trick);
     });
+}
+
+function openTrickModal(trick) {
+    let $modal = $('#trick-modal');
+    if ($modal.length === 0) {
+        $('body').append(`
+            <div id="trick-modal" class="modal">
+                <div class="modal-content">
+                    <button type="button" class="modal-share-btn" aria-label="Share this trick">
+                        <img class="modal-share-icon" src="../img/copy-link.svg" alt="" />
+                        <span>Share</span>
+                    </button>
+                    <span class="close">&times;</span>
+                    <div id="modal-body"></div>
+                </div>
+            </div>
+        `);
+        $modal = $('#trick-modal');
+    }
+    $('#modal-body').html(renderTrickCards([trick]));
+    $modal.show();
+    $('body').css('overflow', 'hidden');
+    $('#trick-modal .close').off('click.trickmodal').on('click.trickmodal', closeTrickModal);
+    $modal.off('click.trickmodal').on('click.trickmodal', function (e) {
+        if (e.target === this) closeTrickModal();
+    });
+
+    const shareUrl = `${baseShareUrl}${encodeURIComponent(trick.title)}`;
+    $('#trick-modal .modal-share-btn').off('click.trickmodal').on('click.trickmodal', function (e) {
+        e.stopPropagation();
+        ShareModule.show(shareUrl);
+    });
+
+    bindShareButtons();
+}
+
+function closeTrickModal() {
+    $('#trick-modal').hide();
+    $('body').css('overflow', 'auto');
+}
+
+// Reads ?trick=<title> from URL and opens that trick's modal on landing.
+// XSS-safe: the param is only used for a case-insensitive lookup against
+// tricksJson — never written to the DOM. Matched trick is rendered through
+// renderTrickCards, which now html-escapes every field.
+function openTrickFromUrl() {
+    const trickParam = new URLSearchParams(window.location.search).get('trick');
+    if (!trickParam) return;
+    const needle = trickParam.toLowerCase();
+    const trick = tricksJson.tricks.find(t => t.title.toLowerCase() === needle);
+    if (trick) openTrickModal(trick);
 }
 
 function filterDirectory(query) {
