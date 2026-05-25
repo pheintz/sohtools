@@ -27,6 +27,13 @@ body {
     flex-direction: column;
 }
 
+/* Landing page opts out of the legacy 50vh body constraint */
+body.landing-body {
+    height: auto;
+    min-height: 100vh;
+    padding: 0;
+}
+
 h1, h3 {
     color: #9575CD;
     text-align: center;
@@ -321,3 +328,186 @@ svg {
         color: var(--text-color);
         border-color: transparent;
     }
+
+/* ===========================================================
+   Shared site header (2026-05-24)
+   Flat Material — solid surfaces, no gradients, Material
+   elevation shadows only. Sits at the top of every page;
+   negative horizontal margin breaks out of body's 20px
+   padding. Landing page uses .landing-body { padding: 0 }
+   so the negative margin collapses harmlessly there.
+   =========================================================== */
+.site-header {
+    background-color: var(--input-bg-color);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: -20px -20px 24px -20px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Material elevation 2dp */
+    position: relative;
+    z-index: 4;
+}
+
+body.landing-body .site-header {
+    margin: 0;
+}
+
+.site-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1.05rem;
+    text-decoration: none;
+}
+
+    .site-brand:hover {
+        text-decoration: none;
+        color: var(--text-color);
+    }
+
+.brand-mark {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    background-color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.brand-text {
+    color: inherit;
+}
+
+.site-nav {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+}
+
+    .site-nav a {
+        color: var(--text-color);
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        transition: background-color 0.15s ease;
+        border-radius: 2px;
+    }
+
+        .site-nav a:hover {
+            background-color: var(--hover-color);
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .site-nav a[aria-current="page"] {
+            color: #9575CD;
+        }
+
+@media (max-width: 640px) {
+    .site-header {
+        padding: 10px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .site-nav a {
+        padding: 6px 12px;
+        font-size: 0.88rem;
+    }
+}
+
+/* ===========================================================
+   Landing page (2026-05-24)
+   Flat Material — solid card surfaces, single elevation
+   shadow, simple hover elevation change.
+   =========================================================== */
+.landing {
+    max-width: 1080px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.landing-hero {
+    text-align: center;
+    padding: 48px 20px 32px;
+}
+
+    .landing-hero h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin: 0 0 12px;
+        color: #9575CD;
+        font-weight: 400;
+        line-height: 1.1;
+    }
+
+    .landing-hero p {
+        color: var(--text-color);
+        font-size: 1.05rem;
+        margin: 0 auto;
+        max-width: 620px;
+        line-height: 1.5;
+    }
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    padding: 16px 0 40px;
+}
+
+.tool-card {
+    background-color: var(--input-bg-color);
+    border-radius: 2px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5),
+                0 1px 2px rgba(0, 0, 0, 0.3); /* Material elevation 1dp */
+    transition: box-shadow 0.2s ease, background-color 0.15s ease;
+}
+
+    .tool-card:hover {
+        background-color: var(--hover-color);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.55),
+                    0 3px 6px rgba(0, 0, 0, 0.4); /* Material elevation 4dp */
+        text-decoration: none;
+    }
+
+.tool-card h2 {
+    font-size: 1.15rem;
+    margin: 0;
+    color: var(--text-color);
+    text-align: left;
+    font-weight: 500;
+}
+
+.tool-card p {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.5;
+    flex: 1;
+    min-height: 3em; /* reserve room for a 2-line description */
+}
+
+.tool-cta {
+    color: #9575CD;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+}
