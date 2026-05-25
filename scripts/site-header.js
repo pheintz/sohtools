@@ -29,18 +29,20 @@
         return pathSegments.indexOf(key) !== -1;
     }
 
-    function escapeAttr(s) {
-        return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
     var navHtml = navLinks.map(function (l) {
         var current = isCurrent(l.key) ? ' aria-current="page"' : '';
-        return '<a href="' + escapeAttr(base + l.href) + '"' + current + '>' + l.label + '</a>';
+        return '<a href="' + escapeHtml(base + l.href) + '"' + current + '>' + escapeHtml(l.label) + '</a>';
     }).join('');
 
     var headerHtml =
         '<header class="site-header">' +
-            '<a class="site-brand" href="' + escapeAttr(base) + '">' +
+            '<a class="site-brand" href="' + escapeHtml(base) + '">' +
                 '<span class="brand-mark" aria-hidden="true"></span>' +
                 '<span class="brand-text">soh.tools</span>' +
             '</a>' +

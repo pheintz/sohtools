@@ -399,3 +399,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Claude Code (local agent config, scratchpad, settings)
+.claude/
+CLAUDE.local.md

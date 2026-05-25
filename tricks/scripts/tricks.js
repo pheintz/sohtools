@@ -44,17 +44,8 @@ const trickFuse = new Fuse(tricksJson.tricks, {
 
 
 const $searchResults = $('#search-results');
-const $searchInput = $('#search');
 const baseShareUrl = window.location.href.split('?')[0] + '?trick=';
-
-function escapeHtml(s) {
-    return String(s == null ? '' : s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
+const escapeHtml = window.SohUtil.escapeHtml;
 
 $(document).ready(function () {
     listTricksAsDirectory();
@@ -83,11 +74,11 @@ function CreateEmbedIframe(embedUrl) {
             finalUrl = `https://youtube.com/embed/${shortMatch[1]}`;
         }
     }
-    const parentParam = isTwitch ? "&parent=ootrjsonsearch.org" : "";
+    const parentParam = isTwitch ? "&parent=soh.tools" : "";
     return `
            <div class="video-container">
                <iframe
-                   src="${finalUrl}${parentParam}"
+                   src="${escapeHtml(finalUrl + parentParam)}"
                    frameborder="0"
                    allowfullscreen
                    ${isTwitch ? 'scrolling="no"' : ''}
@@ -162,7 +153,7 @@ function renderTrickCards(tricks) {
             <article class="trick-card">
                 <h2 class="trick-header">
                     ${escapeHtml(trick.name)}
-                    <img class="trick-icon" src="../img/copy-link.svg" data-url="${escapeHtml(shareUrl)}" title="Copy Share Link" />
+                    <img class="trick-icon" src="../img/share-arrow.svg" data-url="${escapeHtml(shareUrl)}" title="Copy Share Link" />
                 </h2>
                 <div class="description"><strong>How to do it:</strong> ${descHtml}</div>
                 ${embed}
@@ -178,13 +169,17 @@ function renderTrickCards(tricks) {
     }).join('');
 }
 
+// Single delegated handler — bound once, survives DOM re-renders.
+let shareDelegationBound = false;
 function bindShareButtons() {
-    document.querySelectorAll('.trick-icon').forEach(icon => {
-        icon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const url = icon.getAttribute('data-url');
-            if (url) ShareModule.show(url);
-        });
+    if (shareDelegationBound) return;
+    shareDelegationBound = true;
+    document.body.addEventListener('click', (e) => {
+        const icon = e.target.closest('.trick-icon');
+        if (!icon) return;
+        e.stopPropagation();
+        const url = icon.getAttribute('data-url');
+        if (url) ShareModule.show(url);
     });
 }
 
@@ -257,7 +252,7 @@ function openTrickModal(trick) {
             <div id="trick-modal" class="modal">
                 <div class="modal-content">
                     <button type="button" class="modal-share-btn" aria-label="Share this trick">
-                        <img class="modal-share-icon" src="../img/copy-link.svg" alt="" />
+                        <img class="modal-share-icon" src="../img/share-arrow.svg" alt="" />
                         <span>Share</span>
                     </button>
                     <span class="close">&times;</span>
