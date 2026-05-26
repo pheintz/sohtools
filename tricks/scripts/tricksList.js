@@ -1269,6 +1269,53 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/xDLnTnV9UcY",
             },
             {
+                "name": "Enter Jabu as Adult Bombs Only",
+                "location": ZORAS_FOUNTAIN,
+                "description": `
+                                isg
+
+                                to get angle:
+                                align wall backflip roll retarget
+                                sidehop left roll retarget
+
+                                with Z held sidewalk left to store shield position.
+                                do not sidewalk right or shield at any point unnecessarily or links shield will not collide with the explosion properly
+
+                                roll into corner, 2x sidehop right,
+                                retarget (do not shield flick), roll, sidehop left, turn right
+
+                                backflip and on the first frame possible shield drop the bomb
+                                sidehop left on the first landing frame
+                                hold down on control stick until link turns down while sliding
+
+                                *for below: many frames work for this but I like 5 frames specifically because it gives a good window and visual cue
+
+                                5 frames after link turns down:
+                                pull bomb and A-drop. hold right while dropping so link turns as soon as possible
+                                after link turns right release stick
+                                z one frame
+                                A+Z+R to roll and keep shield held
+
+                                on 2nd frame of 4th red bomb flash:
+                                visual cue if using the 5 frames method above: both bombs will be red
+
+                                out of the unpause, untargeted sidehop left with shield (R, Left, and A)
+                                keep R held until shield hits the explosion
+                                release R and hold down until link turns down
+
+                                on 2nd frame of 4th red bomb flash
+
+                                one frame Z only to start camera turn
+                                one frame Z R and A to roll
+                                keep Z and R held
+
+                                2nd frame links head is on the screen zoomed in: sidehop left
+                            `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtu.be/a3sPJy5T6BE",
+            },
+            {
                 "name": "Child Jabu Jumpslash Entry Left Side Bunny Hood",
                 "location": ZORAS_FOUNTAIN,
                 "description": `
