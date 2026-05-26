@@ -535,6 +535,41 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/rcKcEpwXTZI",
             },
             {
+                "name": "Adult Enter Zoras Domain Swordless",
+                "location": ZORAS_RIVER,
+                "description": `
+                        this is a nice HD update from existing videos that gives a better visual of the minimap
+
+                        Setup:
+                        enter from hyrule field not for the first time
+                        backflip, roll and retarget
+                        turn right, sidehop right
+                        turn left, 2x sidehop left, 2x sidehop right
+
+                        swim and drop down. swim around the waterfall to the left and then back up the river to the right. you can choose to surface or keep swimming at this point
+
+                        swim towards the open grotto and drop off far enough to swim underneath the loading zone, about 3 seconds
+
+                        swim up the river using the minimap and turn the corner
+                        i like to hold Z once link is facing north and tap left to swim north
+
+                        my visual cue is to watch the line on the map marker. the base on link's arrow needs to be north of that line. if you're off line when link hits the surface wiggle a bit to get back in bounds then the camera will snap
+
+                        setup for enter domain:
+                        align with wall, turn right walk forward until climb
+                        sidehop left, roll and retarget
+                        forward to climb up the ladder
+
+                        after climbing:
+                        turn right, 2ess right
+                        7x sidehop left, 2x backflip, 2x sidehop right,
+                        walk down and you'll jump into domain
+                        `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/BknsDzliFQ4",
+            },
+            {
                 "name": "Itemless Frestanding Heart Near Domain",
                 "location": ZORAS_RIVER,
                 "description": `
