@@ -16,33 +16,54 @@ const bottomRowSongs = [
     "CVars.gRandoSettings.StartingSerenadeOfWater"
 ]
 function renderInputs(obj, parentKey = '') {
-    let html = '';
+    let rows = '';
+    let groups = '';
+
     for (const key in obj) {
         const fullKey = parentKey ? `${parentKey}.${key}` : key;
         const value = obj[key];
 
         if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-            if (key !== 'InjectItemCounts' && key !== 'CVars' && key !== 'gEnhancements' && key !== 'ExtraTraps') {
-                html += `<strong>${key}</strong>`;
+            const inner = renderInputs(value, fullKey);
+            if (!inner) continue;
+
+            if (key === 'CVars') {
+                groups += inner;
+            } else {
+                groups += `
+        <details class="settings-group" open>
+            <summary>${putSpacesInCamelCase(key)}</summary>
+            ${inner}
+        </details>`;
             }
-            html += renderInputs(value, fullKey);
             continue;
         }
 
         if (typeof value === 'string') {
-            const parts = value.split('-');
-            const min = parts[0] ?? '';
-            const max = parts.length > 1 ? parts[1] : '';
-            const name = putSpacesInCamelCase(key);
+            rows += renderRow(key, value, fullKey);
+        }
+    }
 
-            const isNum = s => /^-?\d+$/.test(String(s));
-            const isBooleanRange = min === '0' && max === '1';
-            const isNumericRange = isNum(min) && isNum(max) && !isBooleanRange;
+    let html = '';
+    if (rows) html += `<div class="settings-grid">${rows}</div>`;
+    html += groups;
+    return html;
+}
 
-            html += `<div class="setting-row" style="margin-left:20px;">`;
+function renderRow(key, value, fullKey) {
+    const parts = value.split('-');
+    const min = parts[0] ?? '';
+    const max = parts.length > 1 ? parts[1] : '';
+    const name = putSpacesInCamelCase(key);
 
-            // hidden data node (the single source of truth)
-            html += `
+    const isNum = s => /^-?\d+$/.test(String(s));
+    const isBooleanRange = min === '0' && max === '1';
+    const isNumericRange = isNum(min) && isNum(max) && !isBooleanRange;
+
+    let html = `<div class="setting-row">`;
+
+    // hidden data node (the single source of truth)
+    html += `
         <input style="display:none"
                id="${fullKey}"
                name="${fullKey}"
@@ -51,17 +72,17 @@ function renderInputs(obj, parentKey = '') {
                type="hidden"
                class="randomize-data">`;
 
-            // label
-            html += `<label for="${fullKey}">${name}:</label>`;
+    // label
+    html += `<label for="${fullKey}">${name}:</label>`;
 
-            if (isBooleanRange) {
-                // Boolean: Randomized + Enabled pair
-                const randomizedId = `${fullKey}-rand`;
-                const enabledId = `${fullKey}-enabled`;
-                const isRandom = (min === '0' && max === '1');
-                const isPinned1 = (min === max && min === '1');
+    if (isBooleanRange) {
+        // Boolean: Randomized + Enabled pair
+        const randomizedId = `${fullKey}-rand`;
+        const enabledId = `${fullKey}-enabled`;
+        const isRandom = (min === '0' && max === '1');
+        const isPinned1 = (min === max && min === '1');
 
-                html += `
+        html += `
           <div class="bool-row">
             <div class="check-container">
                 <input type="checkbox"
@@ -84,28 +105,31 @@ function renderInputs(obj, parentKey = '') {
 
             </div>
           </div>`;
-            } else if (isNumericRange) {
-                // Non-bool numeric: show min/max inputs again ✅
-                html += `
+    } else if (isNumericRange) {
+        // Non-bool numeric: show min/max inputs again ✅
+        html += `
           <div class="range-row">
-            <label>min:</label>
-            <input type="number"
-                   step="1"
-                   min="${min}"
-                   max="${max}"
-                   value="${min}"
-                   onchange="UpdateMin('${fullKey}', this.value)">
-
-            <label>max:</label>
-            <input type="number"
-                   step="1"
-                   min="${min}"
-                   max="${max}"
-                   value="${max}"
-                   onchange="UpdateMax('${fullKey}', this.value)">
+            <div class="range-field">
+                <label>min:</label>
+                <input type="number"
+                       step="1"
+                       min="${min}"
+                       max="${max}"
+                       value="${min}"
+                       onchange="UpdateMin('${fullKey}', this.value)">
+            </div>
+            <div class="range-field">
+                <label>max:</label>
+                <input type="number"
+                       step="1"
+                       min="${min}"
+                       max="${max}"
+                       value="${max}"
+                       onchange="UpdateMax('${fullKey}', this.value)">
+            </div>
           </div>`;
-            } else {
-                html += `
+    } else {
+        html += `
                       <div class="string-row">
                         <label>Enter value:</label>
                         <input type="text" style="max-width: 200px;"
@@ -115,12 +139,37 @@ function renderInputs(obj, parentKey = '') {
                                value="${min}"
                                onchange="UpdateString('${fullKey}', this.value)">
                       </div>`;
-            }
-
-            html += `</div>`;
-        }
     }
+
+    html += `</div>`;
     return html;
+}
+
+function filterSettings(query) {
+    query = (query || '').trim().toLowerCase();
+    const container = document.getElementById('RandomContainer');
+    if (!container) return;
+
+    const rows = container.querySelectorAll('.setting-row');
+    const groups = container.querySelectorAll('details.settings-group');
+
+    if (!query) {
+        rows.forEach(r => r.classList.remove('filter-hidden'));
+        groups.forEach(g => { g.classList.remove('filter-hidden'); g.open = true; });
+        return;
+    }
+
+    rows.forEach(r => {
+        const label = r.querySelector('label');
+        const text = label ? label.textContent.toLowerCase() : '';
+        r.classList.toggle('filter-hidden', !text.includes(query));
+    });
+
+    groups.forEach(g => {
+        const hasMatch = !!g.querySelector('.setting-row:not(.filter-hidden)');
+        g.classList.toggle('filter-hidden', !hasMatch);
+        if (hasMatch) g.open = true;
+    });
 }
 
 function UpdateString(fullKey, value) {
@@ -194,7 +243,9 @@ function generateConfigForDownload(objectToReplace) {
         let value;
 
         if (isNum(min) && isNum(max)) {
-            value = Math.floor(Math.random() * (parseInt(max) - parseInt(min) + 1)) + parseInt(min);
+            const lo = Math.min(parseInt(min), parseInt(max));
+            const hi = Math.max(parseInt(min), parseInt(max));
+            value = Math.floor(Math.random() * (hi - lo + 1)) + lo;
         } else {
             value = min;
         }
@@ -270,8 +321,8 @@ function RandomizeTriforcePieces() {
     const min = Math.floor(Math.random() * (max + 1)); // 0..max inclusive
     const maxEl = document.getElementById("CVars.gRandoSettings.TriforceHuntTotalPieces");
     const minEl = document.getElementById("CVars.gRandoSettings.TriforceHuntRequiredPieces");
-    maxEl.setAttribute('data-min', max); maxEl.setAttribute('data-max', max);
-    minEl.setAttribute('data-min', min); minEl.setAttribute('data-max', min);
+    if (maxEl) { maxEl.setAttribute('data-min', max); maxEl.setAttribute('data-max', max); }
+    if (minEl) { minEl.setAttribute('data-min', min); minEl.setAttribute('data-max', min); }
 }
 
 function coinToss() {
@@ -289,12 +340,16 @@ function coinToss() {
 function RollItemPoolForStartingHearts() {
     const itemPoolType = document.querySelector(`[id="CVars.gRandoSettings.ItemPool"]`);
     let rolledValue = Math.floor(Math.random() * 4);
-    itemPoolType.setAttribute('data-min', rolledValue);
-    itemPoolType.setAttribute('data-max', rolledValue);
+    if (itemPoolType) {
+        itemPoolType.setAttribute('data-min', rolledValue);
+        itemPoolType.setAttribute('data-max', rolledValue);
+    }
     const numStartingHearts = RandomizeStartingHearts(rolledValue);
     const startingHearts = document.querySelector(`[id="CVars.gRandoSettings.StartingHearts"]`);
-    startingHearts.setAttribute('data-min', numStartingHearts);
-    startingHearts.setAttribute('data-max', numStartingHearts);
+    if (startingHearts) {
+        startingHearts.setAttribute('data-min', numStartingHearts);
+        startingHearts.setAttribute('data-max', numStartingHearts);
+    }
 }
 
 function RandomizeStartingHearts(itemPoolType) {

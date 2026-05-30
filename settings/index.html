@@ -27,25 +27,33 @@
         </label>
     </div>
     <div style="border-top: 1px solid gray; margin-bottom: 16px"></div>
+    <input type="search" id="settingsSearch" placeholder="Filter settings…" autocomplete="off">
     <div id="RandomContainer"></div>
     <script src="./scripts/getConfig.js"></script>
     <script src="./scripts/getExtraModes.js"></script>
     <script src="./scripts/settingsrando.js"></script>
     <script type="text/javascript">
+        const searchInput = document.getElementById('settingsSearch');
+
+        function render() {
+            document.getElementById('RandomContainer').innerHTML = renderInputs(config);
+            filterSettings(searchInput.value);
+        }
+
         let config = window.getConfig();
-        document.getElementById('RandomContainer').innerHTML = renderInputs(config);
+        render();
 
         document.getElementById('generate').onclick = function () {
             generateConfigForDownload(config);
         };
 
         document.getElementById('ExtraModes').onclick = function () {
-            if (this.checked) {
-                config = window.getExtraModes();
-            } else {
-                config = window.getConfig();
-            }
-            document.getElementById('RandomContainer').innerHTML = renderInputs(config);
+            config = this.checked ? window.getExtraModes() : window.getConfig();
+            render();
+        };
+
+        searchInput.oninput = function () {
+            filterSettings(this.value);
         };
     </script>
 </body>
