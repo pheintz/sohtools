@@ -32,6 +32,26 @@
             *Extra modes include: Mirrored World, Enemy Randomizer, Randomized Enemy Sizes, Shadow Tag, Additional Traps
         </label>
     </div>
+    <div class="preset-bar">
+        <div class="preset-group">
+            <label for="presetSelect">Preset:</label>
+            <select id="presetSelect"></select>
+            <button id="presetLoad" type="button">Load</button>
+            <button id="presetDelete" type="button">Delete</button>
+        </div>
+        <div class="preset-group">
+            <input type="text" id="presetName" placeholder="New preset name…" autocomplete="off">
+            <button id="presetSave" type="button">Save</button>
+        </div>
+        <div class="preset-group">
+            <button id="presetReset" type="button">Reset to defaults</button>
+        </div>
+    </div>
+    <div class="preset-io">
+        <input type="text" id="presetString" placeholder="Paste a preset string to import, or click Export to fill this">
+        <button id="presetExport" type="button">Export</button>
+        <button id="presetImport" type="button">Import</button>
+    </div>
     <div style="border-top: 1px solid gray; margin-bottom: 16px"></div>
     <input type="search" id="settingsSearch" placeholder="Filter settings…" autocomplete="off">
     <div id="RandomContainer"></div>
@@ -39,28 +59,7 @@
     <script src="./scripts/getExtraModes.js"></script>
     <script src="./scripts/settingsrando.js"></script>
     <script type="text/javascript">
-        const searchInput = document.getElementById('settingsSearch');
-
-        function render() {
-            document.getElementById('RandomContainer').innerHTML = renderInputs(config);
-            filterSettings(searchInput.value);
-        }
-
-        let config = window.getConfig();
-        render();
-
-        document.getElementById('generate').onclick = function () {
-            generateConfigForDownload(config);
-        };
-
-        document.getElementById('ExtraModes').onclick = function () {
-            config = this.checked ? window.getExtraModes() : window.getConfig();
-            render();
-        };
-
-        searchInput.oninput = function () {
-            filterSettings(this.value);
-        };
+        initSettingsRandomizer();
     </script>
 </body>
 </html>

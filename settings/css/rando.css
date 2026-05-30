@@ -21,6 +21,73 @@
     gap: 12px;
 }
 
+/* Preset toolbar: clusters of related controls, with more space between groups
+   than within them (Gestalt grouping). */
+.preset-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+    margin: 8px 0;
+}
+
+.preset-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .preset-group > label {
+        margin: 0;
+        white-space: nowrap;
+    }
+
+.preset-io {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    max-width: 720px;
+}
+
+/* Shared control styling. The width/margin reset overrides the global
+   input[type="text"] { width: 50vw; margin-bottom: 20px } from site.css. */
+.preset-bar select,
+.preset-bar input,
+.preset-bar button,
+.preset-io input,
+.preset-io button {
+    width: auto;
+    margin: 0;
+    padding: 8px 10px;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+#presetName {
+    width: 220px;
+}
+
+.preset-io input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.preset-bar button,
+.preset-io button {
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+    .preset-bar button:hover,
+    .preset-io button:hover {
+        background-color: var(--hover-color);
+    }
+
 .settings-group {
     border: 1px solid var(--input-border-color);
     border-radius: 12px;
@@ -139,3 +206,46 @@ input[type="number"] {
             margin: 0;
             font-size: 14px;
         }
+
+/* Weight control: a number box row above, a slider row below, tied together */
+.weight-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+    .weight-top label {
+        margin: 0;
+    }
+
+    .weight-top .weight-input {
+        width: 64px;
+        padding: 6px 8px;
+        margin: 0;
+        font-size: 14px;
+    }
+
+.weight-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+    .weight-slider-row .bias-end {
+        font-size: 12px;
+        color: var(--text-color);
+        opacity: 0.7;
+    }
+
+    .weight-slider-row .weight-slider {
+        flex: 1;
+        min-width: 80px;
+        accent-color: var(--primary-color);
+    }
+
+.weight-input:disabled,
+.weight-slider:disabled {
+    opacity: 0.4;
+}
