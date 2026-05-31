@@ -431,7 +431,6 @@ function rollSpecialValues() {
     values[TRIFORCE_TOTAL_KEY] = totalPieces;
     values[TRIFORCE_REQUIRED_KEY] = randomInt(0, totalPieces);
 
-    // Starting songs (optional): each ocarina row grants one random song or none.
     if (customBehavior.randomizeSongs) {
         Object.assign(values, rollSongRow(TOP_ROW_SONGS));
         Object.assign(values, rollSongRow(BOTTOM_ROW_SONGS));
@@ -445,14 +444,12 @@ function rollSpecialValues() {
     return values;
 }
 
-// 50/50: either grant exactly one random song in the row, or grant none.
 function rollSongRow(songKeys) {
-    const grantOneSong = coinFlip();
     const grantedIndex = randomInt(0, songKeys.length - 1);
 
     const values = {};
     songKeys.forEach((songKey, index) => {
-        values[songKey] = (grantOneSong && index === grantedIndex) ? 1 : 0;
+        values[songKey] = index === grantedIndex ? 1 : 0;
     });
     return values;
 }
