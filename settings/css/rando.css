@@ -141,6 +141,11 @@
     display: none !important;
 }
 
+/* A setting whose value is taken over by a Custom Behavior toggle. */
+.setting-row.overridden {
+    opacity: 0.55;
+}
+
 #generate {
     background-color: var(--secondary-color);
     color: white;

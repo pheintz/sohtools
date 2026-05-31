@@ -32,6 +32,11 @@ const TRIFORCE_REQUIRED_KEY = "CVars.gRandoSettings.TriforceHuntRequiredPieces";
 const ITEM_POOL_KEY = "CVars.gRandoSettings.ItemPool";
 const STARTING_HEARTS_KEY = "CVars.gRandoSettings.StartingHearts";
 
+// Scrub prices are a [min, max] pair rolled independently, so the output must be
+// ordered to avoid min > max.
+const SCRUBS_PRICE_RANGE_MIN_KEY = "CVars.gRandoSettings.ScrubsPriceRange1";
+const SCRUBS_PRICE_RANGE_MAX_KEY = "CVars.gRandoSettings.ScrubsPriceRange2";
+
 // UI-only toggles for special randomization behavior. These live in memory and
 // are never written to the output config; they only gate the special logic in
 // rollSpecialValues().
@@ -321,6 +326,26 @@ function updateStringValue(fullKey, value) {
 
 function setCustomBehavior(behaviorKey, enabled) {
     customBehavior[behaviorKey] = enabled;
+    if (behaviorKey === 'randomizeSongs') applySongOverrideState();
+}
+
+// While "Randomize Starting Songs" is on, the 12 individual song controls are
+// overridden at generation, so disable them to make that obvious. When off, the
+// controls are restored to their normal interactive state.
+function applySongOverrideState() {
+    const overridden = customBehavior.randomizeSongs;
+    for (const songKey of [...TOP_ROW_SONGS, ...BOTTOM_ROW_SONGS]) {
+        if (overridden) {
+            findControls('.rand-toggle', songKey).forEach(el => { el.disabled = true; });
+            findControls('.enabled-toggle', songKey).forEach(el => { el.disabled = true; });
+            findControls('.chance-control', songKey).forEach(el => { el.disabled = true; });
+        } else {
+            findControls('.rand-toggle', songKey).forEach(el => { el.disabled = false; });
+            syncControlsToData(songKey); // restores the correct enabled/chance disabled states
+        }
+        const row = getDataNode(songKey) ? getDataNode(songKey).closest('.setting-row') : null;
+        if (row) row.classList.toggle('overridden', overridden);
+    }
 }
 
 function onRandomizedToggle(fullKey, randomizedCheckbox) {
@@ -368,7 +393,19 @@ function generateConfigForDownload() {
         setNestedValue(output, path, value);
     });
 
+    orderScrubPriceRange(output);
     downloadJsonAsFile(output, 'settingsrando.json');
+}
+
+// Scrub prices use a [min, max] pair; rolled independently they can come out
+// reversed, so make sure the lower value is the min.
+function orderScrubPriceRange(output) {
+    const min = getNestedValue(output, SCRUBS_PRICE_RANGE_MIN_KEY);
+    const max = getNestedValue(output, SCRUBS_PRICE_RANGE_MAX_KEY);
+    if (typeof min === 'number' && typeof max === 'number' && min > max) {
+        setNestedValue(output, SCRUBS_PRICE_RANGE_MIN_KEY, max);
+        setNestedValue(output, SCRUBS_PRICE_RANGE_MAX_KEY, min);
+    }
 }
 
 // Rolls the final value for one setting from its data-min/data-max/data-bias.
@@ -400,6 +437,10 @@ function setNestedValue(target, dottedPath, value) {
         node = node[key];
     }
     node[lastKey] = value;
+}
+
+function getNestedValue(target, dottedPath) {
+    return dottedPath.split('.').reduce((node, key) => (node == null ? node : node[key]), target);
 }
 
 function downloadJsonAsFile(data, filename) {
@@ -590,6 +631,7 @@ function renderApp() {
 
     const search = document.getElementById('settingsSearch');
     filterSettings(search ? search.value : '');
+    applySongOverrideState();
 }
 
 function onExtraModesToggle(useExtraModes) {
@@ -737,6 +779,8 @@ function applyPreset(preset) {
 
     const overrides = preset.overrides || {};
     for (const key in overrides) applySettingOverride(key, overrides[key]);
+
+    applySongOverrideState(); // re-assert after overrides may have re-enabled song rows
 }
 
 // Writes one override into its data node and syncs the visible controls to match.
