@@ -42,6 +42,7 @@ const SPIRIT_TEMPLE = "Spirit Temple";
 const DESERT_COLOUSUS = "Desert Colossus";
 const LAKE_HYLIA = "Lake Hylia";
 const HYRULE_FIELD = "Hyrule Field";
+const HYRULE_CASTLE = "Hyrule Castle";
 const GERUDO_VALLEY = "Gerudo Valley";
 const GERUDO_TRAINING_GROUNDS = "Gerudo Training Grounds";
 const GF = "Gerudo Fortress";
@@ -71,6 +72,25 @@ const ANY_AGE = "any age";
 window.getTricks = function getTricks() {
     return {
         "tricks": [
+            {
+                "name": "Bonk No Logic Trees Outside Hyrule Castle Ledge Cancel",
+                "location": HYRULE_CASTLE,
+                "description": `
+                        Get ledge cancel
+                        for bombs climb up on 2nd fast red flash holding z and shield
+                        target the wall next to fence and walk up a bit
+                        your goal is to get the camera zoomed way out so the guards dont load in
+
+                        get to position where you'll be caught by the guards
+                        cast dins fire
+                        use ocarina to cancel the textbox
+
+                        bonk tree
+                `,
+                "tags": [BOMBCHU, BOMBS, "Ocarina", "Din's Fire"],
+                "age": CHILD,
+                "embed": "https://youtu.be/LNJRFlNTECI",
+            },
             {
                 "name": "market bazaar at night",
                 "location": HYRULE_MARKET,
@@ -493,6 +513,39 @@ window.getTricks = function getTricks() {
                 "tags": [ONEHW, TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/BsAvkchECjY",
+            },
+            {
+                "name": "Adult Enter Zoras Domain Swordless Itemless",
+                "location": ZORAS_RIVER,
+                "description": `
+                    Setup:
+                    enter from hyrule field not for the first time
+                    backflip, roll and retarget
+                    turn right, sidehop right
+                    turn left, 2x sidehop left, 2x sidehop right
+
+                    swim and drop down. swim around the waterfall to the left and then back up the river to the right. you can choose to surface or keep swimming at this point
+
+                    swim towards the open grotto and drop off far enough to swim underneath the loading zone, about 3 seconds
+
+                    swim up the river using the minimap and turn the corner
+                    i like to hold Z once link is facing north and tap left to swim north
+
+                    my visual cue is to watch the line on the map marker. the base on link's arrow needs to be north of that line. if you're off line when link hits the surface wiggle a bit to get back in bounds then the camera will snap
+
+                    setup for enter domain:
+                    align with wall, turn right walk forward until climb
+                    sidehop left, roll and retarget
+                    forward to climb up the ladder
+
+                    after climbing:
+                    turn right, 2ess right
+                    7x sidehop left, 2x backflip, 2x sidehop right,
+                    walk down and you'll jump into domain
+                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/BknsDzliFQ4",
             },
             {
                 "name": "Another Lower Zoras Freestanding Setup",
@@ -1520,7 +1573,36 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/wfaQWQlglXY",
             },
             {
-                "name": "GTG Gate Clip Bombs",
+                "name": "Gerudo Above Maze Near Scarecrow Chest EPG Out of Bounds Hover",
+                "location": GERUDO_TRAINING_GROUNDS,
+                "description": `
+                    epg:
+                    shield drop chu, vertical slash 2 frames later
+                    open door frame link takes damage
+
+                    turn down right
+                    walk towards left side of doorway until door closes
+                    void out without opening any doors
+
+                    get isg
+                    target center of doorway
+                    equip hovers
+
+                    one backflip hover
+                    10 vertical hovers
+                    when the camera starts zooming out reset links position by targeting the bombchu
+                    lock link's position walking up-upleft
+
+                    after 10 vertical hovers one sideflip hover will reset the camera
+                    4ish sideflips to get position. you can do more for safety
+                    sidehop up or sidehop jumpslash
+                `,
+                "tags": [BOMBCHU, HOVER_BOOTS],
+                "age": ADULT,
+                "embed": "https://youtu.be/OnL9fdRZEJY",
+            },
+            {
+                "name": "GTG Maze Gate Clip Bombs",
                 "location": GERUDO_TRAINING_GROUNDS,
                 "description": `
                                 go into corner. A drop bomb get on fence and climb sideways one over into the corner
@@ -1703,6 +1785,24 @@ window.getTricks = function getTricks() {
                 "tags": [ITEMLESS],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/UAyj--7RGys",
+            },
+            {
+                "name": "Deku B1 Skip Baba Megasidehop",
+                "location": DEKU_TREE,
+                "description": `
+                        for fun
+
+                        line up with wall and get to the crease so that the baba lunges
+                        backflip, 2x sidehop left
+
+                        as soon as baba returns to upright facing you:
+                        roll with shield
+                        hold right during the roll and sidehop right on the second frame links feet are level (links arms down and upper body tilted left)
+                        only one frame works for the sidehop
+                    `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/8tusxToyyRk",
             },
             {
                 "name": "Deku Adult BK (231) Skip",
@@ -2040,6 +2140,24 @@ window.getTricks = function getTricks() {
                 "tags": [ONEHW, TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/x9TPHd1YhDE",
+            },
+            {
+                "name": "Forest Temple 4 Poes Skip w/ Randomizer Enhancements",
+                "location": FOREST_TEMPLE,
+                "description": `
+                            open door to lobby and hold up the whole time
+
+                            with bunnyhood:
+                            links left foot will plant
+                            next frame the right foot starts to come forward
+                            drop bugs/fish and mash bottle
+
+                            without hood (not shown):
+                            drop bugs/fish once links right foot is planted
+                        `,
+                "tags": ["Bottle"],
+                "age": ADULT,
+                "embed": "https://youtu.be/r2lGTwLOXxA",
             },
             {
                 "name": "Forest Temple Skip 1st Key with Hover Boots and Chus",
@@ -2403,6 +2521,23 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtu.be/rfbeUliQPlw",
             },
             {
+                "name": "Zoras Domain GS Hover",
+                "location": ZORAS_DOMAIN,
+                "description": `
+                        method for any weapon
+
+                        get isg
+                        align with the wall on the final turn
+                        turn right and get to the edge of the waterfall
+
+                        space sidehops out and roll to hit the gs if you need to
+                        sidehop left to get the item if needed
+                `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtu.be/ZAZ28NYO-1M",
+            },
+            {
                 "name": "Shadow Temple No Hovers to Boss Door",
                 "location": SHADOW_TEMPLE,
                 "description": `from entrance:
@@ -2446,6 +2581,75 @@ window.getTricks = function getTricks() {
                 "tags": [MASTER_SWORD],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/buUV_5gnukM",
+            },
+            {
+                "name": "Shadow Temple Reverse Boss Door Room Hoverbootsless Bombs",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                        sidehop left, sidehop right, keep z held and roll and hold up during the roll
+
+                        turn around and backwalk off
+                        climb up
+                        3ess left
+
+                        roll, shield drop bomb
+                        turn around and roll again
+                        turn around
+                        roll on big blue and hold down during the roll
+                        backflip second frame link is in the explosion
+
+                        turn down-left, 1ess left
+                        or line up with the door and walk forward
+                `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtu.be/LtJerV_M9Tw",
+            },
+            {
+                "name": "Shadow Temple Reverse Boss Door Room Hoverbootsless Bombchu",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                    facing away from the boss door, get to the top right corner, about one link length away from both edges
+                    sidehop left, sidehop right, keep z held and roll and hold up
+                    turn around and backwalk off
+                    3ess left
+                    megaflip
+                    turn down left and walk forward
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtu.be/R-kms4ZwdQE",
+            },
+            {
+                "name": "Shadow Temple Main Room Silver Rupee Gate Skip",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                    Line up with the crack in the door, about halfway between the center and the right part of the gap
+
+                    sidehop left, right
+                    up + A to roll
+                `,
+                "tags": [ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/9LhinoVcjkg",
+            },
+            {
+                "name": "Shadow Gate Clip C-Up Method",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                    From the corner
+
+                    3x left sidehop
+                    C-Up
+                    1 frame right on control stick
+                    1 frame nothing (link turns slowly during c-up so we use it to get the angle)
+                    exit C Up immediately
+
+                    1 crouch stab 1 jumpslash
+                `,
+                "tags": [ONEHW, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtu.be/X9vn87ZSeoQ",
             },
             {
                 "name": "Shadow Temple BK Skip",
@@ -2873,7 +3077,43 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/V4DpneFDTjM",
             },
             {
-                "name": "BOTW Backshot Master Sword Setup",
+                "name": "BotW Backshot with Bombchu and Master Sword",
+                "location": BOTW,
+                "description": `
+                    from the wall
+
+                    1x Backflip
+                    3x Vertical Slash
+                    keep z held: sidehop, roll
+                    turn around
+                    1x Vertical Slash w/ Shield
+
+                    turn to face the wall
+
+                    bombchu setup
+
+                    backflip, shield flick, 2x roll
+                    backflip and pull chu
+                    drop on 9th black and pull hook next frame
+                    roll on the frame chu didn't move from the previous frame
+                    other visual cue is hookshot is out but pointed left across links body
+
+                    weirdshot
+
+                    hold down during the roll and pause when link hits the explosion
+                    3 frames Z+Down+R
+                    (cue: link should be getting pushed back out of the explosion)
+                    3 frames Z+Down+Hookshot
+
+                    release everything or hold full left until hook nearly overlaps with the ladder
+                    its important to move hookshot in full directions per frame only, no minor adjustments
+                `,
+                "tags": [MASTER_SWORD, HOOKSHOT, BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtu.be/YRRHdzF7ULQ",
+            },
+            {
+                "name": "BotW Backshot with Bombs and Master Sword",
                 "location": BOTW,
                 "description": `
                                 go to corner
