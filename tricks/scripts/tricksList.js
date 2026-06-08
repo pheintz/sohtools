@@ -867,7 +867,8 @@ window.getTricks = function getTricks() {
                                 roll next frame, hold right during the roll
                                 sidehop right when you hit the bomb
 
-                                turn left, backup a bit and then run forward                                `,
+                                turn left, backup a bit and then run forward while holding Z
+                                `,
                 "tags": [BOMBCHU, ONEHW, TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/mbCzNn1BdZE",
