@@ -2120,14 +2120,16 @@ window.getTricks = function getTricks() {
                 "name": "Lost Woods Aqua Escape Child",
                 "location": LOST_WOODS,
                 "description": `
-                        Target the wall and get in the corner,
-                        1 ess right, Sidehop left, Backflip,
-                        slash stick and slidehop right during the end of the slash,
-                        jumpslash when links left foot lines up with the corner of the stone entrance to domain
+                        line up with wall and get in corner
+                        1ess right
+                        sidehop left, backflip
+                        swing stick
+                        when the stick is recoiling back to the left, sidehop right
+                        jumpslash when links foot is lined up with the corner of the shortcut structure
                         `,
                 "tags": [ONEHW, TWOHW],
                 "age": CHILD,
-                "embed": "https://www.youtube.com/embed/D3RSZ1WyB5A",
+                "embed": "https://youtu.be/An2XACTCHIs",
             },
             {
                 "name": "Lost Woods Aqua Escape Adult",
