@@ -2899,6 +2899,7 @@ window.getTricks = function getTricks() {
                                 with Z: backflip, roll
                                 Shield drop chu on 8th red
                                 R+Z+Roll on black chu to the right
+                                R+Z+down on control stick the rest of the way
                 `,
                 "tags": [BOMBCHU, DMC],
                 "age": CHILD,
