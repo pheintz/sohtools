@@ -1558,6 +1558,20 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/BWfb5vN07GU",
             },
             {
+                "name": "Megaflip to 37th HP / Gerudo Kitchen Upper Entry",
+                "location": GF,
+                "description": `
+                            get isg
+                            walk along the edge slowly, see link nudge into the wall 3 times and stop immediately
+                            turn around and backwalk until link can't move anywhere
+                            drop and roll on 9th red bombchu
+                            backflip on normal megaflip leaning back frame
+                                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtu.be/lwumZUlNx_E",
+            },
+            {
                 "name": "Child GTG Entry No C-Up",
                 "location": GF,
                 "description": `
@@ -1745,8 +1759,22 @@ window.getTricks = function getTricks() {
                     Chus: Backflip, turn around, megaflip
                 `,
                 "tags": [BOMBS, BOMBCHU],
-                "age": ANY_AGE,
+                "age": CHILD,
                 "embed": "https://youtube.com/embed/i2At5Fg1Hz8",
+            },
+                        {
+                "name": "Mega Sidehop to Crate HP in Gerudo Valley",
+                "location": GERUDO_VALLEY,
+                "description": `
+                        pretty lenient, make sure link is close enough to the edge inside that little triangle. 
+                        i like to use the reference of the wall and the seam lining up
+
+                        in the video the sidehop is drop on 9th black, roll when shield is out, hold left during the roll
+                        sidehop 1st frame in explosion
+                `,
+                "tags": [BOMBS, BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtu.be/ltcgHeoMC5E",
             },
             {
                 "name": "Gerudo Valley Cucko Jump w/ Sticks",
@@ -2968,6 +2996,28 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ANY_AGE,
                 "embed": "https://youtube.com/embed/Qxu9AYyk7rI",
+            },
+                        {
+                "name": "Child Weirdshot Bombs",
+                "location": GENERAL,
+                "description": `
+                        dont draw first person item early like with adult weirdshot
+
+                        drop bomb, roll, backflip
+                        roll on big blue with z and r
+                        after hitting the explosion:
+
+                        Z+R+Down
+                        Z+R
+                        Z+R+Down
+                        Z only
+                        Z and Down
+                        Z and C button for first person item
+                        hold Z until link is underground, then release everything
+                `,
+                "tags": [BOMBS],
+                "age": ANY_AGE,
+                "embed": "https://youtu.be/C_D2A7mvKRI",
             },
             {
                 "name": "Bombchu Distance Megaflip Demonstration",
