@@ -2766,7 +2766,7 @@ window.getTricks = function getTricks() {
                 `,
                 "tags": [BOMBS, BK_SKIP],
                 "age": ADULT,
-                "embed": "https://youtube.com/embed/CTcKAwgbigA",
+                "embed": "https://youtu.be/gbLGzqJiwg0",
             },
             {
                 "name": "[Alternate] Faster Boatkey",
@@ -2831,6 +2831,20 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/Hcqqj5o-icI",
+            },
+            {
+                "name": "Shadow Temple Start Bombs Megaflip",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                        line up in the center of the brick one from the left on links initial position
+                        insta drop bomb sidehop left
+
+                        climb up, roll on big blue or red holding down during the roll
+                        backflip 2nd frame inside the explosion
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtu.be/-l0MbYkwgd0",
             },
             {
                 "name": "OGC Fairy Strength Block Skip",
