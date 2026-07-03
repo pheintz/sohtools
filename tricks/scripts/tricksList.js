@@ -2161,6 +2161,23 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtu.be/An2XACTCHIs",
             },
             {
+                "name": "QPA Hover With Chus To Lost Woods Slingshot Target",
+                "location": LOST_WOODS,
+                "description": `
+                        qpa and isg
+                        from right side 2x backflip, turn right
+                        start shuffle straight ahead,
+                        keep holding z, 2 frames down, 1 frame right
+                        flip left and drop chu on 3rd frame of flip
+                        2 sideflips left, dropping bomb on frame 6,
+                        visual cue is one frame after link is completely upside down
+                        one moresideflip, pull stick on frame 8
+                        `,
+                "tags": [BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtu.be/KzjryPaUy1Y",
+            },
+            {
                 "name": "Lost Woods Aqua Escape Adult",
                 "location": LOST_WOODS,
                 "description": `
@@ -2717,6 +2734,39 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/3cbEl2sfIvE",
+            },
+            {
+                "name": "Shadow Boatkey Skip | Bombs Only | No Hoverboots",
+                "location": SHADOW_TEMPLE,
+                "description": `
+                        get in the corner
+                        backflip, 3x sidehop right, roll and retarget
+                        turn left, 1ess left, backflip, turn around
+
+                        insta shield drop bomb and backflip
+                        roll on 2nd frame of 3rd fast black flash
+                        hold down during roll
+                        neutral megaflip
+                        hold z r down during the megaflip and release control stick after clipping
+
+                        backwalk off down-left after landing
+                        climb up, turn right, sidehop left, long roll to jump over the platform
+
+                        2 rolls, 2 ess left, turn around
+                        megaflip with bomb
+                        turn down-left and walk forward
+
+                        walk up to boss door and align with wall
+                        turn right, backwalk off
+                        climb up, turn left, backflip, shield flick, roll
+                        turn right, insta shield drop bomb, sidehop left
+                        turn left, sidehop right, left, and dont release z
+                        roll on big blue and release z during roll
+                        repress z once link is fully obscured by the explosion
+                `,
+                "tags": [BOMBS, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://youtube.com/embed/CTcKAwgbigA",
             },
             {
                 "name": "[Alternate] Faster Boatkey",
