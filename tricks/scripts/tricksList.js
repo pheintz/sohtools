@@ -838,6 +838,20 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/c3FUQPX-qL8",
             },
             {
+                "name": `Shoot torch in Spirit Temple sun block room with bow`,
+                "location": SPIRIT_TEMPLE,
+                "description": `
+                    collect rupes
+                    climb near gray line on ledge
+                    aim towards torch
+                    shot arrow on last frame with space between link/bow
+                    visual cue, bow is facing straight down to the ground
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/AuqYffWrXWM",
+            },
+            {
                 "name": "Spirit Temple Silver Block Clip ISG and Bombs",
                 "location": SPIRIT_TEMPLE,
                 "description": `

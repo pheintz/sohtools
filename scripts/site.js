@@ -8,7 +8,7 @@ $(document).ready(function () {
     let clickedItems = JSON.parse(localStorage.getItem("clickedItems")) || {};
 
     const goModeItems = [
-        "Light Arrow",
+        "Light Arrows",
         "Master Sword",
         "Progressive Magic Meter",
         "Progressive Bow"
@@ -77,6 +77,85 @@ $(document).ready(function () {
         });
     }
 
+    // Ordered exact area -> location-name prefixes, roughly geographic.
+    // First match wins, so where prefixes overlap the more specific area must
+    // precede the broader one (Gerudo Training Ground before its "Gerudo"
+    // catch, Ganon's Castle before the "Ganon" boss).
+    const REGION_MAP = [
+        ["Kokiri Forest", ["KF"]],
+        ["Deku Tree", ["Deku Tree"]],
+        ["Lost Woods", ["LW"]],
+        ["Sacred Forest Meadow", ["SFM"]],
+        ["Forest Temple", ["Forest Temple"]],
+        ["Hyrule Field", ["HF"]],
+        ["Hyrule Castle", ["HC"]],
+        ["Market", ["Market"]],
+        ["Temple of Time", ["ToT", "Temple of Time"]],
+        ["Lon Lon Ranch", ["LLR"]],
+        ["Kakariko Village", ["Kak"]],
+        ["Graveyard", ["Graveyard"]],
+        ["Bottom of the Well", ["Bottom of the Well"]],
+        ["Shadow Temple", ["Shadow Temple"]],
+        ["Death Mountain Trail", ["DMT"]],
+        ["Goron City", ["GC"]],
+        ["Death Mountain Crater", ["DMC"]],
+        ["Dodongo's Cavern", ["Dodongos Cavern", "Dodongo's Cavern"]],
+        ["Fire Temple", ["Fire Temple"]],
+        ["Zora's River", ["ZR"]],
+        ["Zora's Domain", ["ZD"]],
+        ["Zora's Fountain", ["ZF"]],
+        ["Jabu Jabu's Belly", ["Jabu Jabus", "Jabu Jabu"]],
+        ["Ice Cavern", ["Ice Cavern"]],
+        ["Lake Hylia", ["LH"]],
+        ["Water Temple", ["Water Temple"]],
+        ["Gerudo Valley", ["GV"]],
+        ["Gerudo's Fortress", ["GF"]],
+        ["Gerudo Training Ground", ["Gerudo Training Ground", "Gerudo"]],
+        ["Haunted Wasteland", ["Wasteland"]],
+        ["Desert Colossus", ["Colossus"]],
+        ["Spirit Temple", ["Spirit Temple"]],
+        ["Outside Ganon's Castle", ["OGC"]],
+        ["Ganon's Castle", ["Ganon's Castle", "Ganons Castle"]],
+        ["Songs", ["Song ", "Sheik"]],
+        ["Free Rewards", ["Link's Pocket", "Gift from"]],
+        ["Bosses", ["Queen Gohma", "King Dodongo", "Barinade", "Phantom Ganon", "Volvagia", "Morpha", "Bongo", "Twinrova", "Ganon"]]
+    ];
+
+    function classifyRegion(name) {
+        for (const [region, prefixes] of REGION_MAP) {
+            if (prefixes.some(p => name.startsWith(p))) {
+                return region;
+            }
+        }
+        return "Other";
+    }
+
+    // Reveals every matching location and re-renders them grouped by region.
+    function RenderGroupedResults(matchingKeys, containerList) {
+        matchingKeys.forEach(key => { clickedItems[key] = true; });
+        localStorage.setItem("clickedItems", JSON.stringify(clickedItems));
+
+        const groups = {};
+        matchingKeys.forEach(key => {
+            const region = classifyRegion(key);
+            (groups[region] = groups[region] || []).push(key);
+        });
+
+        containerList.empty();
+        const order = REGION_MAP.map(r => r[0]).concat("Other");
+        order.forEach(region => {
+            const keys = groups[region];
+            if (!keys || !keys.length) return;
+
+            const section = $("<div class='result-group'></div>");
+            section.append(`<h4 class="result-group-header">${region} <span class="result-group-count">(${keys.length})</span></h4>`);
+            keys.forEach(key => {
+                section.append(`<div class="result shown" data-key="${key}">${key}</div>`);
+            });
+            containerList.append(section);
+        });
+    }
+
     function LoadKeyItems(items, containerId) {
         const container = $("#" + containerId);
         container.empty(); // Clear previous content
@@ -94,6 +173,9 @@ $(document).ready(function () {
         const containerList = $("#" + containerId);
         containerList.empty(); // Clear previous content
         if (matchingKeys.length > 0) {
+            if (containerId === "ResultContainer" && matchingKeys.length > 1) {
+                containerList.append(`<button type="button" class="reveal-all">Reveal All Locations</button>`);
+            }
             matchingKeys.forEach((key, index) => {
                 const displayValue = locations[key]?.item || locations[key];
                 const isClicked = clickedItems[key] || false;
@@ -115,6 +197,11 @@ $(document).ready(function () {
                     localStorage.setItem("clickedItems", JSON.stringify(clickedItems));
                     $(this).html(key).addClass("shown");
                 }
+            });
+
+            // Reveal every location at once, regrouped by region
+            containerList.find(".reveal-all").off("click").on("click", function () {
+                RenderGroupedResults(matchingKeys, containerList);
             });
         } else {
             containerList.append("<div class='no-results'>No matching keys found.</div>");
