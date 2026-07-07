@@ -157,7 +157,7 @@ window.getTricks = function getTricks() {
             },
             {
                 "name": `Spirit SoT Skulltula`,
-                "location": DMC,
+                "location": SPIRIT_TEMPLE,
                 "description": `
                     get against wall, dot on wall to the right of the door
                     turn right
@@ -169,6 +169,109 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU, BK_SKIP],
                 "age": ADULT,
                 "embed": "https://www.youtube.com/embed/AGseVkEmM-A",
+            },
+            {
+                "name": `Ledge cancel for silver boulder in zoras fountain`,
+                "location": ZORAS_FOUNTAIN,
+                "description": `
+                    near jabu, climb up on the right
+                    sidehop left
+                    backflip, shield flick
+                    shield drop chu, roll one frame later
+                    hold up when the chu is halfway up the small fence
+                    4 frame window to hold up until it gets to the top of the small fence
+                    target and shield while climbing
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/jHlEENno2DU",
+            },
+            {
+                "name": `forest hoverslide bk skip from bow room`,
+                "location": FOREST_TEMPLE,
+                "description": `
+                    target wall
+                    turn right
+                    superslide into corner
+                    equip hoverboots
+                    unequp hoverboots once links shield is alinged with pillar
+                    or up to 6 frames after
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/Y4KBFltmIOE",
+            },
+            {
+                "name": `water temple dragonhead chu hovers`,
+                "location": WATER_TEMPLE,
+                "description": `
+                    isg get in corner
+                    backflip, sidehop right, roll retarget
+                    back all the way up
+                    equip hoverboots, 7 vertical hovers
+                    equip kokiri boots, 4 angled hovers alternating directions
+                    when ledge clipping after key, keep z held and hold up then upleft
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/o85sOjrdz68",
+            },
+            {
+                "name": `DC hover`,
+                "location": DODONGOS_CAVERN,
+                "description": `
+                    walk straight in from entrance
+                    jump across, get isg, c-up to fix camera, then ess right
+                    back all the way up, 4 sidehops left, keep target sideroll
+                    walk all the way up
+                    start shuffle hover
+                    4 more ess hovers
+                    1 first frame sideflip hover
+                    backflip
+                `,
+                "tags": [BOMBCHU, BK_SKIP],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/o85sOjrdz68",
+            },
+            {
+                "name": `truth spinner skip with bombchu`,
+                "location": SHADOW_TEMPLE,
+                "description": `
+                    line up with spinner, crouch stab
+                    backwalk to edge
+                    climb up holding z to turn around
+                    2 shielded horizontal slashes
+                    sidehop right, pull chu
+                    shield drop and roll on 8th black
+                    neutral mega no control stick input
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/aMaOo5-Ci0c",
+            },
+            {
+                "name": `serenade cs skip with bombchu`,
+                "location": ICE_CAVERN,
+                "description": `
+                    target boots chest
+                    turn left, sidehop left
+                    turn left, backflip and shield drop chu
+                    hold down and buffer to first frame of seeing links head
+                    press A out of unpause
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/vcsbaa2XHxA",
+            },
+            {
+                "name": `7 gtg keys child and adult route`,
+                "location": GERUDO_TRAINING_GROUNDS,
+                "description": `
+                    watch video for route
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/vcsbaa2XHxA",
             },
         ]
     };
