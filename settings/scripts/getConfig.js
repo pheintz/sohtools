@@ -198,6 +198,8 @@ window.getConfig = function getConfig() {
                 "KakarikoGate": "0-1",
                 "Keysanity": "0-5",
                 "LacsMedallionCount": "0-6",
+                "LacsTokenCount": "0-100",
+                "LacsDungeonCount": "0-8",
                 "LacsStoneCount": "0-3",
                 "LacsRewardCount": "0-9",
                 "LacsRewardOptions": "0-2",
