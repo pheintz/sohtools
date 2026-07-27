@@ -250,6 +250,22 @@ window.getTricks = function getTricks() {
                 "embed": "https://www.youtube.com/embed/aMaOo5-Ci0c",
             },
             {
+                "name": `truth spinner skip with bombs`,
+                "location": SHADOW_TEMPLE,
+                "description": `
+                        backwalk off
+                        climb up and turn right
+                        2x backflip, sidehop left, sideroll keeping z held
+                        backflip and drop bomb during the backflip and release shield before landing
+                        keep z held
+                        roll on 1st frame of 3rd fast black flash
+                        hold left to backflip on lean back frame
+                `,
+                "tags": [BOMBS],
+                "age": ADULT,
+                "embed": "https://youtu.be/cu7sp5ifRHM",
+            },
+            {
                 "name": `serenade cs skip with bombchu`,
                 "location": ICE_CAVERN,
                 "description": `
@@ -272,6 +288,39 @@ window.getTricks = function getTricks() {
                 "tags": [BOMBCHU],
                 "age": ADULT,
                 "embed": "https://www.youtube.com/embed/vcsbaa2XHxA",
+            },
+            {
+                "name": `Enter GTG with Hoverboots`,
+                "location": GERUDO_TRAINING_GROUNDS,
+                "description": `
+                    equip hoverboots
+                    climb up from the right side
+                    vertical slash + R
+                    turn right, crouch stab and wait for momentum to settle
+                    jumpslash and wait for hoverboots to expire
+                    jumpslash again and hold R in the air
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://www.youtube.com/embed/bcCYAhsI8bY",
+            },
+            {
+                "name": `Jumpslash Clip into Water Temple (master sword, non-initial)`,
+                "location": LAKE_HYLIA,
+                "description": `
+                    from slate, start middle-middle left
+                    hop up with neutral stick sidehop right, left (against wall)
+                    sidehop right, sideroll untarget
+                    turn left, 1ess left
+                    3x sidehop right
+                    vertical slash + shield
+                    backwalk
+                    jumpslash in frame window rolling stick from down to up-right making sure to keep full input
+                    release target during jumpslash
+                `,
+                "tags": [BOMBCHU],
+                "age": ADULT,
+                "embed": "https://youtu.be/_0_2zGF59_Q",
             },
         ]
     };

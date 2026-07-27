@@ -1559,6 +1559,20 @@ window.getTricks = function getTricks() {
                 "embed": "https://youtube.com/embed/NO1eHljSloo",
             },
             {
+                "name": "Child Gate Skip Ladder",
+                "location": GF,
+                "description": `
+                        target wall
+                        get sidehop left sideroll retarget angle
+                        hold z before climbing ladder
+                        keep z held while climbing ladder
+                        sidehop right
+                    `,
+                "tags": [CHILD, ITEMLESS],
+                "age": ADULT,
+                "embed": "https://youtu.be/Q3D9nZ_rb_I",
+            },
+            {
                 "name": "damage hover boost jumpslash to gerudo fortress chest",
                 "location": GF,
                 "description": `
@@ -3467,6 +3481,17 @@ window.getTricks = function getTricks() {
                 "tags": [MASTER_SWORD, TWOHW],
                 "age": ADULT,
                 "embed": "https://youtube.com/embed/ByAsSAozcU0",
+            },
+            {
+                "name": "DMT Lunge Storage Setup",
+                "location": DMT,
+                "description": `
+                            line up at the wall near boulder
+                            2 backflips
+                        `,
+                "tags": [MASTER_SWORD, TWOHW],
+                "age": ADULT,
+                "embed": "https://youtu.be/8OWvlN3eb3E",
             },
             {
                 "name": "DMT Chest Jumpslash Clip",
