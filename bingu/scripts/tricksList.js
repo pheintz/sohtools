@@ -322,6 +322,19 @@ window.getTricks = function getTricks() {
                 "age": ADULT,
                 "embed": "https://youtu.be/_0_2zGF59_Q",
             },
+            {
+                "name": `ZL cutscene skip`,
+                "location": HYRULE_CASTLE,
+                "description": `
+                    target pillar
+                    6 sidehops left
+                    turn right
+                    backflip shield drop chu, releasing target during backflip
+                `,
+                "tags": [BOMBCHU],
+                "age": CHILD,
+                "embed": "https://youtu.be/vGy8do0US4Y",
+            }
         ]
     };
 }
