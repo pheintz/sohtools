@@ -1,14 +1,7 @@
-:root {
-    --background-color: #121212;
-    --text-color: #e0e0e0;
-    --primary-color: #673AB7;
-    --secondary-color: #673AB7;
-    --input-bg-color: #1e1e1e;
-    --input-border-color: #292929;
-    --hover-color: #333333;
-    --result-highlight: #212121;
-    --input-action: #66BB6A;
-}
+/* The palette lives in css/site.css. It used to be copied into this file too, and the copy
+   won here because this stylesheet loads second — so repointing the shared tokens changed
+   nothing on this page until the duplicate came out. Five copies of one palette is five places
+   for it to drift. */
 
 .modal {
     display: none;
@@ -331,7 +324,8 @@ input.share-url-input {
 
 .share-btn {
     background-color: transparent;
-    color: var(--primary-color);
+    /* Text on the page ground, so it takes the ink token: the fill purple reads 2.54 here. */
+    color: var(--secondary-color);
 }
 
     .share-btn:hover {

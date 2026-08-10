@@ -1,0 +1,2368 @@
+<title>OoT Bingo v10.6 — goal index</title>
+<style>
+/* ============================================================
+   Palette. Every fg/bg pair below is verified against WCAG AA
+   in both themes by build_goals_page.js — the build fails if a
+   pair regresses. Colour is never the only channel for meaning:
+   every state also carries a glyph and a word.
+   ============================================================ */
+:root {
+  --ink: #14111c;
+  --paper: #edebf2;
+  --amethyst: #8e6fe9;
+
+  --bg: var(--paper);
+  --bg-slab: #e3e0ec;
+  --bg-cell: #d8d4e4;
+  --surface: #f7f6fa;
+  --fg: #1b1725;
+  --fg-muted: #5d566f;
+  --fg-faint: #68607c;
+  --rule: #cbc5d9;
+  --rule-strong: #8579a8;
+  --accent: #6742c9;
+  --accent-soft: #ece5fb;
+  --accent-fg: #ffffff;
+  --gain: #137154;
+  --gain-soft: #d9f2e9;
+  --loss: #af401e;
+  --loss-soft: #fbe3db;
+  --perm: #815f18;
+  --perm-soft: #f6ecd4;
+  --focus: #6742c9;
+
+  --mono: "Cascadia Mono", "SF Mono", ui-monospace, "Segoe UI Mono", Menlo, Consolas, monospace;
+  --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  --step--2: 0.72rem;
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
+  --step-1: clamp(1.1rem, 1.04rem + 0.3vw, 1.25rem);
+  --step-2: clamp(1.4rem, 1.2rem + 0.8vw, 1.85rem);
+  --step-3: clamp(2rem, 1.5rem + 2.4vw, 3.4rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--ink); --bg-slab: #1b1726; --bg-cell: #241f33; --surface: #1e1a2a;
+    --fg: #ece9f4; --fg-muted: #a49bbb; --fg-faint: #887f9f;
+    --rule: #2e2840; --rule-strong: #6e5f98;
+    --accent: var(--amethyst); --accent-soft: #1a152b; --accent-fg: #14111c;
+    --gain: #4fd0a8; --gain-soft: #123329;
+    --loss: #f0805f; --loss-soft: #37190f;
+    --perm: #dfae54; --perm-soft: #302512;
+    --focus: #a98cf5;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: var(--ink); --bg-slab: #1b1726; --bg-cell: #241f33; --surface: #1e1a2a;
+  --fg: #ece9f4; --fg-muted: #a49bbb; --fg-faint: #887f9f;
+  --rule: #2e2840; --rule-strong: #6e5f98;
+  --accent: var(--amethyst); --accent-soft: #1a152b; --accent-fg: #14111c;
+  --gain: #4fd0a8; --gain-soft: #123329;
+  --loss: #f0805f; --loss-soft: #37190f;
+  --perm: #dfae54; --perm-soft: #302512;
+  --focus: #a98cf5;
+}
+:root[data-theme="light"] {
+  --bg: var(--paper); --bg-slab: #e3e0ec; --bg-cell: #d8d4e4; --surface: #f7f6fa;
+  --fg: #1b1725; --fg-muted: #5d566f; --fg-faint: #68607c;
+  --rule: #cbc5d9; --rule-strong: #8579a8;
+  --accent: #6742c9; --accent-soft: #ece5fb; --accent-fg: #ffffff;
+  --gain: #137154; --gain-soft: #d9f2e9;
+  --loss: #af401e; --loss-soft: #fbe3db;
+  --perm: #815f18; --perm-soft: #f6ecd4;
+  --focus: #6742c9;
+}
+
+* { box-sizing: border-box; }
+/* The board is wider than a phone and scrolls inside .boardwrap. Browsers still fold that
+   container's scrollable overflow into the ROOT scroll area, so without this the page itself
+   could be dragged sideways into empty space while the board stayed put. Clamping the root is
+   safe here: the page uses no sticky or fixed positioning, and every wide thing (board, line
+   table, code blocks) already scrolls within its own box. */
+html { overflow-x: hidden; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+
+.shell { max-width: 74rem; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2.5rem) 5rem; }
+
+.skip {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--accent); color: var(--accent-fg);
+  padding: 0.6rem 1rem; z-index: 20; font-family: var(--mono); font-size: var(--step--1);
+}
+.skip:focus { left: 0; }
+
+h1, h2, h3 { font-family: var(--mono); font-weight: 700; letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(1.7rem, 1.15rem + 1.7vw, 2.5rem); line-height: 1; text-transform: uppercase; }
+h2 { font-size: var(--step-1); text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg-muted); font-weight: 500; }
+h3 { font-size: var(--step-0); }
+p { margin: 0; }
+.eyebrow {
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--fg-faint); margin: 0;
+}
+code {
+  font-family: var(--mono); font-size: 0.9em;
+  background: var(--accent-soft); color: var(--accent);
+  padding: 0.05em 0.35em; border-radius: 3px;
+}
+.vh {
+  position: absolute !important; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- masthead ----------
+   This is a tool, not an essay: the header earns only enough room to say what
+   the page is. Anything taller pushes the first result below the fold. */
+.masthead {
+  padding: clamp(1.25rem, 3vw, 2rem) 0 1rem;
+  display: grid; gap: 0.6rem 2.5rem; grid-template-columns: 1fr; align-items: end;
+}
+.masthead .rule { height: 3px; background: var(--fg); grid-column: 1 / -1; margin-top: 0.3rem; }
+.masthead .ver { color: var(--fg-faint); }
+/* ---------- summary ---------- */
+.summary {
+  background: var(--bg-slab);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.9rem 1.1rem;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1.25rem;
+}
+@media (min-width: 52rem) { .summary { grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); align-items: start; } }
+
+.stats { display: flex; flex-direction: column; gap: 0.7rem; }
+.stat { display: flex; flex-direction: column; gap: 0.1rem; }
+.stat .num {
+  font-family: var(--mono); font-size: var(--step-2); line-height: 1;
+  font-variant-numeric: tabular-nums; color: var(--fg);
+}
+.stat .lab { font-size: var(--step--2); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-faint); font-family: var(--mono); }
+
+.chart { display: flex; flex-direction: column; gap: 0.5rem; }
+.bars { display: flex; align-items: flex-end; gap: 2px; height: 4.25rem; }
+.bar-col { flex: 1 1 0; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; position: relative; }
+.bar-total {
+  width: 100%;
+  border: 1px solid var(--rule-strong);
+  border-bottom: none;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--bg-cell) 3px, var(--bg-cell) 6px);
+  display: flex; align-items: flex-end;
+  min-height: 2px;
+}
+.bar-shown { width: 100%; background: var(--accent); min-height: 0; }
+.bar-col.empty .bar-total { border-color: var(--rule); }
+.bar-axis {
+  display: flex; gap: 2px; font-family: var(--mono);
+  font-size: 0.6rem; color: var(--fg-faint); font-variant-numeric: tabular-nums;
+}
+.bar-axis span { flex: 1 1 0; text-align: center; }
+.chart-key { font-size: var(--step--2); color: var(--fg-faint); font-family: var(--mono); display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.chart-key i { font-style: normal; display: inline-flex; align-items: center; gap: 0.35rem; }
+.key-swatch { width: 0.7rem; height: 0.7rem; display: inline-block; }
+.key-swatch.shown { background: var(--accent); }
+.key-swatch.all { border: 1px solid var(--rule-strong); background: repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--bg-cell) 3px, var(--bg-cell) 6px); }
+
+/* ---------- row permalink ----------
+   Accepts the same query shape ootbingo's bingo-popout.html uses:
+   ?title=COL1&goal=…&goal=…  (title once, goal repeated per square). */
+.rowpanel {
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.25rem;
+  display: flex; flex-direction: column; gap: 0.9rem;
+}
+.rowpanel.loaded { border-color: var(--accent); }
+.rowpanel-head { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: baseline; }
+.rowpanel-head h2 { font-size: var(--step-1); color: var(--fg); letter-spacing: 0.02em; }
+.rowpanel-head .sub { font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint); }
+.rowform { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: flex-end; }
+.rowform .field { flex: 1 1 24rem; }
+button.btn {
+  font-family: var(--mono); font-size: var(--step--1);
+  padding: 0.5rem 0.9rem; min-height: 2.5rem;
+  border: 1px solid var(--accent); border-radius: 2px;
+  background: var(--accent); color: var(--accent-fg); cursor: pointer;
+}
+button.btn.ghost { background: transparent; color: var(--accent); }
+button.btn:hover { filter: brightness(1.08); }
+
+ol.rowlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; counter-reset: sq; }
+ol.rowlist > li {
+  display: grid; grid-template-columns: 1.6rem 1fr auto; gap: 0.2rem 0.7rem;
+  align-items: baseline; padding: 0.4rem 0.5rem; background: var(--surface); border-radius: 2px;
+}
+ol.rowlist > li.missing { background: var(--loss-soft); }
+/* the index digit inherits fg-faint, which is only 4.27:1 on loss-soft in dark */
+ol.rowlist > li.missing .sq { color: var(--fg-muted); }
+ol.rowlist .sq {
+  font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+}
+ol.rowlist .gname { color: var(--fg); font-weight: 600; line-height: 1.35; }
+ol.rowlist .gname button {
+  /* padded to clear the WCAG 2.2 24px minimum target rather than leaning on the
+     inline-target exception — this is the panel's primary interaction */
+  background: none; border: none; padding: 0.2rem 0; margin: 0; cursor: pointer;
+  min-height: 1.6rem;
+  font: inherit; color: inherit; text-align: left; text-decoration: underline;
+  text-decoration-color: var(--rule-strong); text-underline-offset: 2px;
+}
+ol.rowlist .gname button:hover { text-decoration-color: var(--accent); color: var(--accent); }
+ol.rowlist .gnums {
+  font-family: var(--mono); font-variant-numeric: tabular-nums;
+  font-size: var(--step--1); color: var(--fg-muted); white-space: nowrap;
+}
+ol.rowlist .gmarks { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 0.25rem 0.6rem; }
+
+.rowalert {
+  border-left: 3px solid var(--loss); background: var(--loss-soft);
+  padding: 0.65rem 0.85rem; display: flex; flex-direction: column; gap: 0.4rem;
+}
+.rowalert.ok { border-left-color: var(--gain); background: var(--gain-soft); }
+.rowalert .atitle {
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--loss); display: flex; align-items: center; gap: 0.4rem;
+}
+.rowalert.ok .atitle { color: var(--gain); }
+.rowalert ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.rowalert li { font-size: var(--step--1); color: var(--fg); line-height: 1.55; }
+.rowalert li b { font-weight: 700; }
+.rowshared { font-size: var(--step--1); color: var(--fg-muted); line-height: 1.55; }
+.rowshared .tagpill {
+  font-family: var(--mono); font-size: var(--step--2);
+  border: 1px solid var(--rule-strong); border-radius: 2px; padding: 0.05rem 0.4rem; margin-right: 0.25rem;
+}
+
+/* ---------- whole board ----------
+   A board is generated from (version, seed, mode), so the page carries ootbingo's own generator
+   and reproduces the exact squares. The board is real tabular data — a 5x5 grid with meaningful
+   row and column headers — so it is marked up as a table rather than a div grid, which also gives
+   screen readers the ROW3 / COL2 coordinates for free. */
+/* A 5x5 grid of goal names cannot fit a phone: at 375px the columns land at ~49px, which turns
+   "8 Different Unused Keys in Gerudo Training Grounds" into an unreadable sliver. So the board
+   keeps a legible minimum width and scrolls inside its own box — the page itself must never
+   scroll horizontally. */
+/* min-width:0 is load-bearing. .rowpanel is a flex column, so its children default to
+   min-width:auto and grow to their content instead of letting the wrapper scroll — which pushes
+   the whole PAGE sideways. Capping with max-width:100% too, so this survives a future reparent. */
+.boardwrap, .linewrap { overflow-x: auto; min-width: 0; max-width: 100%; }
+table.board { border-collapse: collapse; width: 100%; min-width: 34rem; table-layout: fixed; }
+table.board th {
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.08em;
+  color: var(--fg-faint); font-weight: 500; padding: 0.2rem 0.3rem; text-align: center;
+}
+/* The ROW label column, and the empty corner cell above it.
+   `table-layout: fixed` takes every column width from the FIRST row only, and that row begins with
+   the empty corner cell — which had no width, so it was handed an equal sixth of the table. The
+   width declared here on the row headers was in later rows and therefore ignored, leaving a band of
+   dead space down the left as wide as a whole goal column. The corner has to carry the width too. */
+table.board th[scope="row"],
+table.board tr:first-child > *:first-child { width: 3.2rem; }
+table.board th[scope="row"] { text-align: right; }
+table.board td { padding: 1px; vertical-align: top; }
+button.cell {
+  width: 100%; height: 100%; min-height: 4.6rem; text-align: left; cursor: pointer;
+  display: flex; flex-direction: column; gap: 0.25rem;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 2px;
+  padding: 0.4rem 0.45rem; color: var(--fg); font-family: var(--sans);
+}
+button.cell:hover { border-color: var(--accent); }
+button.cell .cn { font-size: var(--step--2); line-height: 1.3; font-weight: 600; }
+button.cell .cd { font-family: var(--mono); font-size: 0.62rem; color: var(--fg-faint); margin-top: auto; }
+button.cell .cm { display: flex; flex-wrap: wrap; gap: 0.15rem; }
+button.cell .cm .g { font-size: 0.7rem; line-height: 1; }
+/* a highlighted line: never colour alone — the cell also gains a heavy border and a ring */
+button.cell.inline { border-color: var(--accent); border-width: 2px; background: var(--accent-soft); }
+table.board th.inline { color: var(--accent); font-weight: 700; }
+
+/* ---------- line table ---------- */
+table.lines { border-collapse: collapse; width: 100%; font-size: var(--step--1); }
+table.lines th, table.lines td { padding: 0.4rem 0.6rem; text-align: left; border-bottom: 1px solid var(--rule); }
+table.lines thead th {
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-faint); font-weight: 500;
+  border-bottom: 2px solid var(--rule-strong); white-space: nowrap;
+}
+table.lines thead th button {
+  background: none; border: 0; padding: 0.25rem 0; min-height: 2.25rem; cursor: pointer;
+  font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+}
+table.lines thead th button:hover { color: var(--accent); }
+table.lines thead th[aria-sort] button { color: var(--accent); font-weight: 700; }
+table.lines td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.lines tbody tr.sel td { background: var(--accent-soft); }
+table.lines .lname { font-family: var(--mono); font-weight: 700; }
+table.lines .goals { color: var(--fg-muted); font-size: var(--step--2); line-height: 1.5; }
+/* synergy verdict: glyph + word + colour, never colour alone */
+.verdict { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
+.verdict.helps { color: var(--gain); }
+.verdict.fights { color: var(--loss); }
+.verdict.flat { color: var(--fg-faint); }
+.risk { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
+.risk.bad { color: var(--loss); font-weight: 700; }
+.risk.none { color: var(--fg-faint); }
+.synbits {
+  font-family: var(--mono); font-size: var(--step--2); color: var(--fg-muted);
+  display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem;
+}
+.boardmeta { font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint); }
+
+/* ---------- controls ---------- */
+.controls {
+  display: flex; flex-direction: column; gap: 0.9rem;
+  padding-bottom: 1rem; border-bottom: 2px solid var(--rule-strong); margin-bottom: 0.9rem;
+}
+.facets { display: flex; flex-wrap: wrap; gap: 0.9rem 2.25rem; }
+.searchrow { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 0.3rem; }
+.field label { font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); }
+input[type="search"], select {
+  font-family: var(--sans); font-size: var(--step-0);
+  background: var(--surface); color: var(--fg);
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  padding: 0.5rem 0.7rem; min-height: 2.5rem;
+}
+input[type="search"] { min-width: min(22rem, 100%); }
+select { min-width: 12rem; }
+
+fieldset { border: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+fieldset legend {
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--fg-faint); padding: 0; float: left; width: 100%; margin-bottom: 0.3rem;
+}
+/* The input stays in the accessibility tree and keeps native radio-group
+   keyboard behaviour; the <label> is the visible control. Clipping the input
+   rather than display:none is what preserves both. */
+.radio { display: inline-flex; }
+.radio input {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.radio label {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--mono); font-size: var(--step--1);
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  padding: 0.35rem 0.7rem; min-height: 2.25rem;
+  color: var(--fg-muted); background: var(--surface); cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.radio input:hover + label { color: var(--fg); border-color: var(--accent); }
+.radio input:checked + label { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.radio input:focus-visible + label { outline: 3px solid var(--focus); outline-offset: 2px; }
+.radio .glyph { font-weight: 700; }
+
+.resultline {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: baseline;
+  font-family: var(--mono); font-size: var(--step--1); color: var(--fg-muted); margin-bottom: 0.75rem;
+}
+.resultline b { color: var(--fg); font-weight: 700; }
+button.clear {
+  font-family: var(--mono); font-size: var(--step--1); background: none;
+  border: none; color: var(--accent); cursor: pointer; text-decoration: underline;
+  padding: 0.25rem 0; min-height: 1.75rem;
+}
+
+/* ---------- goal list ---------- */
+ul.goals { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+ul.goals > li { border-bottom: 1px solid var(--rule); }
+
+button.goalrow {
+  width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+  display: grid; gap: 0.35rem 1rem; align-items: baseline;
+  grid-template-columns: 1fr auto;
+  padding: 0.75rem 0.5rem; min-height: 2.75rem;
+  font-family: inherit; font-size: inherit; color: inherit;
+  transition: background-color 0.12s;
+}
+button.goalrow:hover { background: var(--accent-soft); }
+button.goalrow[aria-expanded="true"] { background: var(--accent-soft); }
+.goalrow .name { font-weight: 600; color: var(--fg); line-height: 1.35; }
+.goalrow .name .chev { color: var(--accent); font-family: var(--mono); margin-right: 0.4rem; display: inline-block; width: 0.8em; }
+.goalrow .meta {
+  grid-column: 1 / -1;
+  display: flex; flex-wrap: wrap; gap: 0.3rem 0.75rem; align-items: center;
+  font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint);
+}
+.goalrow .nums {
+  font-family: var(--mono); font-variant-numeric: tabular-nums;
+  font-size: var(--step--1); color: var(--fg-muted); white-space: nowrap; text-align: right;
+}
+.goalrow .nums .d { color: var(--fg); font-weight: 700; }
+
+/* state markers — glyph + word + colour, never colour alone */
+.mark {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-family: var(--mono); font-size: var(--step--2);
+  border: 1px solid currentColor; border-radius: 999px;
+  padding: 0.05rem 0.5rem; white-space: nowrap;
+}
+.mark .g { font-weight: 700; }
+.mark.routed { color: var(--gain); }
+.mark.helped { color: var(--accent); }
+.mark.breaks { color: var(--loss); border-style: dashed; }
+.mark.touches { color: var(--perm); border-style: dotted; }
+.mark.only   { color: var(--perm); }
+
+/* ---------- detail ---------- */
+.detail {
+  padding: 0.25rem 0.5rem 1.5rem;
+  display: grid; gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 58rem) { .detail { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } }
+.detail[hidden] { display: none; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 3px; padding: 0.9rem 1.05rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.card.span { grid-column: 1 / -1; }
+.card h3 {
+  font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--fg-muted); font-weight: 500;
+}
+.card p, .card li { font-size: var(--step--1); line-height: 1.6; color: var(--fg-muted); }
+.card p.strongline { color: var(--fg); }
+.card ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+
+.kv { display: grid; grid-template-columns: 7rem 1fr; gap: 0.2rem 0.75rem; font-size: var(--step--1); }
+.kv dt { font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-faint); }
+.kv dd { margin: 0; color: var(--fg-muted); }
+@media (max-width: 30rem) { .kv { grid-template-columns: 1fr; } .kv dd { margin-bottom: 0.4rem; } }
+
+.recipe { border-left: 3px solid var(--accent); padding-left: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.recipe.is-break { border-left-color: var(--loss); border-left-style: dashed; }
+.recipe .rname { font-family: var(--mono); font-size: var(--step--1); color: var(--fg); }
+.recipe .rmeta { font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint); }
+/* modifier table — the action is the point, the raw value is the footnote */
+table.modtable { border-collapse: collapse; width: 100%; font-size: var(--step--2); }
+table.modtable caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+table.modtable th {
+  font-family: var(--mono); font-weight: 500; font-size: 0.66rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-faint);
+  text-align: left; padding: 0 0.6rem 0.35rem 0; border-bottom: 1px solid var(--rule);
+  white-space: nowrap;
+}
+table.modtable td {
+  padding: 0.35rem 0.6rem 0.35rem 0; border-bottom: 1px solid var(--rule);
+  vertical-align: top; color: var(--fg-muted); line-height: 1.5;
+}
+table.modtable tr:last-child td { border-bottom: none; }
+table.modtable td.act { font-family: var(--mono); white-space: nowrap; }
+table.modtable td.act .verb { color: var(--fg); }
+table.modtable tr.is-empty td.act .verb { color: var(--loss); }
+/* Was opacity: 0.55, which dropped this row's text to ~2.4:1 — a real AA failure that a
+   token-pair checker is structurally blind to, because the tokens themselves still pass. These
+   rows carry real content ("not available here"), so they get a muted colour instead. */
+table.modtable tr.is-off td { color: var(--fg-muted); }
+table.modtable tr.is-off td .iname,
+table.modtable tr.is-off td .modnote { color: var(--fg-faint); }
+table.modtable tr.is-off td.act .verb { text-decoration: line-through; text-decoration-color: var(--rule-strong); }
+table.modtable td.act .hmhow {
+  display: block; white-space: normal; max-width: 26rem; margin-top: 0.15rem;
+  font-family: var(--sans); font-size: 0.68rem; line-height: 1.45; color: var(--fg-muted);
+}
+table.modtable td.act .cond {
+  display: block; font-size: 0.62rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--perm);
+}
+table.modtable td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.modtable td.num b { color: var(--fg); font-weight: 700; }
+table.modtable td.num .iname { display: block; color: var(--fg-faint); font-size: 0.66rem; }
+table.modtable td.res { width: 99%; }
+/* three outcomes per write. glyph + colour + a screen-reader label, so the
+   distinction survives greyscale and colour-vision deficiency alike */
+table.modtable td.res .fx { display: grid; grid-template-columns: 1rem 1fr; gap: 0 0.3rem; align-items: baseline; }
+table.modtable td.res .fx + .fx { margin-top: 0.15rem; }
+table.modtable td.res .fxg { font-family: var(--mono); font-weight: 700; }
+table.modtable td.res .fx.sets { color: var(--gain); }
+table.modtable td.res .fx.assigns { color: var(--fg-muted); }
+table.modtable td.res .fx.clears { color: var(--loss); }
+table.modtable td.res .fx.never { color: var(--perm); }
+.modnote { font-size: var(--step--2); color: var(--fg-faint); line-height: 1.5; }
+
+.trap {
+  border-left: 3px solid var(--perm); background: var(--perm-soft);
+  padding: 0.6rem 0.8rem; font-size: var(--step--1); color: var(--fg); line-height: 1.55;
+}
+.trap .tag {
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--perm); display: block; margin-bottom: 0.2rem;
+}
+/* ---------- strategy notes ----------
+   Community strategy writing, rendered in the page's own voice but clearly attributed. Videos are
+   click-to-load: 362 of them across the dataset, so embedding eagerly would be absurd, and it also
+   means the page makes no third-party request until a reader asks for one. */
+.tips { display: flex; flex-direction: column; gap: 0.55rem; }
+.tips h4 {
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-faint); font-weight: 500; margin: 0.35rem 0 0;
+}
+.tips p { font-size: var(--step--1); color: var(--fg-muted); line-height: 1.6; margin: 0; }
+.tips ul, .tips ol { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.tips li { font-size: var(--step--1); color: var(--fg-muted); line-height: 1.55; }
+.tips a { color: var(--accent); text-underline-offset: 2px; }
+/* An inline link inside a sentence is exempt from the WCAG 2.2 target-size minimum, so this
+   deliberately stays inline rather than becoming a block button and breaking the prose. */
+button.ytlink {
+  font: inherit; color: var(--accent); background: none; border: 0;
+  padding: 0.1rem 0; min-height: 1.5rem; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 2px;
+  display: inline; text-align: left;
+}
+button.ytlink:hover { filter: brightness(1.15); }
+button.ytlink .g { font-size: 0.75em; }
+figure.ytbox { margin: 0.5rem 0 0.2rem; max-width: 44rem; display: flex; flex-direction: column; gap: 0.3rem; }
+figure.ytbox .frame {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  background: var(--bg-cell); border: 1px solid var(--rule-strong); border-radius: 2px;
+}
+figure.ytbox iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+figure.ytbox figcaption { font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint); }
+.credit { font-size: var(--step--2); color: var(--fg-faint); line-height: 1.5; }
+.credit a { color: var(--accent); }
+
+.pill-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.pill {
+  font-family: var(--mono); font-size: var(--step--2);
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  padding: 0.1rem 0.45rem; color: var(--fg-muted);
+}
+.pill.warn { color: var(--loss); border-color: var(--loss); border-style: dashed; }
+/* Stream popout controls. The dimension chip is not decoration: an OBS Browser Source asks for a
+   width and a height in numbers, and getting them wrong is the difference between a crisp overlay
+   and a scaled one. */
+.popbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 0.6rem; }
+.popbar .dims {
+  font-family: var(--mono); font-size: var(--step--1); color: var(--fg-muted);
+  border: 1px solid var(--rule); border-radius: 0.25rem; padding: 0.1rem 0.4rem;
+}
+.popbar .said { font-size: var(--step--1); color: var(--gain); }
+/* Conflict pills are graded by what bingo's own synergy numbers say about the pair, so the
+   strongest warnings are not drowned by the 147 pairs bingo actually likes. Border style differs
+   as well as colour, and each group carries a worded heading — never colour alone. */
+.pill.vc { color: var(--loss); border-color: var(--loss); border-style: solid; font-weight: 600; }
+.pill.vp { color: var(--fg-soft); border-color: var(--fg-faint); border-style: dotted; }
+.vtail { margin-left: 0.35rem; font-size: 0.86em; }
+.vtail.vc { color: var(--loss); }
+.vtail.vp { color: var(--fg-soft); }
+
+.empty {
+  padding: 3rem 0; text-align: center; color: var(--fg-faint);
+  font-family: var(--mono); font-size: var(--step--1);
+}
+
+footer.end {
+  margin-top: 3rem; padding-top: 1.25rem; border-top: 3px solid var(--fg);
+  font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint);
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; justify-content: space-between;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
+
+<a class="skip" href="#results">Skip to results</a>
+
+<div class="shell">
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">soh.tools &middot; ocarina of time bingo</p>
+      <h1>Goal index <span class="ver">v10.6</span></h1>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <section class="rowpanel" id="rowPanel" aria-labelledby="rowh">
+    <h2 id="rowh" class="vh">Load a bingo board or row</h2>
+    <div id="rowEmpty">
+      <form class="rowform" id="rowForm">
+        <div class="field">
+          <label for="rowurl">Paste a board link, a row popout link, or just a seed</label>
+          <input type="search" id="rowurl" autocomplete="off" placeholder="https://ootbingo.github.io/bingo/bingo.html?version=10.6&amp;seed=523297&amp;mode=normal">
+        </div>
+        <button type="submit" class="btn">Load</button>
+      </form>
+      <p class="boardmeta" id="rowHint"></p>
+    </div>
+    <div id="boardLoaded" hidden></div>
+    <div id="rowLoaded" hidden></div>
+    <p class="vh" id="rowStatus" aria-live="polite" role="status"></p>
+  </section>
+
+  <section class="summary" aria-labelledby="sumh">
+    <h2 id="sumh" class="vh">Summary of the goals currently shown</h2>
+    <div class="stats">
+      <div class="stat"><span class="num" id="statCount">269</span><span class="lab">goals shown</span></div>
+      <div class="stat"><span class="num" id="statMedian">&mdash;</span><span class="lab">median length</span></div>
+      <div class="stat"><span class="num" id="statRba">&mdash;</span><span class="lab">touched by RBA</span></div>
+    </div>
+    <div class="chart">
+      <p class="eyebrow" id="charth">Difficulty spread</p>
+      <div class="bars" id="bars" role="img" aria-labelledby="charth" aria-describedby="chartdesc"></div>
+      <div class="bar-axis" id="barAxis"></div>
+      <p class="chart-key">
+        <i><span class="key-swatch shown"></span> shown by the current filter</i>
+        <i><span class="key-swatch all"></span> all goals in this mode</i>
+      </p>
+      <p class="vh" id="chartdesc"></p>
+    </div>
+  </section>
+
+  <form class="controls" id="controls" role="search" aria-label="Filter goals">
+    <div class="searchrow">
+      <div class="field">
+        <label for="q">Search</label>
+        <input type="search" id="q" autocomplete="off" placeholder="name, area, dungeon, tag&hellip;">
+      </div>
+      <div class="field">
+        <label for="arch">Kind of goal</label>
+        <select id="arch"></select>
+      </div>
+      <div class="field">
+        <label for="sort">Order by</label>
+        <select id="sort">
+          <option value="name">Name</option>
+          <option value="time">Length, shortest first</option>
+          <option value="timedesc">Length, longest first</option>
+          <option value="diff">Difficulty</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="facets">
+    <fieldset>
+      <legend>Board mode</legend>
+      <span class="radio"><input type="radio" name="mode" id="mode-n" value="normal" checked><label for="mode-n">normal</label></span>
+      <span class="radio"><input type="radio" name="mode" id="mode-s" value="short"><label for="mode-s">short</label></span>
+    </fieldset>
+
+    <fieldset>
+      <legend>Relationship to RBA</legend>
+      <span class="radio"><input type="radio" name="rba" id="rba-any" value="any" checked><label for="rba-any">any</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-s" value="s"><label for="rba-s"><span class="glyph" aria-hidden="true">&#9650;</span> RBA can complete it</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-e" value="e"><label for="rba-e"><span class="glyph" aria-hidden="true">&#9670;</span> RBA helps</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-d" value="d"><label for="rba-d"><span class="glyph" aria-hidden="true">&#10006;</span> RBA writes it</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-none" value="none"><label for="rba-none">untouched</label></span>
+    </fieldset>
+    </div>
+  </form>
+
+  <p class="resultline">
+    <span id="count" aria-live="polite" role="status"></span>
+    <span id="othermode"></span>
+    <button type="button" class="clear" id="clear">Clear filters</button>
+  </p>
+
+  <main id="results">
+    <ul class="goals" id="list"></ul>
+    <p class="empty" id="empty" hidden>Nothing matches those filters.</p>
+  </main>
+
+  <footer class="end">
+    <span>OoT Bingo v10.6 &middot; 269 goals</span>
+    <span id="gen"></span>
+  </footer>
+</div>
+
+<script type="application/json" id="data">/*__DATA__*/</script>
+<script type="application/json" id="boarddata">/*__BOARD_DATA__*/</script>
+<!-- ootbingo's own seedrandom + generator.js, embedded verbatim. Reimplementing a seeded RNG walk
+     would risk producing a plausible board that is silently the wrong one; build_board_data.js
+     checks 1600+ boards against the untouched pipeline on every build. -->
+<script>/*__BOARD_GENERATOR__*/</script>
+<!-- a faithful port of the generator's module-private SynergyCalculator, plus a decomposition;
+     verify_board_synergy.js proves it against the generator's own numbers and bounds -->
+<script>/*__BOARD_SYNERGY__*/</script>
+<script>
+(function () {
+  "use strict";
+
+  var DATA = JSON.parse(document.getElementById("data").textContent);
+  var GOALS = DATA.goals;
+  var RECIPES = DATA.recipes;
+  var TKC = DATA.tkc || { sections: [], credit: {} };
+  var byName = {};
+  GOALS.forEach(function (g) { byName[g.n] = g; });
+  // value -> { name, verb, action, conditional } for the six writable bottle states
+  var MODS = {};
+  (DATA.modifiers || []).forEach(function (m) { MODS[m.v] = m; });
+
+  document.getElementById("gen").textContent = "generated " + DATA.gen;
+
+  /* ---------- helpers ---------- */
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  function titleCase(s) {
+    return s.replace(/-/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+  function modeOf(g) { return state.mode === "short" ? g.S : g.N; }
+
+  /* ---------- state ---------- */
+  var state = { q: "", arch: "all", mode: "normal", rba: "any", sort: "name", row: null };
+
+  /* ---------- archetype select ---------- */
+  var archSel = document.getElementById("arch");
+  archSel.appendChild(new Option("All kinds", "all"));
+  DATA.archetypes.forEach(function (a) {
+    var n = GOALS.filter(function (g) { return g.a === a; }).length;
+    archSel.appendChild(new Option(titleCase(a) + " (" + n + ")", a));
+  });
+
+  /* ---------- filtering ---------- */
+  function haystack(g) {
+    if (g._h) return g._h;
+    var parts = [g.n, g.a.replace(/-/g, " ")];
+    if (g.ar) parts.push(g.ar);
+    if (g.dg) parts.push(g.dg);
+    if (g.tags) parts.push(g.tags.join(" ").replace(/-/g, " "));
+    if (g.age) parts.push(g.age);
+    g._h = parts.join(" ").toLowerCase();
+    return g._h;
+  }
+
+  function matches(g, ignoreMode) {
+    if (state.row && state.row.set.indexOf(g.n) === -1) return false;
+    if (!ignoreMode && !modeOf(g)) return false;
+    if (state.arch !== "all" && g.a !== state.arch) return false;
+    if (state.rba !== "any") {
+      var r = g.rba;
+      if (state.rba === "none") { if (r) return false; }
+      else if (!r || !r[state.rba] || !r[state.rba].length) return false;
+    }
+    if (state.q) {
+      var h = haystack(g);
+      var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+      for (var i = 0; i < terms.length; i++) if (h.indexOf(terms[i]) === -1) return false;
+    }
+    return true;
+  }
+
+  function sortRows(rows) {
+    var s = state.sort;
+    if (s === "board" && state.row) {
+      var order = state.row.set;
+      return rows.sort(function (a, b) { return order.indexOf(a.n) - order.indexOf(b.n); });
+    }
+    return rows.sort(function (a, b) {
+      var ma = modeOf(a), mb = modeOf(b);
+      if (s === "time") return ma[1] - mb[1] || a.n.localeCompare(b.n);
+      if (s === "timedesc") return mb[1] - ma[1] || a.n.localeCompare(b.n);
+      if (s === "diff") return ma[0] - mb[0] || a.n.localeCompare(b.n);
+      return a.n.localeCompare(b.n);
+    });
+  }
+
+  /* ---------- markers ---------- */
+  /* A write lands on a byte; whether that helps or hurts often depends on what
+     you already had. Only claim removal when the state genuinely cannot be
+     written back (bits 5-7); otherwise say it overwrites and leave it there. */
+  function destroyKinds(g) {
+    if (!g.rba || !g.rba.d) return {};
+    var out = { permanent: [], overwrite: [] };
+    g.rba.d.forEach(function (k) {
+      var kind = (g.rba.dk && g.rba.dk[k]) === "permanent" ? "permanent" : "overwrite";
+      out[kind].push(k);
+    });
+    return out;
+  }
+
+  var COMMUNITY_NOTE =
+    "Community-sourced. Racer knowledge relayed from the bingo Discord — not derived from the " +
+    "decompilation or the goal list like the rest of this page, and cross-checked only against " +
+    "bingo's own synergy data.";
+
+  /* Which C-Right item writes which dungeon's byte.
+     dungeonItems[] is indexed by scene id from 0x34 and RBA's offset IS the C-Right item id, so the
+     pairing is forced rather than chosen. It runs out after Spirit: the next byte would need the
+     Kokiri Sword on C-Right, which cannot be equipped there. Unreachable rows are kept and marked
+     in words — knowing Shadow is impossible matters as much as knowing Water is 0x39. */
+  /* Which C-Right item writes which inventory slot.
+     Emptying the bottle puts an Empty Bottle into the slot, and that is what fills it — so for a
+     slot-filling goal this is the list of items worth putting on C-Right. Two of them do not fill
+     a spare slot at all: Green and Blue Potion land on the adult and child trade items. */
+  /* The strength field, for the six goals that live in it.
+     A coloured gauntlet is not a value RBA writes. The Pocket Cucco write sets one bit worth 4, and
+     which colour you end up with is decided by the strength upgrade you ALREADY owned — so the
+     answer to "how do I get Blue Gauntlets" is "own Silver first, then write". That rule sat in the
+     recipe and never reached the page, and the two halves live on different bytes at different
+     trade stops, which is also why Cojiro undoes it. */
+  function gauntletCard(g) {
+    if (!/Gauntlets|Goron Bracelet/i.test(g.n)) return null;
+    var hi = RECIPES["upg-wallet-scale-strength-hi"];
+    if (!hi || !hi.gc) return null;
+    var lo = RECIPES["upg-quiver-bombbag-strength-lo"];
+
+    var box = el("div", "card span");
+    box.appendChild(el("h3", null, "How the strength value decides the colour"));
+    box.appendChild(el("p", "strongline", hi.gc.rule));
+
+    var wrap = el("div", "linewrap");
+    var t = el("table", "lines");
+    var thead = el("thead"), hr = el("tr");
+    ["Strength", "You end up with", "Because you already had", "Shows the icon of"].forEach(function (h) {
+      var th = el("th", null, h); th.scope = "col"; hr.appendChild(th);
+    });
+    thead.appendChild(hr); t.appendChild(thead);
+    var tb = el("tbody");
+    (hi.gc.values || []).forEach(function (v) {
+      var tr = el("tr");
+      if (v.colour === g.n) tr.className = "sel";
+      tr.appendChild(el("td", "num", String(v.strength)));
+      var td = el("td");
+      td.appendChild(document.createTextNode(v.colour));
+      // Black Gauntlets is a real state with no goal behind it — say so rather than implying a target
+      if (!v.isGoal) td.appendChild(el("span", "modnote", " — not a v10.6 goal"));
+      tr.appendChild(td);
+      tr.appendChild(el("td", null, v.prior || "nothing — no strength upgrade at all"));
+      tr.appendChild(el("td", null, v.icon));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    wrap.appendChild(t);
+    box.appendChild(wrap);
+    box.appendChild(el("p", null, hi.gc.strengthEffect));
+
+    /* The two halves of the strength field sit on different bytes reached at different trade stops,
+       and the later one always zeroes the earlier. Worth stating on the goal, not just the recipe. */
+    if (lo) {
+      var trap = el("div", "trap");
+      trap.appendChild(el("span", "tag", "Cojiro undoes this"));
+      trap.appendChild(document.createTextNode(
+        "The Pocket Cucco byte (" + hi.off + ", trade stop 2) holds the bit worth 4. The low strength bits live on the " +
+        "Cojiro byte (" + lo.off + ", trade stop 3), and every value RBA can write there is under 64, so those bits are " +
+        "always cleared. Writing Cojiro after setting a colour drops the strength to 4 — Black Gauntlets, which is not a " +
+        "v10.6 goal. The trade sequence only moves forward, so the Cucco byte cannot be redone."));
+      box.appendChild(trap);
+    }
+    return box;
+  }
+
+  function slotMapCard(rows) {
+    var box = el("div", "card span");
+    box.appendChild(el("h3", null, "Which item fills which slot"));
+    var safe = rows.filter(function (r) { return !r.warn; }).length;
+    box.appendChild(el("p", "strongline",
+      safe + " of the " + rows.length + " reachable C-Right items write a spare slot. Emptying the bottle is what fills it."));
+
+    var wrap = el("div", "linewrap");
+    var t = el("table", "lines");
+    var thead = el("thead"), hr = el("tr");
+    ["On C-Right", "Slot written"].forEach(function (h) {
+      var th = el("th", null, h); th.scope = "col"; hr.appendChild(th);
+    });
+    thead.appendChild(hr); t.appendChild(thead);
+    var tb = el("tbody");
+    rows.forEach(function (r) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, r.item));
+      var td = el("td");
+      if (r.warn) {
+        // glyph + word, never colour alone
+        var sp = el("span", "risk bad");
+        var gl = el("span", null, "✖"); gl.setAttribute("aria-hidden", "true");
+        sp.appendChild(gl);
+        sp.appendChild(document.createTextNode(r.slot + " — overwrites a trade item"));
+        td.appendChild(sp);
+      } else {
+        td.appendChild(document.createTextNode(r.slot));
+      }
+      tr.appendChild(td);
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    wrap.appendChild(t);
+    box.appendChild(wrap);
+    return box;
+  }
+
+  function dungeonMapCard(rows) {
+    var box = el("div", "card span");
+    box.appendChild(el("h3", null, "Which item writes which dungeon"));
+    var reach = rows.filter(function (r) { return r.item; }).length;
+    box.appendChild(el("p", "strongline",
+      reach + " of the " + rows.length + " dungeon bytes can be written — the adult trade sequence covers the first four, the magic arrows the next three."));
+
+    var wrap = el("div", "linewrap");
+    var t = el("table", "lines");
+    var thead = el("thead"), hr = el("tr");
+    ["Dungeon", "C-Right item", "Offset"].forEach(function (h) {
+      var th = el("th", null, h); th.scope = "col"; hr.appendChild(th);
+    });
+    thead.appendChild(hr); t.appendChild(thead);
+    var tb = el("tbody");
+    rows.forEach(function (r) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, r.dungeon));
+      var td = el("td");
+      if (r.item) {
+        td.appendChild(document.createTextNode(r.item));
+      } else {
+        // glyph + word, never colour alone
+        var sp = el("span", "risk bad");
+        var gl = el("span", null, "✖"); gl.setAttribute("aria-hidden", "true");
+        sp.appendChild(gl);
+        sp.appendChild(document.createTextNode("no item can sit on C-Right"));
+        td.appendChild(sp);
+      }
+      tr.appendChild(td);
+      tr.appendChild(el("td", "num", r.off));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    wrap.appendChild(t);
+    box.appendChild(wrap);
+    return box;
+  }
+
+  /* ---------- strategy notes ---------- */
+
+  /* Videos load only when asked. The button holds its own figure once created and toggles it after,
+     so a goal with ten clips costs nothing until a reader opens one. Nothing here trusts the source
+     text as markup — every string goes through textContent, and hrefs are rendered as-is only after
+     the parser has already resolved them to a YouTube id or a plain URL. */
+  function toggleVideo(btn, run) {
+    if (btn._fig) {
+      var show = btn._fig.hidden;
+      btn._fig.hidden = !show;
+      btn.setAttribute("aria-expanded", show ? "true" : "false");
+      return;
+    }
+    var fig = el("figure", "ytbox");
+    var frame = el("div", "frame");
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + run.yt.id + (run.yt.t ? "?start=" + run.yt.t : "");
+    f.title = "Video: " + (run._spoken || run.text);
+    f.setAttribute("loading", "lazy");
+    f.setAttribute("allowfullscreen", "");
+    f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+    frame.appendChild(f);
+    fig.appendChild(frame);
+    var cap = el("figcaption");
+    var a = el("a", null, "open on youtube.com");
+    a.href = ytHref(run.yt);
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    cap.appendChild(a);
+    // a strict CSP (an embedded artifact) blocks the frame; the link is the way out
+    cap.appendChild(el("span", null, " — if the player stays blank, the link opens it."));
+    fig.appendChild(cap);
+
+    var host = btn.closest("li,p,div");
+    // a <figure> may not sit inside <p>, so paragraphs get it as a sibling and list items keep it
+    if (host && host.tagName === "LI") host.appendChild(fig);
+    else if (host && host.parentElement) host.parentElement.insertBefore(fig, host.nextSibling);
+    else btn.parentElement.appendChild(fig);
+    btn._fig = fig;
+    btn.setAttribute("aria-expanded", "true");
+  }
+
+  /* Many links in the source lost their label in translation and fall back to the word "video".
+     Visually that is fine — the sentence around them says what they are — but a screen reader
+     navigating by link would hear "video" seven times in one card. Borrow the phrase that precedes
+     the link, which is exactly what the sentence uses to introduce it. */
+  function videoName(prevText, ctx) {
+    var lead = String(prevText || "").replace(/\s*[:–—-]\s*$/, "").trim();
+    lead = lead.split(/[.;]/).pop().replace(/^[\s(]+/, "").trim();
+    // the translation dropped some opening brackets, leaving "no HoverSlide)" — close the gap
+    if ((lead.match(/\)/g) || []).length > (lead.match(/\(/g) || []).length) {
+      lead = lead.replace(/\)\s*$/, "").trim();
+    }
+    return lead || ctx || "strategy";
+  }
+
+  /* YouTube's /embed/ endpoint refuses a null origin, which is exactly what a page opened straight
+     off disk has. Rather than offer a play button that expands into a dead grey box, fall back to a
+     plain link when the page is not being served over http(s). Open goals-page.html through any
+     local server — or deployed — and the inline players come back. */
+  var CAN_EMBED = location.protocol === "http:" || location.protocol === "https:";
+
+  function ytHref(yt) {
+    return "https://www.youtube.com/watch?v=" + yt.id + (yt.t ? "&t=" + yt.t : "");
+  }
+
+  function appendRuns(host, runs, ctx) {
+    var prevText = "";
+    (runs || []).forEach(function (r) {
+      if (r.yt && !CAN_EMBED) {
+        var la = el("a", null, "▶ " + r.text);
+        la.href = ytHref(r.yt);
+        la.target = "_blank";
+        la.rel = "noopener noreferrer";
+        la.setAttribute("aria-label",
+          (/^video$/i.test(r.text) ? videoName(prevText, ctx) : r.text) + " — watch on YouTube");
+        host.appendChild(la);
+        return;
+      }
+      if (r.yt) {
+        var b = el("button", "ytlink");
+        b.type = "button";
+        b.setAttribute("aria-expanded", "false");
+        var g = el("span", "g", "▶ ");
+        g.setAttribute("aria-hidden", "true");
+        b.appendChild(g);
+        b.appendChild(document.createTextNode(r.text));
+        var spoken = /^video$/i.test(r.text) ? videoName(prevText, ctx) : r.text;
+        b.setAttribute("aria-label", spoken + " — play video");
+        r._spoken = spoken; // reused for the iframe title
+        b.addEventListener("click", function () { toggleVideo(b, r); });
+        host.appendChild(b);
+      } else if (r.url) {
+        var a = el("a", null, r.text);
+        a.href = r.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        host.appendChild(a);
+      } else {
+        prevText = r.text;
+        host.appendChild(document.createTextNode(r.text));
+      }
+    });
+  }
+
+  function tipsCard(refs, goalName) {
+    var box = el("div", "card span");
+    box.appendChild(el("h3", null, "Strategy notes"));
+    var body = el("div", "tips");
+
+    refs.forEach(function (i) {
+      var sec = TKC.sections[i];
+      if (!sec) return;
+      sec.blocks.forEach(function (b) {
+        if (b.t === "h") {
+          var h = el("h4");
+          appendRuns(h, b.runs, goalName);
+          body.appendChild(h);
+        } else if (b.t === "ul" || b.t === "ol") {
+          var list = el(b.t === "ol" ? "ol" : "ul");
+          b.items.forEach(function (it) {
+            var li = el("li");
+            appendRuns(li, it, goalName);
+            list.appendChild(li);
+          });
+          body.appendChild(list);
+        } else {
+          var p = el("p");
+          appendRuns(p, b.runs, goalName);
+          body.appendChild(p);
+        }
+      });
+    });
+    box.appendChild(body);
+
+    /* Attribution, not decoration: this is someone else's writing and the page should say so, and
+       say that it describes v10.5 rather than the v10.6 list everything else here is built on. */
+    var c = TKC.credit;
+    var cr = el("p", "credit");
+    cr.appendChild(document.createTextNode("From "));
+    var link = el("a", null, c.what);
+    link.href = c.original; link.target = "_blank"; link.rel = "noopener noreferrer";
+    cr.appendChild(link);
+    cr.appendChild(document.createTextNode(" by "));
+    var who = el("a", null, c.author);
+    who.href = c.profile; who.target = "_blank"; who.rel = "noopener noreferrer";
+    cr.appendChild(who);
+    cr.appendChild(document.createTextNode(
+      ", via an English translation. Written for v10.5, so a renamed or reworked goal may not match this list exactly."));
+    box.appendChild(cr);
+    return box;
+  }
+
+  function locationCard(loc) {
+    var box = el("div", "card span");
+    box.appendChild(el("h3", null, loc.title));
+
+    if (loc.costs) {
+      box.appendChild(el("p", "strongline", loc.lead));
+      var wrap = el("div", "linewrap");
+      var t = el("table", "lines");
+      var head = el("thead"), hr = el("tr");
+      ["Piece", "Trade quest", "No trade quest"].forEach(function (h, i) {
+        var th = el("th", i ? "num" : null, h);
+        th.scope = "col";
+        hr.appendChild(th);
+      });
+      head.appendChild(hr); t.appendChild(head);
+      var tb = el("tbody");
+      loc.costs.forEach(function (c) {
+        var tr = el("tr");
+        var td0 = el("td");
+        td0.appendChild(document.createTextNode(c.label));
+        if (c.cond) td0.appendChild(el("span", "modnote", " (" + c.cond + ")"));
+        tr.appendChild(td0);
+        // an em dash reads as "not priced in this column", which is different from zero
+        tr.appendChild(el("td", "num", c.tq == null ? "—" : c.tq + "s" + (c.q || "")));
+        tr.appendChild(el("td", "num", c.notq == null ? "—" : c.notq + "s" + (c.q || "")));
+        tb.appendChild(tr);
+      });
+      t.appendChild(tb);
+      wrap.appendChild(t);
+      box.appendChild(wrap);
+      if (loc.note) box.appendChild(el("p", null, loc.note));
+    } else {
+      var slack = loc.total - loc.need;
+      box.appendChild(el("p", "strongline",
+        loc.need + " of " + loc.total +
+        (slack > 0 ? " — " + slack + " can be skipped." : " — the whole set, with nothing to spare.")));
+      box.appendChild(el("p", null, loc.lead));
+      var dl = el("dl", "kv");
+      loc.groups.forEach(function (grp) {
+        dl.appendChild(el("dt", null, grp.area));
+        dl.appendChild(el("dd", null, grp.items.join(" · ")));
+      });
+      box.appendChild(dl);
+    }
+
+    box.appendChild(el("p", "modnote", COMMUNITY_NOTE));
+    return box;
+  }
+
+  function markers(g) {
+    var out = [];
+    if (g.rba && g.rba.s) out.push(["routed", "▲", "RBA can complete it"]);
+    if (g.rba && g.rba.e) out.push(["helped", "◆", "RBA shortcut"]);
+    var dk = destroyKinds(g);
+    if (dk.permanent && dk.permanent.length) out.push(["breaks", "✖", "RBA can remove it for good"]);
+    if (dk.overwrite && dk.overwrite.length) out.push(["touches", "◈", "RBA overwrites this"]);
+    if (g.only) out.push(["only", "●", "RBA only — not in normal play"]);
+    return out;
+  }
+
+  /* ---------- detail ---------- */
+  function recipeBlock(key, relation, note, ctx) {
+    var r = RECIPES[key];
+    // a goal about one dungeon names that dungeon's C-Right item, not all seven
+    var cr = (ctx && ctx[key]) || {};
+    var name = cr.n || r.n, off = cr.off || r.off, tgt = cr.tgt || r.tgt, stage = cr.stage || r.stage;
+    var wrap = el("div", "recipe" + (relation === "d" ? " is-break" : ""));
+    /* A goal about one dungeon was already narrowed to that dungeon's item by `ctx`. A goal that
+       spans several was not, and listing seven items as a slash-run tells the reader nothing about
+       which one reaches which dungeon — so pair them up explicitly instead. */
+    var spread = !cr.n && r.pairs;
+    if (spread) {
+      wrap.appendChild(el("p", "rname", "One item per dungeon on C-Right — " + off));
+      var dl = el("dl", "kv");
+      r.pairs.forEach(function (p) {
+        dl.appendChild(el("dt", null, p.dungeon));
+        dl.appendChild(el("dd", null, p.item + " · " + p.off));
+      });
+      wrap.appendChild(el("p", "rmeta", tgt + " · " + r.age + (stage ? " · " + stage : "")));
+      wrap.appendChild(dl);
+      // the table below is per byte, not per board — easy to read as global otherwise
+      wrap.appendChild(el("p", "modnote",
+        "Each write lands on one dungeon's byte. The results below are what a single write does to " +
+        "whichever dungeon you picked — reaching several means repeating it with that dungeon's item."));
+    } else {
+      wrap.appendChild(el("p", "rname", name + " on C-Right — " + off));
+      wrap.appendChild(el("p", "rmeta", tgt + " · " + r.age + (stage ? " · " + stage : "")));
+    }
+    // the plainest sentence about what this write does; it was shipped but never shown
+    if (r.sum) wrap.appendChild(el("p", "strongline", r.sum));
+    if (note) wrap.appendChild(el("p", null, note));
+    // preconditions: without these the route does not work at all
+    if (r.how) wrap.appendChild(el("p", null, "Getting it on C-Right: " + r.how));
+    if (r.display) wrap.appendChild(el("p", null, r.display));
+
+    /* The value written is whatever ends up in the bottle on B. Naming the
+       action matters more than the number: catching writes what you caught,
+       but emptying always writes 20 — the write you did not ask for. */
+    var tbl = el("table", "modtable");
+    var cap = el("caption", null, "What you do with the bottle on B, and what it writes");
+    tbl.appendChild(cap);
+    var thead = el("thead");
+    var hr = el("tr");
+    ["with the bottle on B", "writes", "result"].forEach(function (h) {
+      var th = el("th", null, h);
+      th.scope = "col";
+      hr.appendChild(th);
+    });
+    thead.appendChild(hr);
+    tbl.appendChild(thead);
+
+    var tb = el("tbody");
+    Object.keys(r.mods).forEach(function (v) {
+      var m = MODS[v];
+      var hm = Number(v) === 31 ? r.hm : null;
+      var unavailable = hm && hm.ok === false;
+      var tr = el("tr", (m && m.verb === "empty" ? "is-empty" : "is-catch") + (unavailable ? " is-off" : ""));
+      var act = el("td", "act");
+      act.appendChild(el("span", "verb", m ? m.action : "—"));
+      if (hm) {
+        act.appendChild(el("span", "cond", unavailable ? "not available here" : "needs a setup"));
+        act.appendChild(el("span", "hmhow", hm.how));
+      } else if (m && m.conditional) {
+        act.appendChild(el("span", "cond", "conditional"));
+      }
+      tr.appendChild(act);
+      var val = el("td", "num");
+      val.appendChild(el("b", null, v));
+      if (m) val.appendChild(el("span", "iname", m.name));
+      tr.appendChild(val);
+      /* A write assigns the whole byte, so there are exactly two outcomes: what it turns on and
+         what it turns off. Bits RBA cannot write back used to get a third row of their own, but
+         they are losses like any other — whether you can re-obtain them is a routing question, not
+         part of the transaction. They are folded into "you lose" in build_web_data.js. */
+      var res = el("td", "res");
+      var fx = r.fx && r.fx[v];
+      if (fx && (fx.sets.length || fx.clears.length)) {
+        var assigns = fx.mode === "assign";
+        [[assigns ? "assigns" : "sets", assigns ? "=" : "+", fx.sets, assigns ? "sets to" : "you gain"],
+         ["clears", "−", fx.clears, "you lose"]].forEach(function (part) {
+          if (!part[2].length) return;
+          var line = el("p", "fx " + part[0]);
+          var g = el("span", "fxg", part[1]);
+          g.setAttribute("aria-hidden", "true");
+          line.appendChild(g);
+          line.appendChild(el("span", "vh", part[3] + ": "));
+          line.appendChild(document.createTextNode(part[2].join(", ")));
+          res.appendChild(line);
+        });
+      } else {
+        res.appendChild(document.createTextNode(r.mods[v]));
+      }
+      tr.appendChild(res);
+      tb.appendChild(tr);
+    });
+    tbl.appendChild(tb);
+    wrap.appendChild(tbl);
+
+    /* The traps. 44 of them across 13 recipes, and until now they existed only in the generated
+       writeups — even though "the RBA traps" is the first thing this project claims to be about.
+       They belong next to the write that causes them, not in a separate document. */
+    if (r.traps && r.traps.length) {
+      var tw = el("div", "trap");
+      tw.appendChild(el("span", "tag", r.traps.length === 1 ? "Trap" : r.traps.length + " traps"));
+      var tl = el("ul");
+      r.traps.forEach(function (t) { tl.appendChild(el("li", null, t)); });
+      tw.appendChild(tl);
+      wrap.appendChild(tw);
+    }
+    if (r.also && r.also.length) {
+      var aw = el("div", "rowalert ok");
+      var at = el("div", "atitle");
+      var ag = el("span", null, "✓");
+      ag.setAttribute("aria-hidden", "true");
+      at.appendChild(ag);
+      at.appendChild(document.createTextNode("also worth having"));
+      aw.appendChild(at);
+      var al = el("ul");
+      r.also.forEach(function (x) { al.appendChild(el("li", null, x)); });
+      aw.appendChild(al);
+      wrap.appendChild(aw);
+    }
+    return wrap;
+  }
+
+  function buildDetail(g) {
+    var d = el("div", "detail");
+
+    /* facts */
+    var facts = el("div", "card");
+    facts.appendChild(el("h3", null, "The square"));
+    var dl = el("dl", "kv");
+    function kv(k, v) {
+      dl.appendChild(el("dt", null, k));
+      dl.appendChild(el("dd", null, v));
+    }
+    kv("Kind", titleCase(g.a));
+    if (g.N) kv("Normal", "difficulty " + g.N[0] + " · " + g.N[1] + " min");
+    if (g.S) kv("Short", "difficulty " + g.S[0] + " · " + g.S[1] + " min");
+    if (!g.S) kv("Short", "not on short boards");
+    if (g.ar) kv("Area", g.ar);
+    if (g.dg) kv("Dungeon", g.dg);
+    if (g.age) kv("Age", g.age);
+    facts.appendChild(dl);
+    if (g.excl) {
+      var ex = el("div");
+      ex.appendChild(el("p", null, "Never shares a row with goals in the same group:"));
+      var pl = el("div", "pill-list");
+      g.excl.forEach(function (e) { pl.appendChild(el("span", "pill", e)); });
+      ex.appendChild(pl);
+      facts.appendChild(ex);
+    }
+    d.appendChild(facts);
+
+    /* intended route */
+    var route = el("div", "card");
+    route.appendChild(el("h3", null, "The intended way"));
+    if (g.ir) {
+      route.appendChild(el("p", "strongline", g.ir.h + "."));
+      var rl = el("dl", "kv");
+      rl.appendChild(el("dt", null, "Age")); rl.appendChild(el("dd", null, g.ir.age));
+      rl.appendChild(el("dt", null, "Where")); rl.appendChild(el("dd", null, g.ir.w));
+      if (g.ir.req && g.ir.req.length) {
+        rl.appendChild(el("dt", null, "Needs")); rl.appendChild(el("dd", null, g.ir.req.join("; ")));
+      }
+      route.appendChild(rl);
+      if (g.ir.note) route.appendChild(el("p", null, g.ir.note));
+    } else if (g.only) {
+      route.appendChild(el("p", "strongline", "There isn't one — this value does not exist in normal play."));
+    } else {
+      route.appendChild(el("p", null, "No prerequisite chain written for this goal yet. Collection goals are covered by the location data rather than a route."));
+    }
+    d.appendChild(route);
+
+    /* spawn window — the target only exists during a window of game state.
+       Deliberately its own card, not folded into "The intended way": there is
+       nothing to acquire here, and the failure mode is the reverse of a missing
+       prerequisite, since further quest progress is what closes the window. */
+    if (g.sw) {
+      var win = el("div", "card span");
+      win.appendChild(el("h3", null, "When it exists"));
+      var wl = el("dl", "kv");
+      wl.appendChild(el("dt", null, "Present")); wl.appendChild(el("dd", null, g.sw.open));
+      wl.appendChild(el("dt", null, "Absent")); wl.appendChild(el("dd", null, g.sw.closed));
+      win.appendChild(wl);
+      var wt = el("div", "trap");
+      wt.appendChild(el("span", "tag", "Routing"));
+      wt.appendChild(document.createTextNode(g.sw.route));
+      win.appendChild(wt);
+      if (g.sw.trap) {
+        var rt = el("div", "trap");
+        rt.appendChild(el("span", "tag", "RBA trap"));
+        rt.appendChild(document.createTextNode(g.sw.trap));
+        win.appendChild(rt);
+      }
+      if (g.sw.why) win.appendChild(el("p", null, g.sw.why));
+      if (g.sw.drop) win.appendChild(el("p", null, "On death: " + g.sw.drop));
+      d.appendChild(win);
+    }
+
+    /* Community location / cost data.
+       Deliberately built from the SAME vocabulary as every other card — .card.span, an h3, a
+       strongline, a .kv grid — with one addition: a .modnote naming the source. Everything else on
+       a goal card is a proved byte offset or a value read out of the goal list, and racer knowledge
+       must not inherit that authority just by sitting in the same layout. */
+    if (g.loc) d.appendChild(locationCard(g.loc));
+    var gaunt = gauntletCard(g);
+    if (gaunt) d.appendChild(gaunt);
+    if (g.tips && g.tips.length) d.appendChild(tipsCard(g.tips, g.n));
+    if (g.smap) d.appendChild(slotMapCard(g.smap));
+    if (g.dmap) d.appendChild(dungeonMapCard(g.dmap));
+
+    /* rba */
+    if (g.rba) {
+      var box = el("div", "card span");
+      box.appendChild(el("h3", null, "Reverse Bottle Adventure"));
+      var dk = destroyKinds(g);
+      var groups = [
+        { keys: g.rba.s, rel: "s", head: "RBA can complete this" },
+        { keys: g.rba.e, rel: "e", head: "RBA makes this much cheaper" },
+        { keys: dk.permanent, rel: "d", head: "RBA can remove this for good",
+          sub: "This state lives in bits 5-7 of the target byte, which no modifier can ever set. Once a write clears it, only re-obtaining it in game brings it back." },
+        { keys: dk.overwrite, rel: "d", head: "RBA writes the same state this goal measures",
+          sub: "The byte holds a value rather than a set of independent switches, so whether a write helps or hurts depends on what you already have. Read the table before assuming it costs you anything." },
+      ];
+      /* One block per RECIPE, not one per relation.
+         Eight goals — the seven "Map & Compass in X" and Golden Scale — are both routed and
+         destroyed by the same recipe, because one bottle value helps and another wipes it. Grouping
+         by relation rendered that recipe twice in full: same header, same six-row table, same three
+         traps, one after the other. Worse, it buried the actual point, which is that a single write
+         does both depending on the value you use. So collect each recipe's relations first and say
+         them together. */
+      var order = [], byKey = {};
+      groups.forEach(function (grp) {
+        (grp.keys || []).forEach(function (k) {
+          if (!byKey[k]) { byKey[k] = { rels: [], heads: [], subs: [] }; order.push(k); }
+          if (byKey[k].rels.indexOf(grp.rel) === -1) byKey[k].rels.push(grp.rel);
+          if (byKey[k].heads.indexOf(grp.head) === -1) byKey[k].heads.push(grp.head);
+          if (grp.sub && byKey[k].subs.indexOf(grp.sub) === -1) byKey[k].subs.push(grp.sub);
+        });
+      });
+
+      order.forEach(function (k) {
+        var info = byKey[k];
+        // a recipe that both helps and hurts is a warning in itself, not two separate findings
+        var both = info.heads.length > 1;
+        box.appendChild(el("p", "strongline",
+          both ? info.heads.join(", and ") + " — the same write, depending on which value you use:"
+               : info.heads[0] + ":"));
+        info.subs.forEach(function (s) { box.appendChild(el("p", null, s)); });
+        // mark it as a break only when destroying is all it does here
+        var rel = info.rels.length === 1 ? info.rels[0] : "both";
+        box.appendChild(recipeBlock(k, rel, g.rba.note && g.rba.note[k], g.rba.ctx));
+      });
+      /* The per-recipe "cannot be written back" callout used to sit here. It said the same thing
+         the effects table now folds into "you lose" — a cleared bit is a loss whether or not RBA
+         can put it back, and whether YOU can get it back is a routing question. Removed with the
+         table's third column so the two cannot disagree. */
+      d.appendChild(box);
+    }
+
+    /* Conflict pills, graded by verdict.
+       c = bingo prices the pair negatively too, so the clash is corroborated.
+       u = bingo says nothing either way.
+       p = bingo prices the pair POSITIVELY. The clash is still mechanically real ("3 Songs"
+           routed via the Saw wipes Requiem), but the goal list rates the two a good pairing, so
+           presenting it like a trap over-warns. It gets its own group and its own sentence. */
+    function conflictGroups(names, vmap, lead) {
+      var buckets = { c: [], u: [], p: [] };
+      names.forEach(function (n) { buckets[(vmap && vmap[n]) || "u"].push(n); });
+      var heads = {
+        c: lead + " — bingo prices these pairs badly too:",
+        u: lead + ":",
+        p: lead + ", but bingo prices these pairs well — your call:",
+      };
+      var out = [];
+      ["c", "u", "p"].forEach(function (k) {
+        if (!buckets[k].length) return;
+        out.push(el("p", null, heads[k]));
+        var list = el("div", "pill-list");
+        buckets[k].forEach(function (n) {
+          list.appendChild(el("span", "pill warn" + (k === "c" ? " vc" : k === "p" ? " vp" : ""), n));
+        });
+        out.push(list);
+      });
+      return out;
+    }
+
+    /* conflicts */
+    if (g.breaks || g.brokenBy) {
+      var cf = el("div", "card span");
+      cf.appendChild(el("h3", null, "Watch your card"));
+      if (g.breaks) {
+        conflictGroups(g.breaks, g.bv, "Routing this square with RBA can invalidate")
+          .forEach(function (n) { cf.appendChild(n); });
+      }
+      if (g.brokenBy) {
+        conflictGroups(g.brokenBy, g.rv, "These squares, done with RBA, can invalidate this one")
+          .forEach(function (n) { cf.appendChild(n); });
+      }
+      d.appendChild(cf);
+    }
+
+    return d;
+  }
+
+  /* ---------- rendering ---------- */
+  var listEl = document.getElementById("list");
+  var emptyEl = document.getElementById("empty");
+  var countEl = document.getElementById("count");
+  var otherEl = document.getElementById("othermode");
+  var open = {};
+
+  function render() {
+    // NB: wrap, don't pass `matches` directly — Array.filter hands the callback
+    // (value, index, array), and the index would land in `ignoreMode`.
+    var rows = sortRows(GOALS.filter(function (g) { return matches(g); }));
+
+    listEl.innerHTML = "";
+    rows.forEach(function (g, idx) {
+      var li = el("li");
+      var m = modeOf(g);
+      var panelId = "p-" + g.id;
+
+      var btn = el("button", "goalrow");
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", open[g.id] ? "true" : "false");
+      btn.setAttribute("aria-controls", panelId);
+
+      var name = el("span", "name");
+      var chev = el("span", "chev", open[g.id] ? "−" : "+");
+      chev.setAttribute("aria-hidden", "true");
+      name.appendChild(chev);
+      name.appendChild(document.createTextNode(g.n));
+      btn.appendChild(name);
+
+      var nums = el("span", "nums");
+      nums.innerHTML = '<span class="d">d' + m[0] + "</span> · " + m[1] + " min";
+      btn.appendChild(nums);
+
+      var meta = el("span", "meta");
+      meta.appendChild(el("span", null, titleCase(g.a)));
+      if (g.ar) meta.appendChild(el("span", null, g.ar));
+      if (g.dg && !g.ar) meta.appendChild(el("span", null, g.dg));
+      markers(g).forEach(function (mk) {
+        var s = el("span", "mark " + mk[0]);
+        var gl = el("span", "g", mk[1]);
+        gl.setAttribute("aria-hidden", "true");
+        s.appendChild(gl);
+        s.appendChild(document.createTextNode(mk[2]));
+        meta.appendChild(s);
+      });
+      btn.appendChild(meta);
+
+      var panel = buildDetail(g);
+      panel.id = panelId;
+      panel.setAttribute("role", "region");
+      panel.setAttribute("aria-label", g.n + " details");
+      if (!open[g.id]) panel.hidden = true;
+
+      btn.addEventListener("click", function () {
+        open[g.id] = !open[g.id];
+        panel.hidden = !open[g.id];
+        btn.setAttribute("aria-expanded", open[g.id] ? "true" : "false");
+        chev.textContent = open[g.id] ? "−" : "+";
+      });
+
+      li.appendChild(btn);
+      li.appendChild(panel);
+      listEl.appendChild(li);
+    });
+
+    emptyEl.hidden = rows.length > 0;
+    countEl.innerHTML = "<b>" + rows.length + "</b> of " + GOALS.filter(function (g) { return !!modeOf(g); }).length +
+      " goals on " + state.mode + " boards";
+
+    /* Goals exist on one board size and not the other, so a filter can silently
+       hide something the reader knows is real. Say so, and offer the switch. */
+    var other = state.mode === "normal" ? "short" : "normal";
+    var hiddenByMode = GOALS.filter(function (g) {
+      return matches(g, true) && !modeOf(g) && (other === "short" ? g.S : g.N);
+    }).length;
+    otherEl.innerHTML = "";
+    if (hiddenByMode > 0) {
+      otherEl.appendChild(document.createTextNode(
+        hiddenByMode + " more " + (hiddenByMode === 1 ? "match" : "matches") + " only on " + other + " boards — "));
+      var swap = el("button", "clear", "switch to " + other);
+      swap.type = "button";
+      swap.addEventListener("click", function () {
+        document.getElementById(other === "short" ? "mode-s" : "mode-n").checked = true;
+        state.mode = other;
+        render();
+      });
+      otherEl.appendChild(swap);
+    }
+
+    renderSummary(rows);
+  }
+
+  /* ---------- summary ---------- */
+  var barsEl = document.getElementById("bars");
+  var axisEl = document.getElementById("barAxis");
+  var chartDesc = document.getElementById("chartdesc");
+
+  function renderSummary(rows) {
+    var all = GOALS.filter(function (g) { return !!modeOf(g); });
+    document.getElementById("statCount").textContent = rows.length;
+
+    var times = rows.map(function (g) { return modeOf(g)[1]; }).sort(function (a, b) { return a - b; });
+    document.getElementById("statMedian").textContent = times.length
+      ? (times[Math.floor(times.length / 2)] + " min") : "—";
+
+    var touched = rows.filter(function (g) { return !!g.rba; }).length;
+    document.getElementById("statRba").textContent = touched + " / " + rows.length;
+
+    var maxD = 25;
+    var histAll = new Array(maxD + 1).fill(0);
+    var histShown = new Array(maxD + 1).fill(0);
+    all.forEach(function (g) { histAll[modeOf(g)[0]]++; });
+    rows.forEach(function (g) { histShown[modeOf(g)[0]]++; });
+    var peak = Math.max.apply(null, histAll) || 1;
+
+    barsEl.innerHTML = "";
+    axisEl.innerHTML = "";
+    for (var d = 1; d <= maxD; d++) {
+      var col = el("div", "bar-col" + (histAll[d] === 0 ? " empty" : ""));
+      var total = el("div", "bar-total");
+      total.style.height = (histAll[d] / peak * 100) + "%";
+      var shown = el("div", "bar-shown");
+      shown.style.height = histAll[d] ? (histShown[d] / histAll[d] * 100) + "%" : "0%";
+      total.appendChild(shown);
+      col.appendChild(total);
+      barsEl.appendChild(col);
+
+      var ax = el("span", null, d % 5 === 0 ? String(d) : "");
+      axisEl.appendChild(ax);
+    }
+
+    var parts = [];
+    for (var i = 1; i <= maxD; i++) if (histShown[i]) parts.push("difficulty " + i + ": " + histShown[i]);
+    chartDesc.textContent = parts.length
+      ? "Goals shown by difficulty — " + parts.join(", ") + "."
+      : "No goals shown.";
+  }
+
+  /* ---------- row permalink ----------
+     Same query shape as ootbingo's bingo-popout.html: title once, goal repeated.
+     Accepts a full pasted URL or a bare query string. */
+  var rowPanel = document.getElementById("rowPanel");
+  var rowEmpty = document.getElementById("rowEmpty");
+  var rowLoaded = document.getElementById("rowLoaded");
+  var rowStatus = document.getElementById("rowStatus");
+  var sortEl = document.getElementById("sort");
+
+  function parseRow(input) {
+    var qs = input;
+    var i = input.indexOf("?");
+    if (i !== -1) qs = input.slice(i + 1);
+    var p;
+    try { p = new URLSearchParams(qs); } catch (e) { return null; }
+    var names = p.getAll("goal");
+    if (!names.length) return null;
+    return { title: p.get("title") || "Row", set: names };
+  }
+
+  function loadRow(row, updateUrl) {
+    state.row = row;
+    // A board is generated in one mode. If the row clearly belongs to the other
+    // one, follow it — otherwise its squares just vanish from the index.
+    var inNormal = 0, inShort = 0;
+    row.set.forEach(function (n) {
+      var g = byName[n];
+      if (!g) return;
+      if (g.N) inNormal++;
+      if (g.S) inShort++;
+    });
+    if (inShort > inNormal) {
+      state.mode = "short";
+      document.getElementById("mode-s").checked = true;
+    } else if (inNormal > inShort) {
+      state.mode = "normal";
+      document.getElementById("mode-n").checked = true;
+    }
+    // board order is only meaningful while a row is loaded
+    if (!sortEl.querySelector('option[value="board"]')) {
+      var o = new Option("Board order", "board");
+      sortEl.insertBefore(o, sortEl.firstChild);
+    }
+    sortEl.value = "board";
+    state.sort = "board";
+    renderRow();
+    render();
+    if (updateUrl && window.history && history.replaceState) {
+      var sp = new URLSearchParams();
+      sp.set("title", row.title);
+      row.set.forEach(function (n) { sp.append("goal", n); });
+      history.replaceState(null, "", location.pathname + "?" + sp.toString());
+    }
+  }
+
+  /* ---------- stream popout ----------
+     Opened only on request. A popup that appears by itself while someone is mid-race is hostile,
+     and OBS wants a URL far more often than it wants a second browser window.
+
+     The squares are passed by NAME rather than as seed+line on purpose. The two pages disagree
+     about the order of BL-TR — this page uses the generator's own INDICES_PER_ROW ([4,8,12,16,20],
+     top-right first) while ootbingo's popout emits it bottom-left first — so naming the squares is
+     the only way to guarantee the strip shows exactly what is on screen here, in the same order,
+     without touching a port that verify_board_synergy.js checks against the real library. */
+  var POPOUT_W = 480, POPOUT_H = 1080;   // 4:9, the column left beside a 4:3 capture on a 16:9 canvas
+
+  function popoutUrl(title, names) {
+    var p = new URLSearchParams();
+    p.set("title", title);
+    names.forEach(function (n) { p.append("goal", n); });
+    /* Send the seed along when there is one. The popout does NOT regenerate from it — the named
+       squares above win — but it prints it in the header, which is how a strip on a stream stays
+       traceable to a board. A pasted row carries no seed, so the header just omits it. */
+    if (board && board.spec) {
+      p.set("seed", board.spec.seed);
+      if (board.spec.version) p.set("version", board.spec.version);
+      if (board.spec.mode) p.set("mode", board.spec.mode);
+    }
+    p.set("timer", "1");
+    return new URL("popout.html?" + p.toString(), location.href).toString();
+  }
+
+  function popoutControls(title, names) {
+    var bar = el("div", "popbar");
+    var url = popoutUrl(title, names);
+
+    var open = el("button", "btn", "Open stream popout");
+    open.type = "button";
+    open.addEventListener("click", function () {
+      /* Fit the 4:9 column to the screen rather than always asking for 1080 tall, which would open
+         partly offscreen on a 1080p display once window chrome is added. */
+      var h = Math.max(540, Math.min(POPOUT_H, (screen.availHeight || POPOUT_H) - 80));
+      var w = Math.round(h * POPOUT_W / POPOUT_H);
+      var win = window.open(url, "sohtools-popout",
+        "width=" + w + ",height=" + h + ",menubar=no,toolbar=no,location=no,status=no,scrollbars=no");
+      if (!win) { say(bar, "Your browser blocked the popup — use Copy link instead."); return; }
+      /* Browsers disagree about whether width/height mean the outer window or the viewport, and the
+         difference is the whole title bar. Correct it once the window can be measured. */
+      setTimeout(function () {
+        try {
+          var dw = w - win.innerWidth, dh = h - win.innerHeight;
+          if (dw || dh) win.resizeBy(dw, dh);
+        } catch (e) { /* cross-origin or blocked; the ratio is close enough */ }
+      }, 250);
+    });
+    bar.appendChild(open);
+
+    var copy = el("button", "btn ghost", "Copy link");
+    copy.type = "button";
+    copy.addEventListener("click", function () {
+      /* An OBS Browser Source takes a URL, so this is the path a streamer actually uses. */
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(
+          function () { say(bar, "Copied."); },
+          function () { say(bar, "Could not copy — the link is in the address bar of the popout."); }
+        );
+      } else {
+        say(bar, "Clipboard unavailable in this browser.");
+      }
+    });
+    bar.appendChild(copy);
+
+    bar.appendChild(el("span", "dims", POPOUT_W + " × " + POPOUT_H));
+    return bar;
+  }
+
+  function say(bar, msg) {
+    var old = bar.querySelector(".said");
+    if (old) old.remove();
+    bar.appendChild(el("span", "said", msg));
+  }
+
+  function clearRow() {
+    state.row = null;
+    var o = sortEl.querySelector('option[value="board"]');
+    if (o) o.remove();
+    sortEl.value = "name";
+    state.sort = "name";
+    rowPanel.classList.remove("loaded");
+    rowLoaded.hidden = true;
+    rowLoaded.innerHTML = "";
+    rowEmpty.hidden = false;
+    if (window.history && history.replaceState) history.replaceState(null, "", location.pathname);
+    render();
+  }
+
+  function renderRow() {
+    var row = state.row;
+    // a row link replaces a loaded board rather than stacking under it
+    board = null; selectedLine = null;
+    boardLoaded.hidden = true; boardLoaded.innerHTML = "";
+    rowEmpty.hidden = true;
+    rowLoaded.hidden = false;
+    rowPanel.classList.add("loaded");
+    rowLoaded.innerHTML = "";
+
+    var found = row.set.map(function (n) { return byName[n] || null; });
+    var missing = row.set.filter(function (n, i) { return !found[i]; });
+    var known = found.filter(Boolean);
+
+    var head = el("div", "rowpanel-head");
+    var h = el("h2", null, row.title);
+    head.appendChild(h);
+    var mins = known.reduce(function (t, g) { var m = modeOf(g); return t + (m ? m[1] : 0); }, 0);
+    head.appendChild(el("span", "sub",
+      row.set.length + " squares · " + Math.round(mins * 100) / 100 + " min of listed length, before synergy"));
+    var clr = el("button", "btn ghost", "Clear row");
+    clr.type = "button";
+    clr.addEventListener("click", clearRow);
+    head.appendChild(clr);
+    rowLoaded.appendChild(head);
+    rowLoaded.appendChild(popoutControls(row.title, row.set));
+
+    var ol = el("ol", "rowlist");
+    row.set.forEach(function (name, i) {
+      var g = found[i];
+      var li = el("li", g ? null : "missing");
+      li.appendChild(el("span", "sq", (i + 1) + "."));
+      var nm = el("span", "gname");
+      if (g) {
+        var jump = el("button", null, name);
+        jump.type = "button";
+        jump.addEventListener("click", function () {
+          var btn = [...listEl.querySelectorAll("button.goalrow")]
+            .filter(function (b) { return b.querySelector(".name").textContent.replace(/^[+−]\s*/, "") === name; })[0];
+          if (btn) {
+            if (btn.getAttribute("aria-expanded") === "false") btn.click();
+            btn.scrollIntoView({ block: "center", behavior: "smooth" });
+            btn.focus();
+          }
+        });
+        nm.appendChild(jump);
+      } else {
+        nm.appendChild(document.createTextNode(name));
+      }
+      li.appendChild(nm);
+      var m = g && modeOf(g);
+      li.appendChild(el("span", "gnums", m ? "d" + m[0] + " · " + m[1] + " min" : (g ? "not on " + state.mode + " boards" : "unknown goal")));
+      if (g) {
+        var mk = el("span", "gmarks");
+        markers(g).forEach(function (x) {
+          var sp = el("span", "mark " + x[0]);
+          var gl = el("span", "g", x[1]);
+          gl.setAttribute("aria-hidden", "true");
+          sp.appendChild(gl);
+          sp.appendChild(document.createTextNode(x[2]));
+          mk.appendChild(sp);
+        });
+        if (mk.children.length) li.appendChild(mk);
+      }
+      ol.appendChild(li);
+    });
+    rowLoaded.appendChild(ol);
+
+    /* the point of the whole feature: which squares in THIS row fight */
+    var clashes = [];
+    known.forEach(function (g) {
+      (g.breaks || []).forEach(function (victim) {
+        if (row.set.indexOf(victim) !== -1 && victim !== g.n) clashes.push([g.n, victim, (g.bv || {})[victim] || "u"]);
+      });
+    });
+    var alert = el("div", "rowalert" + (clashes.length ? "" : " ok"));
+    var at = el("div", "atitle");
+    var ag = el("span", null, clashes.length ? "✖" : "✓");
+    ag.setAttribute("aria-hidden", "true");
+    at.appendChild(ag);
+    var rowC = clashes.filter(function (c) { return c[2] === "c"; }).length;
+    at.appendChild(document.createTextNode(clashes.length
+      ? clashes.length + (clashes.length === 1 ? " clash" : " clashes") + " inside this row"
+        + (rowC ? ", " + rowC + " corroborated by bingo" : "")
+      : "no RBA clashes inside this row"));
+    alert.appendChild(at);
+    if (clashes.length) {
+      var ul = el("ul");
+      clashes.forEach(function (c) {
+        var li2 = el("li");
+        li2.appendChild(document.createTextNode("Routing "));
+        li2.appendChild(el("b", null, c[0]));
+        li2.appendChild(document.createTextNode(" with RBA can invalidate "));
+        li2.appendChild(el("b", null, c[1]));
+        li2.appendChild(document.createTextNode("."));
+        /* Say what bingo thinks of the pair. Without this every clash reads equally severe,
+           and most of them are pairs the goal list actively likes. */
+        if (c[2] === "c") li2.appendChild(el("span", "vtail vc", " bingo rates this pair badly too."));
+        if (c[2] === "p") li2.appendChild(el("span", "vtail vp", " bingo rates this pair well — your call."));
+        ul.appendChild(li2);
+      });
+      alert.appendChild(ul);
+    }
+    rowLoaded.appendChild(alert);
+
+    /* setup shared by three or more squares is worth doing once */
+    var tally = {};
+    known.forEach(function (g) { (g.tags || []).forEach(function (t) { tally[t] = (tally[t] || 0) + 1; }); });
+    var shared = Object.keys(tally).filter(function (t) { return tally[t] >= 3; })
+      .sort(function (a, b) { return tally[b] - tally[a]; });
+    if (shared.length) {
+      var sh = el("p", "rowshared");
+      sh.appendChild(document.createTextNode("Shared by three or more squares: "));
+      shared.forEach(function (t, i) {
+        if (i) sh.appendChild(document.createTextNode(" "));
+        sh.appendChild(el("span", "tagpill", t.replace(/-/g, " ") + " ×" + tally[t]));
+      });
+      rowLoaded.appendChild(sh);
+    }
+
+    if (missing.length) {
+      var warn = el("p", "rowshared");
+      warn.style.color = "var(--loss)";
+      warn.textContent = missing.length + " goal name" + (missing.length === 1 ? "" : "s") +
+        " not in the v10.6 list (probably from a different bingo version): " + missing.join(", ");
+      rowLoaded.appendChild(warn);
+    }
+
+    rowStatus.textContent = "Loaded row " + row.title + " — " + known.length + " of " +
+      row.set.length + " squares matched" + (clashes.length ? ", " + clashes.length + " RBA clashes found" : "");
+  }
+
+  /* ================= whole board =================
+     A bingo board is a pure function of (version, seed, mode), so pasting a board link is enough
+     to rebuild all 25 squares — and, more usefully, to rank the 12 winnable lines.
+
+     The synergy number shown here is the generator's OWN figure, not an approximation. That is
+     possible only because we have the seed: part of the generator's synergy is
+     sum(desiredTime - goal.time), and desiredTime comes from the seed's magic square. A bare list
+     of goal names could never carry it, which is why the row-permalink view above still reports
+     plain summed length instead. */
+  var BOARD = JSON.parse(document.getElementById("boarddata").textContent);
+  var boardLoaded = document.getElementById("boardLoaded");
+  var board = null;      // { spec, squares, lines }
+  var lineSort = { key: "syn", dir: -1 };
+  var selectedLine = null;
+
+  // shared with board_synergy.js so the build tests the same function the browser runs
+  function parseBoardInput(input) {
+    return window.BoardSynergy.parseBoardInput(input, BOARD.defaultVersion);
+  }
+
+  function analyseLines(squares, list, mode) {
+    var S = window.BoardSynergy;
+    var calc = new S.SynergyCalculator(
+      S.PROFILES[mode] || S.PROFILES.normal,
+      list[mode].rowtypes,
+      S.parseSynergyFilters(list[mode].synfilters)
+    );
+    return S.linesOf(squares).map(function (line) {
+      var names = line.squares.map(function (sq) { return sq.goal.name; });
+      var ex = calc.explain(line.squares);
+      var time = line.squares.reduce(function (t, sq) { return t + sq.goal.time; }, 0);
+      // which squares in THIS line fight, from the RBA conflict matrix
+      var clashes = [];
+      names.forEach(function (n) {
+        var g = byName[n];
+        if (!g) return;
+        (g.breaks || []).forEach(function (victim) {
+          if (victim !== n && names.indexOf(victim) !== -1) clashes.push([n, victim, (g.bv || {})[victim] || "u"]);
+        });
+      });
+      return {
+        key: line.key, label: line.label, indices: line.indices, names: names,
+        time: Math.round(time * 100) / 100, ex: ex, clashes: clashes,
+        unknown: names.filter(function (n) { return !byName[n]; }),
+      };
+    });
+  }
+
+  function loadBoard(spec, updateUrl) {
+    var list = BOARD.versions[spec.version];
+    if (!list) {
+      var have = Object.keys(BOARD.versions).join(", ");
+      rowStatus.textContent = "Version " + spec.version + " is not built into this page.";
+      alertInline("This page can generate versions " + have + ". Version " + spec.version +
+        " is not embedded, so its board cannot be reproduced here.");
+      return false;
+    }
+    if (!list[spec.mode]) {
+      rowStatus.textContent = "Mode " + spec.mode + " is not available for v" + spec.version + ".";
+      alertInline("v" + spec.version + " has no “" + spec.mode + "” goal list. Try normal or short.");
+      return false;
+    }
+    var generated;
+    try {
+      generated = window.BingoLibrary.generateBingoBoard(list, spec.mode, spec.seed);
+    } catch (err) { generated = null; }
+    if (!generated) {
+      rowStatus.textContent = "The generator could not build that board.";
+      alertInline("The generator could not build a board for seed " + spec.seed + ".");
+      return false;
+    }
+
+    board = { spec: spec, squares: generated.squares, lines: analyseLines(generated.squares, list, spec.mode) };
+    selectedLine = null;
+
+    // a board exists in exactly one mode; follow it, or its squares vanish from the index below
+    if (spec.mode === "short" || spec.mode === "normal") {
+      state.mode = spec.mode;
+      document.getElementById(spec.mode === "short" ? "mode-s" : "mode-n").checked = true;
+    }
+    clearRowSelection();
+    renderBoard();
+    render();
+    if (updateUrl && window.history && history.replaceState) {
+      var sp = new URLSearchParams();
+      sp.set("version", spec.version); sp.set("seed", spec.seed); sp.set("mode", spec.mode);
+      history.replaceState(null, "", location.pathname + "?" + sp.toString());
+    }
+    return true;
+  }
+
+  function clearRowSelection() {
+    state.row = null;
+    var o = sortEl.querySelector('option[value="board"]');
+    if (o) o.remove();
+    if (state.sort === "board") { sortEl.value = "name"; state.sort = "name"; }
+  }
+
+  function clearBoard() {
+    board = null; selectedLine = null;
+    clearRowSelection();
+    rowPanel.classList.remove("loaded");
+    boardLoaded.hidden = true; boardLoaded.innerHTML = "";
+    rowEmpty.hidden = false;
+    if (window.history && history.replaceState) history.replaceState(null, "", location.pathname);
+    render();
+  }
+
+  /* Selecting a line narrows the goal index to those five squares. It deliberately does NOT reuse
+     renderRow(): the board panel already shows the squares and the clashes, so re-rendering the
+     row list underneath would just say everything twice. */
+  function selectLine(line) {
+    selectedLine = (selectedLine && selectedLine.key === line.key) ? null : line;
+    if (selectedLine) {
+      state.row = { title: line.label, set: line.names };
+      if (!sortEl.querySelector('option[value="board"]')) {
+        sortEl.insertBefore(new Option("Board order", "board"), sortEl.firstChild);
+      }
+      sortEl.value = "board"; state.sort = "board";
+      rowStatus.textContent = "Filtered to " + line.label + " — 5 squares, synergy " +
+        fmtSyn(line.ex.total) + (line.clashes.length ? ", " + line.clashes.length + " RBA clashes" : "");
+    } else {
+      clearRowSelection();
+      rowStatus.textContent = "Showing the whole board again.";
+    }
+    renderBoard();
+    render();
+  }
+
+  function fmtSyn(v) { return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(Math.round(v * 100) / 100); }
+
+  /* Glyph + word + colour, so the verdict survives greyscale and colour-blindness.
+     Banded against the PROFILE's allowed range rather than against zero. The generator only ever
+     emits lines inside [minimumSynergy, maximumSynergy] — for normal that is [-3, 7] — so almost
+     every line of a real board is positive, and a plain "positive / negative" verdict would read
+     "helps" twelve times and rank nothing. Thirds of the achievable band actually separate them. */
+  function verdictOf(v, mode) {
+    var P = (window.BoardSynergy.PROFILES[mode] || window.BoardSynergy.PROFILES.normal);
+    var lo = P.minimumSynergy, hi = P.maximumSynergy, span = hi - lo || 1;
+    var t = (v - lo) / span;
+    if (t >= 0.7) return ["helps", "▲", "strong overlap"];
+    if (t >= 0.4) return ["flat", "◆", "fair overlap"];
+    return ["fights", "▽", "little overlap"];
+  }
+
+  var LINE_COLS = [
+    { key: "line", label: "Line", num: false },
+    { key: "time", label: "Length", num: true },
+    { key: "syn", label: "Synergy", num: true },
+    { key: "risk", label: "RBA risk", num: true },
+  ];
+
+  function sortedLines() {
+    var ls = board.lines.slice();
+    var k = lineSort.key, d = lineSort.dir;
+    var val = function (l) {
+      if (k === "time") return l.time;
+      if (k === "syn") return l.ex.total;
+      if (k === "risk") return l.clashes.length;
+      return null;
+    };
+    ls.sort(function (a, b) {
+      if (k === "line") return d * (window.BoardSynergy.LINE_KEYS.indexOf(a.key) - window.BoardSynergy.LINE_KEYS.indexOf(b.key));
+      var r = d * (val(a) - val(b));
+      // stable, predictable tiebreak: board order
+      return r || (window.BoardSynergy.LINE_KEYS.indexOf(a.key) - window.BoardSynergy.LINE_KEYS.indexOf(b.key));
+    });
+    return ls;
+  }
+
+  function renderBoard() {
+    if (!board) return;
+    rowEmpty.hidden = true;
+    rowLoaded.hidden = true;
+    boardLoaded.hidden = false;
+    rowPanel.classList.add("loaded");
+    boardLoaded.innerHTML = "";
+
+    var spec = board.spec;
+    var head = el("div", "rowpanel-head");
+    head.appendChild(el("h2", null, "Board " + spec.seed));
+    var totalMin = board.squares.reduce(function (t, sq) { return t + sq.goal.time; }, 0);
+    head.appendChild(el("span", "sub",
+      "v" + spec.version + " · " + spec.mode + " · 25 squares · " +
+      (Math.round(totalMin * 10) / 10) + " min listed across the whole board"));
+    var clr = el("button", "btn ghost", "Clear board");
+    clr.type = "button";
+    clr.addEventListener("click", clearBoard);
+    head.appendChild(clr);
+    boardLoaded.appendChild(head);
+
+    /* ---- the 5x5 grid ---- */
+    var hi = {};
+    if (selectedLine) selectedLine.indices.forEach(function (i) { hi[i] = true; });
+    var tbl = el("table", "board");
+    var cap = el("caption", "vh", "The board, five by five. " +
+      (selectedLine ? selectedLine.label + " is highlighted." : "No line highlighted."));
+    tbl.appendChild(cap);
+    var thead = el("thead"), hr = el("tr");
+    hr.appendChild(el("td"));
+    for (var c = 1; c <= 5; c++) {
+      var th = el("th", null, "COL" + c);
+      th.scope = "col";
+      if (selectedLine && selectedLine.key === "col" + c) th.className = "inline";
+      hr.appendChild(th);
+    }
+    thead.appendChild(hr); tbl.appendChild(thead);
+    var tbody = el("tbody");
+    for (var r = 0; r < 5; r++) {
+      var tr = el("tr");
+      var rh = el("th", null, "ROW" + (r + 1));
+      rh.scope = "row";
+      if (selectedLine && selectedLine.key === "row" + (r + 1)) rh.className = "inline";
+      tr.appendChild(rh);
+      for (var cc = 0; cc < 5; cc++) {
+        var idx = r * 5 + cc;
+        var sq = board.squares[idx];
+        var g = byName[sq.goal.name];
+        var td = el("td");
+        var b = el("button", "cell" + (hi[idx] ? " inline" : ""));
+        b.type = "button";
+        b.appendChild(el("span", "cn", sq.goal.name));
+        if (g) {
+          var mk = el("span", "cm");
+          markers(g).forEach(function (x) {
+            var sp = el("span", "mark " + x[0]);
+            var gl = el("span", "g", x[1]);
+            gl.setAttribute("aria-hidden", "true");
+            sp.appendChild(gl);
+            sp.appendChild(el("span", "vh", x[2]));
+            mk.appendChild(sp);
+          });
+          if (mk.children.length) b.appendChild(mk);
+        }
+        b.appendChild(el("span", "cd", "d" + sq.difficulty + " · " + sq.goal.time + " min"));
+        (function (name) {
+          b.addEventListener("click", function () { jumpToGoal(name); });
+        })(sq.goal.name);
+        td.appendChild(b);
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    tbl.appendChild(tbody);
+    var bwrap = el("div", "boardwrap");
+    bwrap.appendChild(tbl);
+    boardLoaded.appendChild(bwrap);
+
+    /* ---- the 12 lines ---- */
+    var wrap = el("div", "linewrap");
+    var lt = el("table", "lines");
+    var lcap = el("caption", "vh",
+      "The twelve winnable lines, sortable. Length is the plain sum of the listed goal times. " +
+      "Synergy is the bingo generator's own figure for that line: higher means the goals overlap more.");
+    lt.appendChild(lcap);
+    var lhead = el("thead"), lhr = el("tr");
+    LINE_COLS.forEach(function (col) {
+      var th = el("th");
+      if (col.num) th.className = "num";
+      var btn = el("button");
+      btn.type = "button";
+      btn.appendChild(document.createTextNode(col.label));
+      var active = lineSort.key === col.key;
+      if (active) {
+        th.setAttribute("aria-sort", lineSort.dir === 1 ? "ascending" : "descending");
+        var ar = el("span", null, lineSort.dir === 1 ? "↑" : "↓");
+        ar.setAttribute("aria-hidden", "true");
+        btn.appendChild(ar);
+      }
+      btn.addEventListener("click", function () {
+        if (lineSort.key === col.key) lineSort.dir = -lineSort.dir;
+        else lineSort = { key: col.key, dir: col.key === "time" ? 1 : -1 };
+        renderBoard();
+      });
+      th.appendChild(btn);
+      lhr.appendChild(th);
+    });
+    var thg = el("th", null, "Squares");
+    lhr.appendChild(thg);
+    lhead.appendChild(lhr); lt.appendChild(lhead);
+
+    var ltb = el("tbody");
+    sortedLines().forEach(function (line) {
+      var tr = el("tr");
+      if (selectedLine && selectedLine.key === line.key) tr.className = "sel";
+
+      var tdn = el("td");
+      var lb = el("button");
+      lb.type = "button";
+      lb.className = "lname";
+      lb.style.cssText = "background:none;border:0;padding:0.25rem 0;min-height:2.25rem;cursor:pointer;font:inherit;color:var(--accent);text-decoration:underline";
+      lb.textContent = line.label;
+      lb.setAttribute("aria-pressed", selectedLine && selectedLine.key === line.key ? "true" : "false");
+      lb.addEventListener("click", function () { selectLine(line); });
+      tdn.appendChild(lb);
+      tr.appendChild(tdn);
+
+      tr.appendChild(el("td", "num", line.time + " min"));
+
+      var tds = el("td", "num");
+      var v = verdictOf(line.ex.total, board.spec.mode);
+      var vs = el("span", "verdict " + v[0]);
+      var vg = el("span", null, v[1]);
+      vg.setAttribute("aria-hidden", "true");
+      vs.appendChild(vg);
+      vs.appendChild(document.createTextNode(fmtSyn(line.ex.total) + " " + v[2]));
+      tds.appendChild(vs);
+      tr.appendChild(tds);
+
+      var tdr = el("td", "num");
+      var rs = el("span", "risk " + (line.clashes.length ? "bad" : "none"));
+      var rg = el("span", null, line.clashes.length ? "✖" : "✓");
+      rg.setAttribute("aria-hidden", "true");
+      rs.appendChild(rg);
+      rs.appendChild(document.createTextNode(line.clashes.length ? line.clashes.length + " clash" + (line.clashes.length === 1 ? "" : "es") : "none"));
+      tdr.appendChild(rs);
+      tr.appendChild(tdr);
+
+      tr.appendChild(el("td", "goals", line.names.join(" · ")));
+      ltb.appendChild(tr);
+    });
+    lt.appendChild(ltb);
+    wrap.appendChild(lt);
+    boardLoaded.appendChild(wrap);
+
+    /* ---- detail for the selected line ---- */
+    if (selectedLine) boardLoaded.appendChild(lineDetail(selectedLine));
+
+    var worst = board.lines.reduce(function (a, b) { return b.ex.total > a.ex.total ? b : a; });
+    rowStatus.textContent = "Board " + spec.seed + " loaded. Best synergy: " + worst.label +
+      " at " + fmtSyn(worst.ex.total) + ".";
+  }
+
+  function lineDetail(line) {
+    var box = el("div", "card span");
+    box.appendChild(el("h3", null, line.label + " in detail"));
+    box.appendChild(popoutControls(line.label, line.names));
+
+    var bits = el("div", "synbits");
+    bits.appendChild(el("span", null, "goal overlap " + fmtSyn(line.ex.typeTotal)));
+    bits.appendChild(el("span", null, "row bonuses " + fmtSyn(line.ex.rowtypeTotal)));
+    bits.appendChild(el("span", null, "time vs board budget " + fmtSyn(line.ex.timeDifference)));
+    bits.appendChild(el("span", null, "= " + fmtSyn(line.ex.total)));
+    box.appendChild(bits);
+    box.appendChild(el("p", null,
+      "Synergy is the generator's own score for this line, in minutes. " +
+      "“Goal overlap” is how much these five goals share; “row bonuses” are whole-row " +
+      "categories that only pay out when all five squares carry them; “time vs board budget” is how " +
+      "far the squares sit from the length the seed asked for at those positions."));
+
+    if (line.ex.contributions && line.ex.contributions.length) {
+      var top = line.ex.contributions.slice(0, 6);
+      var p = el("p", "rowshared");
+      p.appendChild(document.createTextNode("Biggest shared categories: "));
+      top.forEach(function (c, i) {
+        if (i) p.appendChild(document.createTextNode(" "));
+        p.appendChild(el("span", "tagpill", c.cat + " " + fmtSyn(c.value)));
+      });
+      box.appendChild(p);
+    }
+
+    var alert = el("div", "rowalert" + (line.clashes.length ? "" : " ok"));
+    var at = el("div", "atitle");
+    var ag = el("span", null, line.clashes.length ? "✖" : "✓");
+    ag.setAttribute("aria-hidden", "true");
+    at.appendChild(ag);
+    var lineC = line.clashes.filter(function (c) { return c[2] === "c"; }).length;
+    at.appendChild(document.createTextNode(line.clashes.length
+      ? line.clashes.length + (line.clashes.length === 1 ? " clash" : " clashes") + " inside this line"
+        + (lineC ? ", " + lineC + " corroborated by bingo" : "")
+      : "no RBA clashes inside this line"));
+    alert.appendChild(at);
+    if (line.clashes.length) {
+      var ul = el("ul");
+      line.clashes.forEach(function (c) {
+        var li = el("li");
+        li.appendChild(document.createTextNode("Routing "));
+        li.appendChild(el("b", null, c[0]));
+        li.appendChild(document.createTextNode(" with RBA can invalidate "));
+        li.appendChild(el("b", null, c[1]));
+        li.appendChild(document.createTextNode("."));
+        /* Say what bingo thinks of the pair. Without this every clash reads equally severe,
+           and most of them are pairs the goal list actively likes. */
+        if (c[2] === "c") li.appendChild(el("span", "vtail vc", " bingo rates this pair badly too."));
+        if (c[2] === "p") li.appendChild(el("span", "vtail vp", " bingo rates this pair well — your call."));
+        ul.appendChild(li);
+      });
+      alert.appendChild(ul);
+    }
+    box.appendChild(alert);
+
+    var tally = {};
+    line.names.forEach(function (n) {
+      var g = byName[n];
+      if (g) (g.tags || []).forEach(function (t) { tally[t] = (tally[t] || 0) + 1; });
+    });
+    var shared = Object.keys(tally).filter(function (t) { return tally[t] >= 3; })
+      .sort(function (a, b) { return tally[b] - tally[a]; });
+    if (shared.length) {
+      var sh = el("p", "rowshared");
+      sh.appendChild(document.createTextNode("Setup shared by three or more squares: "));
+      shared.forEach(function (t, i) {
+        if (i) sh.appendChild(document.createTextNode(" "));
+        sh.appendChild(el("span", "tagpill", t.replace(/-/g, " ") + " ×" + tally[t]));
+      });
+      box.appendChild(sh);
+    }
+
+    if (line.unknown.length) {
+      var w = el("p", "rowshared");
+      w.style.color = "var(--loss)";
+      w.textContent = line.unknown.length + " goal" + (line.unknown.length === 1 ? "" : "s") +
+        " in this line are not in the v" + DATA.v + " RBA dataset, so they carry no markers: " +
+        line.unknown.join(", ");
+      box.appendChild(w);
+    }
+    return box;
+  }
+
+  function jumpToGoal(name) {
+    var btn = [...listEl.querySelectorAll("button.goalrow")]
+      .filter(function (b) { return b.querySelector(".name").textContent.replace(/^[+−]\s*/, "") === name; })[0];
+    if (btn) {
+      if (btn.getAttribute("aria-expanded") === "false") btn.click();
+      btn.scrollIntoView({ block: "center", behavior: "smooth" });
+      btn.focus();
+    }
+  }
+
+  document.getElementById("rowHint").textContent =
+    "Boards can be generated for v" + Object.keys(BOARD.versions).join(", v") +
+    ". A row link narrows the index to five squares; a board link also ranks all twelve lines.";
+
+  document.getElementById("rowForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = document.getElementById("rowurl").value.trim();
+    // a board link carries a seed; a row popout link carries goal parameters
+    var spec = parseBoardInput(v);
+    if (spec) { loadBoard(spec, true); return; }
+    var row = parseRow(v);
+    if (!row) {
+      rowStatus.textContent = "That is not a board link, a row link, or a seed.";
+      alertInline("Paste a board link (with a seed), a row popout link (with goal parameters), or just a seed number.");
+      return;
+    }
+    loadRow(row, true);
+  });
+
+  function alertInline(msg) {
+    var existing = rowEmpty.querySelector(".rowalert");
+    if (existing) existing.remove();
+    var a = el("div", "rowalert");
+    var t = el("div", "atitle");
+    var g = el("span", null, "✖");
+    g.setAttribute("aria-hidden", "true");
+    t.appendChild(g);
+    t.appendChild(document.createTextNode("could not read that link"));
+    a.appendChild(t);
+    a.appendChild(el("p", null, msg));
+    rowEmpty.appendChild(a);
+  }
+
+  /* ---------- wiring ---------- */
+  var qEl = document.getElementById("q");
+  qEl.addEventListener("input", function () { state.q = qEl.value; render(); });
+  archSel.addEventListener("change", function () { state.arch = archSel.value; render(); });
+  document.getElementById("sort").addEventListener("change", function (e) { state.sort = e.target.value; render(); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="mode"]'), function (r) {
+    r.addEventListener("change", function () { if (r.checked) { state.mode = r.value; render(); } });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="rba"]'), function (r) {
+    r.addEventListener("change", function () { if (r.checked) { state.rba = r.value; render(); } });
+  });
+  document.getElementById("controls").addEventListener("submit", function (e) { e.preventDefault(); });
+  document.getElementById("clear").addEventListener("click", function () {
+    state = { q: "", arch: "all", mode: state.mode, rba: "any", sort: "name" };
+    qEl.value = "";
+    archSel.value = "all";
+    document.getElementById("sort").value = "name";
+    document.getElementById("rba-any").checked = true;
+    render();
+    qEl.focus();
+  });
+
+  /* A board or a row can arrive on the page URL itself, in exactly the shapes ootbingo uses:
+     bingo.html?version=&seed=&mode=  and  bingo-popout.html?title=&goal=&goal=…
+     Board first, since only that shape carries a seed. */
+  var boardFromUrl = parseBoardInput(location.search);
+  var rowFromUrl = boardFromUrl ? null : parseRow(location.search);
+  if (boardFromUrl) { if (!loadBoard(boardFromUrl, false)) render(); }
+  else if (rowFromUrl) loadRow(rowFromUrl, false);
+  else render();
+})();
+</script>

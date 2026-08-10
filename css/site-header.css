@@ -1,0 +1,106 @@
+/* ===========================================================
+   Shared site header (2026-05-24)
+   Flat Material — solid surfaces, no gradients, Material
+   elevation shadows only. Sits at the top of every page.
+
+   Split out of site.css so the GENERATED pages under /bingo/
+   and /rba/ can wear the header without loading site.css:
+   that stylesheet sets body{padding:20px; height:50vh;
+   display:flex} for the legacy tool layout, plus global
+   element rules, which would fight those pages' own CSS and
+   break the contrast pairs their build asserts.
+
+   Every colour is var(--token, literal). On a page that loads
+   site.css the tokens win, so the header stays in step with
+   the rest of the site; on a generated page the literal
+   applies. One definition either way, no copy to drift.
+   =========================================================== */
+.site-header {
+    background-color: var(--input-bg-color, #1e1e1e);
+    color: var(--text-color, #e0e0e0);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    /* No assumption about the host page's body padding; site.css adds the
+       negative margin back for the legacy pages that carry it. */
+    margin: 0;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Material elevation 2dp */
+    position: relative;
+    z-index: 4;
+}
+
+.site-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color, #e0e0e0);
+    font-weight: 500;
+    font-size: 1.05rem;
+    text-decoration: none;
+}
+
+    .site-brand:hover {
+        text-decoration: none;
+        color: var(--text-color, #e0e0e0);
+    }
+
+.brand-mark {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    background-color: var(--primary-color, #673AB7);
+    flex-shrink: 0;
+}
+
+.brand-text {
+    color: inherit;
+}
+
+.site-nav {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+}
+
+    .site-nav a {
+        color: var(--text-color, #e0e0e0);
+        padding: 8px 16px;
+        /* Set in caps, and caps need roughly 15% more letter height than mixed case to be
+           recognised as readily (NN/g, glanceable reading). At 0.95rem these links were SMALLER
+           than the body text they sit above, so the caps were costing legibility on the site's
+           primary navigation rather than buying emphasis. */
+        font-size: 1.05rem;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        transition: background-color 0.15s ease;
+        border-radius: 2px;
+    }
+
+        .site-nav a:hover {
+            background-color: var(--hover-color, #333333);
+            text-decoration: none;
+            color: var(--text-color, #e0e0e0);
+        }
+
+        .site-nav a[aria-current="page"] {
+            color: var(--secondary-color);
+        }
+
+@media (max-width: 640px) {
+    .site-header {
+        padding: 10px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .site-nav a {
+        padding: 6px 12px;
+        font-size: 0.88rem;
+    }
+}

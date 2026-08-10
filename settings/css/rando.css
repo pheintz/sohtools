@@ -1,15 +1,10 @@
+/* The palette lives in css/site.css. It used to be copied into this file too, and the copy
+   won here because this stylesheet loads second — so repointing the shared tokens changed
+   nothing on this page until the duplicate came out. Five copies of one palette is five places
+   for it to drift. */
 :root {
-    --background-color: #121212;
-    --text-color: #e0e0e0;
-    --primary-color: #673AB7;
-    --secondary-color: #673AB7;
-    --input-bg-color: #1e1e1e;
-    --input-border-color: #292929;
-    --hover-color: #333333;
-    --result-highlight: #212121;
-    --input-action: #66BB6A;
     --checkbox-size: 20px;
-    --checkbox-border-radius: 4px;
+    --checkbox-border-radius: 2px;
     --checkbox-checked-bg: var(--primary-color);
     --checkbox-unchecked-bg: var(--input-bg-color);
     --checkbox-border: 2px solid var(--input-border-color);
@@ -64,8 +59,8 @@
     background-color: var(--input-bg-color);
     color: var(--text-color);
     border: 1px solid var(--input-border-color);
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 2px;
+    font-size: var(--step--1);
 }
 
 #presetName {
@@ -90,7 +85,7 @@
 
 .settings-group {
     border: 1px solid var(--input-border-color);
-    border-radius: 12px;
+    border-radius: 2px;
     background: var(--result-highlight);
 }
 
@@ -146,8 +141,11 @@
     opacity: 0.55;
 }
 
+/* The primary CTA is a FILL, so it takes the fill token. It used to say --secondary-color, which
+   was the same dark purple back when the two tokens matched; repointing --secondary-color to the
+   lighter ink accent dropped white-on-fill from 7.33 to 3.75. */
 #generate {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
     text-align: center;
     text-decoration: none;
@@ -247,7 +245,8 @@ input[type="number"] {
     .weight-slider-row .weight-slider {
         flex: 1;
         min-width: 80px;
-        accent-color: var(--primary-color);
+        /* accent-color tints a native control, so it needs the 3:1 boundary token, not the fill */
+        accent-color: var(--secondary-color);
     }
 
 .weight-input:disabled,

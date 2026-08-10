@@ -20,7 +20,9 @@
     var navLinks = [
         { href: 'tricks/',    label: 'tricks',         key: 'tricks' },
         { href: 'settings/',  label: 'settings rando', key: 'settings' },
-        { href: 'nospoiler/', label: 'no-spoiler log search',     key: 'nospoiler' }
+        { href: 'nospoiler/', label: 'no-spoiler log search',     key: 'nospoiler' },
+        { href: 'bingo/',     label: 'bingo goals',    key: 'bingo' },
+        { href: 'rba/',       label: 'rba',            key: 'rba' }
     ];
 
     var pathSegments = window.location.pathname.split('/').filter(function (s) { return s.length > 0; });
