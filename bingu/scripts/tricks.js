@@ -146,7 +146,13 @@ function renderTrickCards(tricks) {
     return tricks.map(trick => {
         const embed = CreateEmbedIframe(trick.embed);
         const shareUrl = `${baseShareUrl}${encodeURIComponent(trick.name)}`;
-        const descHtml = escapeHtml(trick.description).replace(/\n/g, '<br>');
+        // Most entries are video-only and carry no written steps yet. Rendering the heading anyway
+        // leaves a bare "How to do it:" with nothing under it, which reads as a broken card rather
+        // than as a video that speaks for itself.
+        const hasSteps = String(trick.description || '').trim().length > 0;
+        const descHtml = hasSteps
+            ? `<div class="description"><strong>How to do it:</strong> ${escapeHtml(trick.description).replace(/\n/g, '<br>')}</div>`
+            : '';
 
         return `
         <div class="trick-card-container ${separator}">
@@ -155,7 +161,7 @@ function renderTrickCards(tricks) {
                     ${escapeHtml(trick.name)}
                     <img class="trick-icon" src="../img/share-arrow.svg" data-url="${escapeHtml(shareUrl)}" title="Copy Share Link" />
                 </h2>
-                <div class="description"><strong>How to do it:</strong> ${descHtml}</div>
+                ${descHtml}
                 ${embed}
                 <div class="tags-container">
                     <strong>Tags:</strong>
