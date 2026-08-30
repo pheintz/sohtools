@@ -38,6 +38,8 @@ const payload = JSON.stringify(reachable.map((r) => ({
   how: r.howToGetOnCRight,
   gr: r.itemGroup,
   b: r.bits,
+  bh: r.bitHolds,
+  bn: r.bitsAreNumeric,
   w: Object.fromEntries(r.writes.map((w) => [w.value, { g: w.grants, e: w.erases, p: w.permanent, x: w.notes, m: w.mode }])),
 }))).replace(/</g, '\u003c');   // "</" would close the JSON script tag early
 

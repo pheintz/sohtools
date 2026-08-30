@@ -237,7 +237,27 @@ function decodeWrite(desc, value) {
         const chunk = (value >> (oLo - bitBase)) & ((1 << n) - 1);
         if (n !== u.bits) {
           notes.push(`${u.label}: bits ${oLo}-${oHi} of ${lo}-${hi} := ${chunk} (PARTIAL — combines with the bits held in the neighbouring byte)`);
-          if (oLo >= 5) permanent.push(`${u.label} bits ${oLo}-${oHi} — RBA can only ever write 0 here`);
+
+          /* Which bits of THIS byte the field occupies. The test used to be `oLo >= 5`, comparing a
+             GLOBAL bit index against the byte-local 5-7 threshold, so any field sitting above bit 5
+             of the save struct was called permanently unwritable. It marked two things wrongly, and
+             one of them inverted the meaning of the item: Pocket Cucco holds Strength bit 8, which
+             is byte-local bit 0 and is set by fish, bug and half-milk. That write is +4 strength --
+             it is how coloured gauntlets are made -- and it was being reported as a permanent loss.
+             Pocket Egg / Bullet Bag bit 16 had the same fault. */
+          const localLo = oLo - bitBase, localHi = oHi - bitBase;
+          let everySettable = true;
+          for (let b = localLo; b <= localHi; b++) if (!unreachable(b)) everySettable = false;
+
+          if (everySettable) {
+            permanent.push(`${u.label} bits ${oLo}-${oHi} — RBA can only ever write 0 here`);
+          } else if (chunk) {
+            // what this byte's share is worth inside the whole field
+            const contributes = chunk << (oLo - lo);
+            grants.push(`${u.label} += ${contributes} from this byte (the rest of the field lives in the neighbouring byte)`);
+          } else {
+            erases.push(`${u.label}: the ${n === 1 ? 'bit' : 'bits'} this byte holds ${n === 1 ? 'is' : 'are'} cleared (the rest of the field lives in the neighbouring byte)`);
+          }
         } else if (u.name === 'UPG_STRENGTH') {
           grants.push(`Strength := ${chunk} → ${STRENGTH_NAMES[chunk]}`);
         } else if (u.name === 'UPG_SCALE') {
@@ -327,6 +347,47 @@ function bitLabelsFor(desc) {
   }
 }
 
+
+/* What each of the eight bits HOLDS, for display only -- always eight entries.
+ *
+ * `bits` above stays null for anything that is not a real bitfield, and that is deliberate: it is
+ * the signal validate_rba_page.js uses to decide which rows it can cross-check by re-deriving
+ * grants and erases from labels. Widening it would quietly break that check.
+ *
+ * This is the softer question the page asks: "if I write here, what sits in each bit". Three
+ * answers exist, and they are not equally strong -- the page should not pretend otherwise:
+ *   - a real bitfield: the switch's name, straight from `bits`
+ *   - a packed field (the upgrades bytes): the field that owns the bit, from the UPGRADES table,
+ *     so Scale and Wallet are named rather than reduced to arithmetic
+ *   - a plain number (ammo, key counts, an item ID): the bit's place value. Truthful, but it is
+ *     arithmetic rather than meaning, which is why `numeric` is flagged for the renderer.
+ */
+function bitHoldsFor(desc) {
+  const named = bitLabelsFor(desc);
+  if (named) return { numeric: false, holds: named.map((n) => n || null) };
+
+  if (desc.kind === 'upgradeBitfield') {
+    // byte 0 is the most significant, so byte N covers global bits (3-N)*8 .. +7
+    const base = (3 - desc.byteIndex) * 8;
+    const holds = Array.from({ length: 8 }, (_, b) => {
+      const globalBit = base + b;
+      const u = UPGRADES.find((x) => globalBit >= x.shift && globalBit < x.shift + x.bits);
+      return u ? u.label : null;
+    });
+    return { numeric: false, holds };
+  }
+
+  if (desc.kind === 'questBitfield' && desc.byteIndex === 0) {
+    // heart pieces live in the high nibble; the low nibble is unused
+    return { numeric: false, holds: [null, null, null, null, 'Heart Piece count', 'Heart Piece count', 'Heart Piece count', 'Heart Piece count'] };
+  }
+
+  if (desc.kind === 'padding') return { numeric: false, holds: [null, null, null, null, null, null, null, null] };
+
+  // everything else is a number: the bit is worth its place value and nothing more
+  return { numeric: true, holds: Array.from({ length: 8 }, (_, b) => 'adds ' + (1 << b)) };
+}
+
 const rows = [];
 for (let off = 0; off <= 0xff; off++) {
   const itemName = itemById.get(off);
@@ -350,6 +411,8 @@ for (let off = 0; off <= 0xff; off++) {
     target: desc.field,
     region: desc.region,
     bits: bitLabelsFor(desc),
+    bitHolds: bitHoldsFor(desc).holds,
+    bitsAreNumeric: bitHoldsFor(desc).numeric,
     reachable: reach.reachable,
     age: reach.age,
     howToGetOnCRight: reach.how,

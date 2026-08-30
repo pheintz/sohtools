@@ -304,6 +304,33 @@ td.bit.dead {
 .deadtable td.byte { font-family: var(--mono); white-space: nowrap; color: var(--fg-muted); }
 .deadtable td.lost { color: var(--loss); }
 
+/* The answer, before the explanation. Chips because colour and position are preattentive -- they
+   land in well under a second -- while a table of eight rows has to be read. */
+.verdict { margin: 0 0 1.4rem; }
+.verdict .vrow { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+.verdict .vkey {
+  font-family: var(--mono); font-size: 0.78em; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--fg-faint); min-width: 3.6rem;
+}
+.verdict .chip {
+  display: inline-block; padding: 0.16rem 0.5rem; border-radius: 0.3rem;
+  font-size: var(--step--1); line-height: 1.35;
+}
+.verdict .chip.give { background: var(--gain-soft); color: var(--gain); }
+.verdict .chip.cost { background: var(--loss-soft); color: var(--loss); }
+.verdict .chip .qual { opacity: 0.75; font-size: 0.88em; }
+.verdict .vsentence { font-size: var(--step--1); color: var(--fg-muted); }
+/* Boss Key / Compass / Map are the same three names for all twenty dungeon bytes, so the chips
+   alone never said WHICH dungeon this item writes. Naming it once scopes the whole verdict. */
+.verdict .vscope {
+  font-family: var(--mono); font-size: 0.78em; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem;
+}
+.deadtable td.gain { color: var(--gain); }
+.deadtable td.nil { color: var(--fg-faint); }
+.deadtable td .lost { color: var(--loss); display: block; }
+.deadtable td .gain { color: var(--gain); display: block; }
+
 
 /* ---------- controls ---------- */
 .controls {
@@ -470,16 +497,18 @@ footer.end {
         </div>
       </div>
       <div>
+        <div class="verdict" id="verdict"></div>
         <p class="eyebrow" id="deadForLabel">what this byte loses for good</p>
         <table class="deadtable">
           <thead>
-            <tr><th>bit</th><th>holds</th><th>after an RBA write</th></tr>
+            <tr id="deadHead"><th>bit</th><th>holds</th><th>after an RBA write</th></tr>
           </thead>
           <tbody id="deadFor"></tbody>
         </table>
         <p class="pickcount" id="deadNote"></p>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -553,7 +582,8 @@ footer.end {
   var TARGETS = JSON.parse(document.getElementById("offsets").textContent).map(function (r) {
     return {
       off: r.o, item: r.n, target: r.t, addr: r.a, region: r.r,
-      age: r.age, how: r.how, labels: r.b, writes: r.w, group: r.gr,
+      age: r.age, how: r.how, labels: r.b, holds: r.bh, numeric: r.bn,
+      writes: r.w, group: r.gr,
       kind: r.b ? FLAG : TEXT
     };
   });
@@ -653,28 +683,184 @@ footer.end {
   var deadForEl = document.getElementById("deadFor");
   var deadNoteEl = document.getElementById("deadNote");
   var deadLabelEl = document.getElementById("deadForLabel");
+  var headEl = document.getElementById("deadHead");
 
   // bit 1 belongs here with 5-7: only half-milk sets it, and half-milk needs the byte to read 26
   var NEVER_BITS = [1, 5, 6, 7];
   var VALUES = MODS.map(function (m) { return m.v; });
 
-  function renderValues(t) {
-    deadForEl.innerHTML = "";
-    deadLabelEl.textContent = "every bit of the byte " + t.item + " points at";
+  /* The target string is a decomp field path -- "Inventory.ammo[0] = ammo for SLOT_DEKU_STICK".
+     Correct, and not what the note under the table should say out loud. */
+  var SLOT_NAMES = {
+    DEKU_STICK: "Deku Stick", DEKU_NUT: "Deku Nut", BOMB: "Bomb", BOW: "Bow",
+    ARROW_FIRE: "Fire Arrow", DINS_FIRE: "Din's Fire", SLINGSHOT: "Slingshot",
+    OCARINA: "Ocarina", BOMBCHU: "Bombchu", HOOKSHOT: "Hookshot", ARROW_ICE: "Ice Arrow",
+    FARORES_WIND: "Farore's Wind", BOOMERANG: "Boomerang", LENS_OF_TRUTH: "Lens of Truth",
+    MAGIC_BEAN: "Magic Bean", HAMMER: "Hammer", ARROW_LIGHT: "Light Arrow",
+    NAYRUS_LOVE: "Nayru's Love", BOTTLE_1: "Bottle 1", BOTTLE_2: "Bottle 2",
+    BOTTLE_3: "Bottle 3", BOTTLE_4: "Bottle 4", TRADE_ADULT: "Adult trade", TRADE_CHILD: "Child trade"
+  };
+  function slotWord(id) { return SLOT_NAMES[id.replace("SLOT_", "")] || id; }
 
-    if (!t.labels) {
-      /* The byte holds a number, not switches, so there is nothing to name bit by bit. What is
-         still true is the ceiling: no write can set bits 5-7, so the byte can never exceed 31. */
-      deadNoteEl.textContent = t.target + " holds a number, not switches. No write can set bits 5–7, "
-        + "so RBA can never leave a value above 31 here.";
+  /* MODS already pairs each writable value with the bottle content that produces it. The bit table
+     was listing the raw values -- 24, 25, 28 -- which asks the reader to hold the left-hand matrix
+     in their head to use the right-hand one. Naming the bottle removes that lookup; the matrix
+     still shows the numbers for anyone who wants them. */
+  var BOTTLE_OF = {};
+  MODS.forEach(function (m) { BOTTLE_OF[m.v] = m.name; });
+  function bottleList(values) {
+    return values.map(function (v) { return BOTTLE_OF[v] || v; }).join(", ");
+  }
+
+  function whatItIs(target) {
+    var m;
+    m = /^Inventory\.ammo\[\d+\] = ammo for (SLOT_[A-Z0-9_]+)$/.exec(target);
+    if (m) return slotWord(m[1]) + " ammo";
+    m = /^Inventory\.items\[\d+\] = (SLOT_[A-Z0-9_]+)$/.exec(target);
+    if (m) return "the " + slotWord(m[1]) + " slot";
+    m = /^Inventory\.dungeonKeys\[\d+\] = (.+)$/.exec(target);
+    if (m) return m[1] + " small keys";
+    if (/gsTokens/.test(target)) return "the Gold Skulltula counter";
+    if (/defenseHearts/.test(target)) return "defense hearts";
+    return target;
+  }
+
+  /* ---------- the verdict ----------
+     A design pass on this panel found the glance question unanswered. The table describes the
+     BYTE -- eight rows, twenty-four cells, and for 41 of the 60 items every row is arithmetic
+     ("adds 1 ... adds 128") that names nothing a player can hold. Meanwhile the median item can
+     give six distinct things. So the outcome was derivable but never stated.
+     This states it first, in chips, because colour and position are preattentive and prose is not.
+     The table stays underneath as the detail layer. */
+  function thingsFrom(list) {
+    var out = [];
+    (list || []).forEach(function (raw) {
+      var text = String(raw);
+      var m = /^([^:]+): (.+)$/.exec(text);          // "Deku Tree: Boss Key + Map"
+      if (m) {
+        if (m[2] === "nothing") return;
+        m[2].replace(/ \+ /g, ", ").split(", ").forEach(function (x) { out.push(x.trim()); });
+        return;
+      }
+      /* a field split across two bytes: keep what this byte is worth, drop the explanation --
+         "Strength += 4 from this byte (the rest ...)" is a sentence, and a chip needs a label */
+      var split = /^(.+?) \+= (\d+) from this byte/.exec(text);
+      if (split) { out.push(split[1] + " +" + split[2]); return; }
+      var cleared = /^(.+?): the bits? this byte holds/.exec(text);
+      if (cleared) { out.push(cleared[1]); return; }
+
+      text = text.replace(/ bits [\d-]+.*$/, "");     // "Strength bits 8-8 - RBA can only ..."
+      text = text.replace(/ \(bits [\d-]+\).*$/, ""); // "Heart Piece count (bits 28-31) := 1"
+      text = text.replace(/ :=.*$/, "");              // "Scale := 2 -> Golden Scale"
+      text = text.replace(/ \(dive meter.*$/, "");
+      out.push(text.trim());
+    });
+    return out.filter(Boolean);
+  }
+
+  var verdictEl = document.getElementById("verdict");
+
+  function chip(label, cls, qual) {
+    var el = document.createElement("span");
+    el.className = "chip " + cls;
+    el.appendChild(document.createTextNode(label));
+    if (qual) {
+      var q = document.createElement("span");
+      q.className = "qual";
+      q.textContent = "  " + qual;
+      el.appendChild(q);
+    }
+    return el;
+  }
+
+  function vrow(key, nodes) {
+    var row = document.createElement("div");
+    row.className = "vrow";
+    var k = document.createElement("span");
+    k.className = "vkey";
+    k.textContent = key;
+    row.appendChild(k);
+    nodes.forEach(function (n) { row.appendChild(n); });
+    return row;
+  }
+
+  function renderVerdict(t) {
+    verdictEl.innerHTML = "";
+
+    /* The three bulk shapes have one sentence each; chips would just repeat the same six bottles
+       sixty times over and say nothing about what you walk away with. */
+    var m;
+    var sentence = null;
+    if ((m = /^Inventory\.items\[\d+\] = (SLOT_[A-Z0-9_]+)$/.exec(t.target)))
+      sentence = "Copies your bottle into the " + slotWord(m[1]) + " slot \u2014 whatever was there is gone.";
+    else if ((m = /^Inventory\.ammo\[\d+\] = ammo for (SLOT_[A-Z0-9_]+)$/.exec(t.target)))
+      sentence = "Sets " + slotWord(m[1]) + " ammo to between 20 and 31.";
+    else if ((m = /^Inventory\.dungeonKeys\[\d+\] = (.+)$/.exec(t.target)))
+      sentence = "Sets " + m[1] + " small keys to between 20 and 31.";
+
+    if (sentence) {
+      var p = document.createElement("p");
+      p.className = "vsentence";
+      p.textContent = sentence;
+      verdictEl.appendChild(p);
       return;
     }
+
+    /* every dungeon byte grants the same three names, so say whose they are */
+    var dung = /^Inventory\.dungeonItems\[\d+\] = (.+)$/.exec(t.target);
+    if (dung) {
+      var scope = document.createElement("div");
+      scope.className = "vscope";
+      scope.textContent = dung[1];
+      verdictEl.appendChild(scope);
+    }
+
+    var gives = [], costs = [];
+    MODS.forEach(function (mod) {
+      var w = t.writes[mod.v] || {};
+      thingsFrom(w.g).forEach(function (x) { if (gives.indexOf(x) === -1) gives.push(x); });
+      thingsFrom(w.p).forEach(function (x) { if (costs.indexOf(x) === -1) costs.push(x); });
+    });
+
+    /* Something in both lists is not a contradiction: half-milk is the only value that sets bit 1,
+       so that thing is obtainable but only one way. Said once, as a gain with the condition
+       attached, rather than twice with opposite colours. */
+    var halfMilkOnly = gives.filter(function (x) { return costs.indexOf(x) !== -1; });
+    costs = costs.filter(function (x) { return halfMilkOnly.indexOf(x) === -1; });
+
+    if (!gives.length && !costs.length) {
+      var none = document.createElement("p");
+      none.className = "vsentence";
+      none.textContent = "Nothing to gain or lose here \u2014 no system reads this byte.";
+      verdictEl.appendChild(none);
+      return;
+    }
+
+    if (gives.length) {
+      verdictEl.appendChild(vrow("gives", gives.map(function (x) {
+        return chip(x, "give", halfMilkOnly.indexOf(x) !== -1 ? "half-milk only" : null);
+      })));
+    }
+    if (costs.length) {
+      verdictEl.appendChild(vrow("costs", costs.map(function (x) { return chip(x, "cost", "for good"); })));
+    }
+  }
+
+  function renderValues(t) {
+    deadForEl.innerHTML = "";
+
+    /* One table for all sixty items. `holds` always has eight entries: a real switch's name where
+       the byte is a bitfield, the owning field where it is packed (the upgrades bytes name Scale
+       and Wallet rather than reducing them to arithmetic), and the bit's place value where the byte
+       is simply a number. The third column depends only on which of the six values set the bit, so
+       it is the same calculation either way. */
+    deadLabelEl.textContent = "every bit of the byte " + t.item + " points at";
 
     /* All eight bits, not just the ones that die. Listing only the doomed ones answered "what do I
        lose" but left "is Zelda's Lullaby safe?" unanswerable — a bit that survives every write was
        simply absent, which reads as missing data rather than as safety. */
     for (var b = 0; b < 8; b++) {
-      var name = t.labels[b];
+      var name = t.holds ? t.holds[b] : null;
       var tr = document.createElement("tr");
       var td1 = document.createElement("td");
       td1.className = "byte";
@@ -699,19 +885,34 @@ footer.end {
           var sets = VALUES.filter(function (v) { return (v >> b) & 1; });
           td3.className = sets.length === VALUES.length ? "safe" : "";
           td3.textContent = sets.length === VALUES.length
-            ? "kept by every value"
-            : "kept by " + sets.join(", ");
+            ? "kept by every bottle"
+            : "kept by " + bottleList(sets);
         }
       }
       tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
       deadForEl.appendChild(tr);
     }
-    deadNoteEl.textContent = "";
+    /* A number has no per-bit meaning beyond arithmetic, so say what the byte actually is and what
+       a write leaves in it. The three inert bytes say why nothing happens instead. */
+    var inert = MODS.every(function (m) {
+      var w = t.writes[m.v] || {};
+      return !(w.g && w.g.length) && !(w.e && w.e.length) && !(w.p && w.p.length);
+    });
+    if (inert) {
+      deadNoteEl.textContent = ((t.writes[MODS[0].v] || {}).x || [])[0]
+        || "Nothing reads this byte \u2014 the write lands and no item changes.";
+    } else if (t.numeric) {
+      deadNoteEl.textContent = whatItIs(t.target) + " holds a number, not switches \u2014 a write leaves it reading "
+        + VALUES.join(", ") + ".";
+    } else {
+      deadNoteEl.textContent = "";
+    }
   }
 
   function render() {
     var t = target();
 
+    renderVerdict(t);
     renderValues(t);
     Array.prototype.forEach.call(itemsEl.children, function (b, i) {
       b.setAttribute("aria-pressed", String(TARGETS[i].off === state.off));
