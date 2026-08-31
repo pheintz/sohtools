@@ -657,9 +657,9 @@ footer.end {
     <fieldset>
       <legend>Relationship to RBA</legend>
       <span class="radio"><input type="radio" name="rba" id="rba-any" value="any" checked><label for="rba-any">any</label></span>
-      <span class="radio"><input type="radio" name="rba" id="rba-s" value="s"><label for="rba-s"><span class="glyph" aria-hidden="true">&#9650;</span> RBA can complete it</label></span>
-      <span class="radio"><input type="radio" name="rba" id="rba-e" value="e"><label for="rba-e"><span class="glyph" aria-hidden="true">&#9670;</span> RBA helps</label></span>
-      <span class="radio"><input type="radio" name="rba" id="rba-d" value="d"><label for="rba-d"><span class="glyph" aria-hidden="true">&#10006;</span> RBA writes it</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-s" value="s"><label for="rba-s">RBA can complete it</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-e" value="e"><label for="rba-e">RBA helps</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-d" value="d"><label for="rba-d">RBA writes it</label></span>
       <span class="radio"><input type="radio" name="rba" id="rba-none" value="none"><label for="rba-none">untouched</label></span>
     </fieldset>
     </div>
@@ -1140,10 +1140,14 @@ footer.end {
 
   function markers(g) {
     var out = [];
-    if (g.rba && g.rba.s) out.push(["routed", "▲", "RBA can complete it"]);
-    if (g.rba && g.rba.e) out.push(["helped", "◆", "RBA shortcut"]);
+    /* One flag, not two opposed ones. "RBA can complete it" and "RBA can remove it for good" were
+       separate markers; a square can carry both, and the row then argued with itself. The detail
+       panel still separates them under their own headings, so this only moves the distinction one
+       click away rather than dropping it. */
     var dk = destroyKinds(g);
-    if (dk.permanent && dk.permanent.length) out.push(["breaks", "✖", "RBA can remove it for good"]);
+    var touchesRba = (g.rba && g.rba.s) || (dk.permanent && dk.permanent.length);
+    if (touchesRba) out.push(["routed", "▲", "RBA interaction"]);
+    if (g.rba && g.rba.e) out.push(["helped", "◆", "RBA shortcut"]);
     if (dk.overwrite && dk.overwrite.length) out.push(["touches", "◈", "RBA overwrites this"]);
     if (g.only) out.push(["only", "●", "RBA only — not in normal play"]);
     return out;
@@ -1277,56 +1281,9 @@ footer.end {
   function buildDetail(g) {
     var d = el("div", "detail");
 
-    /* facts */
-    var facts = el("div", "card");
-    facts.appendChild(el("h3", null, "The square"));
-    var dl = el("dl", "kv");
-    function kv(k, v) {
-      dl.appendChild(el("dt", null, k));
-      dl.appendChild(el("dd", null, v));
-    }
-    kv("Kind", titleCase(g.a));
-    if (g.N) kv("Normal", "difficulty " + g.N[0] + " · " + g.N[1] + " min");
-    if (g.S) kv("Short", "difficulty " + g.S[0] + " · " + g.S[1] + " min");
-    if (!g.S) kv("Short", "not on short boards");
-    if (g.ar) kv("Area", g.ar);
-    if (g.dg) kv("Dungeon", g.dg);
-    if (g.age) kv("Age", g.age);
-    facts.appendChild(dl);
-    if (g.excl) {
-      var ex = el("div");
-      ex.appendChild(el("p", null, "Never shares a row with goals in the same group:"));
-      var pl = el("div", "pill-list");
-      g.excl.forEach(function (e) { pl.appendChild(el("span", "pill", e)); });
-      ex.appendChild(pl);
-      facts.appendChild(ex);
-    }
-    d.appendChild(facts);
-
-    /* intended route */
-    var route = el("div", "card");
-    route.appendChild(el("h3", null, "The intended way"));
-    if (g.ir) {
-      route.appendChild(el("p", "strongline", g.ir.h + "."));
-      var rl = el("dl", "kv");
-      rl.appendChild(el("dt", null, "Age")); rl.appendChild(el("dd", null, g.ir.age));
-      rl.appendChild(el("dt", null, "Where")); rl.appendChild(el("dd", null, g.ir.w));
-      if (g.ir.req && g.ir.req.length) {
-        rl.appendChild(el("dt", null, "Needs")); rl.appendChild(el("dd", null, g.ir.req.join("; ")));
-      }
-      route.appendChild(rl);
-      if (g.ir.note) route.appendChild(el("p", null, g.ir.note));
-    } else if (g.only) {
-      route.appendChild(el("p", "strongline", "There isn't one — this value does not exist in normal play."));
-    } else {
-      route.appendChild(el("p", null, "No prerequisite chain written for this goal yet. Collection goals are covered by the location data rather than a route."));
-    }
-    d.appendChild(route);
-
-    /* spawn window — the target only exists during a window of game state.
-       Deliberately its own card, not folded into "The intended way": there is
-       nothing to acquire here, and the failure mode is the reverse of a missing
-       prerequisite, since further quest progress is what closes the window. */
+    /* spawn window — the target only exists during a window of game state. Worth its own card
+       because the failure mode is the reverse of a missing prerequisite: further quest progress is
+       what closes the window. */
     if (g.sw) {
       var win = el("div", "card span");
       win.appendChild(el("h3", null, "When it exists"));
@@ -1410,46 +1367,44 @@ footer.end {
       d.appendChild(box);
     }
 
-    /* Conflict pills, graded by verdict.
-       c = bingo prices the pair negatively too, so the clash is corroborated.
-       u = bingo says nothing either way.
-       p = bingo prices the pair POSITIVELY. The clash is still mechanically real ("3 Songs"
-           routed via the Saw wipes Requiem), but the goal list rates the two a good pairing, so
-           presenting it like a trap over-warns. It gets its own group and its own sentence. */
-    function conflictGroups(names, vmap, lead) {
-      var buckets = { c: [], u: [], p: [] };
-      names.forEach(function (n) { buckets[(vmap && vmap[n]) || "u"].push(n); });
-      var heads = {
-        c: lead + " — bingo prices these pairs badly too:",
-        u: lead + ":",
-        p: lead + ", but bingo prices these pairs well — your call:",
-      };
-      var out = [];
-      ["c", "u", "p"].forEach(function (k) {
-        if (!buckets[k].length) return;
-        out.push(el("p", null, heads[k]));
-        var list = el("div", "pill-list");
-        buckets[k].forEach(function (n) {
-          list.appendChild(el("span", "pill warn" + (k === "c" ? " vc" : k === "p" ? " vp" : ""), n));
-        });
-        out.push(list);
-      });
-      return out;
-    }
-
     /* conflicts */
     if (g.breaks || g.brokenBy) {
       var cf = el("div", "card span");
-      cf.appendChild(el("h3", null, "Watch your card"));
-      if (g.breaks) {
-        conflictGroups(g.breaks, g.bv, "Routing this square with RBA can invalidate")
-          .forEach(function (n) { cf.appendChild(n); });
+      cf.appendChild(el("h3", null, "Possible RBA interactions"));
+
+      /* One list, both directions, one heading. The old split -- "routing this square can
+         invalidate those" versus "those can invalidate this one" -- crossed with three verdict
+         buckets produced up to four headed groups for what is usually three or four names. That is
+         a distinction about which square you route first, not about which squares to watch.
+         Verdict survives in the pill styling, and a name appearing on both sides keeps its
+         stronger verdict. */
+      var rank = { c: 3, p: 2, u: 1 };
+      var verdictOf = {};
+      function collect(names, vmap) {
+        (names || []).forEach(function (n) {
+          var v = (vmap && vmap[n]) || "u";
+          if (!verdictOf[n] || rank[v] > rank[verdictOf[n]]) verdictOf[n] = v;
+        });
       }
-      if (g.brokenBy) {
-        conflictGroups(g.brokenBy, g.rv, "These squares, done with RBA, can invalidate this one")
-          .forEach(function (n) { cf.appendChild(n); });
-      }
+      collect(g.breaks, g.bv);
+      collect(g.brokenBy, g.rv);
+
+      var list = el("div", "pill-list");
+      Object.keys(verdictOf).sort().forEach(function (n) {
+        var v = verdictOf[n];
+        list.appendChild(el("span", "pill warn" + (v === "c" ? " vc" : v === "p" ? " vp" : ""), n));
+      });
+      cf.appendChild(list);
       d.appendChild(cf);
+    }
+
+    /* "The square" and "The intended way" were on every goal, so no detail panel could ever come out
+       empty. Without them seven goals have nothing else to show, and the expander opened onto blank
+       space. The stats are already on the summary row, so this just marks the panel as empty. */
+    if (!d.querySelector(".card")) {
+      var bare = el("div", "card span");
+      bare.appendChild(el("p", null, "n/a"));
+      d.appendChild(bare);
     }
 
     return d;
