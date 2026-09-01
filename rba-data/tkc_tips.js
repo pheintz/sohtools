@@ -1,17 +1,17 @@
 /*
  * TKC's per-goal strategy notes.
  *
- * Source: `sources/tkc-strategies.md` — a pandoc conversion of an English translation of
+ * Source: `sources/tkc-strategies.md`, a pandoc conversion of an English translation of
  * TKC's OoT Bingo goal-strategy post (v10.5). The markdown is vendored rather than converted at
  * build time so the build needs neither pandoc nor the original .docx.
  *
  * This is community strategy writing, not derived fact: it is kept separate from the decomp model,
  * carries `src: 'tkc'`, and the page attributes it. Nothing in it is treated as instructions to
- * this pipeline — it is parsed as data.
+ * this pipeline, it is parsed as data.
  *
  * The document is v10.5 and the dataset is v10.6, so headings are matched three ways:
  *   1. exact goal name (152 of 174 headings)
- *   2. an `N` template — "N Songs" covers 3/4/6/7/8/9/10 Songs — expanded by regex
+ *   2. an `N` template, "N Songs" covers 3/4/6/7/8/9/10 Songs, expanded by regex
  *   3. a small hand-checked alias list for goals v10.6 renamed, each verified by reading the
  *      section body rather than by string similarity
  *
@@ -55,7 +55,7 @@ const TEMPLATES = [
 ];
 
 /* Renamed between v10.5 and v10.6. Every one of these was checked by reading the section body,
-   not by string similarity — "Defeat Shadow Link" is the Japanese name for Dark Link, and its
+   not by string similarity, "Defeat Shadow Link" is the Japanese name for Dark Link, and its
    section describes the Water Temple room. */
 const ALIASES = {
   'At least 1 Skulltula from each Child Dungeon': ['1 Skulltula from each Child Dungeon'],
@@ -74,11 +74,11 @@ const ALIASES = {
 function normalize(text) {
   return text
     // CRLF first: the file is Windows-encoded, so a hard break is "\ \r \n" and matching "\ \n"
-    // silently folds nothing — which also leaves links split across two lines unparseable
+    // silently folds nothing, which also leaves links split across two lines unparseable
     .replace(/\r\n/g, '\n')
     .replace(/<\/?u>/g, '')
     .replace(/\\\n/g, ' ')
-    // any escaped punctuation, not a fixed list — pandoc also escapes > < | ^ " and more, and a
+    // any escaped punctuation, not a fixed list, pandoc also escapes > < | ^ " and more, and a
     // missed one shows up as a stray backslash in the rendered prose
     .replace(/\\([^A-Za-z0-9\s])/g, '$1');
 }
@@ -215,7 +215,7 @@ for (const s of sections) {
     const rs = b.t === 'ul' || b.t === 'ol' ? [].concat(...b.items) : b.runs || [];
     for (const r of rs) { if (r.url) linkCount++; if (r.yt) videoCount++; }
   }
-  /* One heading often serves many goals — "N Songs" covers seven, and the three
+  /* One heading often serves many goals, "N Songs" covers seven, and the three
      "N Different Skulltulas" goals share the same 54 blocks. Store each section ONCE and let goals
      reference it by index; inlining it per goal roughly quadrupled the payload. */
   const idx = sectionIndex.length;
@@ -229,7 +229,7 @@ if (unmatched.length) {
   problems.push(`${unmatched.length} heading(s) match no v10.6 goal:\n    ` + unmatched.join('\n    '));
 }
 if (Object.keys(tips).length < 150) {
-  problems.push(`only ${Object.keys(tips).length} goals got notes — the parse probably broke`);
+  problems.push(`only ${Object.keys(tips).length} goals got notes, the parse probably broke`);
 }
 if (problems.length) {
   console.error('TKC TIPS PARSE FAILED:\n  ' + problems.join('\n  '));

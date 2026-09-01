@@ -45,7 +45,20 @@ const ITEMS = parseEnum(itemH, 'ItemID');
 const SLOTS = parseEnum(itemH, 'InventorySlot');
 const itemById = new Map(ITEMS.map((e) => [e.value, e.name]));
 const slotById = new Map(SLOTS.map((e) => [e.value, e.name]));
+/* Mechanical de-snaking of the enum name, except where it produces something nobody says.
+   ITEM_BOW_FIRE became "Bow Fire"; the community calls that a Fire Arrow, full stop. The catch is
+   that ITEM_ARROW_FIRE is a DIFFERENT reachable byte -- the bare arrow on a button, without the
+   bow -- and would collapse onto the same words, so it keeps a qualifier. */
+const NAME_OVERRIDES = {
+  ITEM_BOW_FIRE: 'Fire Arrow',
+  ITEM_BOW_ICE: 'Ice Arrow',
+  ITEM_BOW_LIGHT: 'Light Arrow',
+  ITEM_ARROW_FIRE: 'Fire Arrow (no bow)',
+  ITEM_ARROW_ICE: 'Ice Arrow (no bow)',
+  ITEM_ARROW_LIGHT: 'Light Arrow (no bow)',
+};
 const pretty = (n) =>
+  NAME_OVERRIDES[n] ||
   n.replace(/^(ITEM|SLOT)_/, '').toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
 // ------------------------------------------------------------------ struct map
@@ -161,7 +174,7 @@ function describeOffset(off) {
   if (off < 0x18) return { region: 'items', kind: 'itemSlot', slot: off, field: `Inventory.items[${off}] = ${slotById.get(off)}` };
   if (off < 0x28) { const s = off - 0x18; return { region: 'ammo', kind: 'ammo', slot: s, field: `Inventory.ammo[${s}] = ammo for ${slotById.get(s)}` }; }
   if (off < 0x2a) return { region: 'equipment', kind: 'equipBitfield', byteIndex: off - 0x28, field: `Inventory.equipment byte ${off - 0x28}` };
-  if (off < 0x2c) return { region: 'padding', kind: 'padding', field: `padding between Inventory.equipment and Inventory.upgrades (+0x${off.toString(16)}) — always zero, unused` };
+  if (off < 0x2c) return { region: 'padding', kind: 'padding', field: `padding between Inventory.equipment and Inventory.upgrades (+0x${off.toString(16)}), always zero, unused` };
   if (off < 0x30) return { region: 'upgrades', kind: 'upgradeBitfield', byteIndex: off - 0x2c, field: `Inventory.upgrades byte ${off - 0x2c}` };
   if (off < 0x34) return { region: 'questItems', kind: 'questBitfield', byteIndex: off - 0x30, field: `Inventory.questItems byte ${off - 0x30}` };
   if (off < 0x48) { const d = off - 0x34; return { region: 'dungeonItems', kind: 'dungeonItems', dungeon: d, field: `Inventory.dungeonItems[${d}] = ${DUNGEONS[d]}` }; }
@@ -191,7 +204,7 @@ const ASSIGNING = ['itemSlot', 'ammo', 'upgradeBitfield', 'dungeonKeys', 'scalar
 /* Bits RBA can never be the first to set.
    5-7: no writable value contains them.
    1  : only 31 contains it, and 31 requires the target byte to already read
-        26 (0b00011010), which already has bit 1 — so the precondition is
+        26 (0b00011010), which already has bit 1, so the precondition is
         circular. Proved in validate_claims.js, which gates the build. */
 const UNREACHABLE_BITS = new Set([1, 5, 6, 7]);
 const unreachable = (b) => UNREACHABLE_BITS.has(b);
@@ -236,7 +249,7 @@ function decodeWrite(desc, value) {
         const n = oHi - oLo + 1;
         const chunk = (value >> (oLo - bitBase)) & ((1 << n) - 1);
         if (n !== u.bits) {
-          notes.push(`${u.label}: bits ${oLo}-${oHi} of ${lo}-${hi} := ${chunk} (PARTIAL — combines with the bits held in the neighbouring byte)`);
+          notes.push(`${u.label}: bits ${oLo}-${oHi} of ${lo}-${hi} := ${chunk} (PARTIAL, combines with the bits held in the neighbouring byte)`);
 
           /* Which bits of THIS byte the field occupies. The test used to be `oLo >= 5`, comparing a
              GLOBAL bit index against the byte-local 5-7 threshold, so any field sitting above bit 5
@@ -250,7 +263,7 @@ function decodeWrite(desc, value) {
           for (let b = localLo; b <= localHi; b++) if (!unreachable(b)) everySettable = false;
 
           if (everySettable) {
-            permanent.push(`${u.label} bits ${oLo}-${oHi} — RBA can only ever write 0 here`);
+            permanent.push(`${u.label} bits ${oLo}-${oHi}: RBA can only ever write 0 here`);
           } else if (chunk) {
             // what this byte's share is worth inside the whole field
             const contributes = chunk << (oLo - lo);
@@ -268,9 +281,9 @@ function decodeWrite(desc, value) {
         } else {
           const cap = capacityFor(ui, chunk);
           const oor = chunk > 3;
-          const line = `${u.label} := ${chunk}${oor ? ` (OUT OF RANGE — gUpgradeCapacities read spills into the next row → capacity ${cap})` : ` (capacity ${cap})`}`;
+          const line = `${u.label} := ${chunk}${oor ? ` (OUT OF RANGE: gUpgradeCapacities read spills into the next row → capacity ${cap})` : ` (capacity ${cap})`}`;
           // capacity 0 means the upgrade is effectively gone, however the raw
-          // field value compares — a quiver at index 4 reads 0 arrows, not more
+          // field value compares, a quiver at index 4 reads 0 arrows, not more
           (cap === 0 ? erases : grants).push(line);
         }
       }
@@ -425,7 +438,7 @@ for (let off = 0; off <= 0xff; off++) {
 }
 
 const model = {
-  /* Provenance, split by how it was actually established — this used to list seven decomp files as
+  /* Provenance, split by how it was actually established, this used to list seven decomp files as
      though the script read them all. It reads one. Everything else was read by hand once and then
      hardcoded here, which is a materially weaker guarantee: a struct field moving in the decomp
      would leave this parsing cleanly while every bit meaning silently went stale. Saying so is the
@@ -433,7 +446,7 @@ const model = {
   generatedFrom: {
     decomp: OOT,
     parsedAtBuildTime: [
-      'include/item.h — the ItemID and InventorySlot enums, re-read on every build',
+      'include/item.h, the ItemID and InventorySlot enums, re-read on every build',
     ],
     hardcodedFromReading: {
       note: 'read by hand from the decomp and transcribed into build_rba_table.js. NOT verified against source at build time.',
@@ -462,7 +475,7 @@ fs.writeFileSync(path.join(OUT, 'rba-offsets.json'), JSON.stringify(model, null,
 
 // ---- readable report
 let txt = '';
-txt += 'REVERSE BOTTLE ADVENTURE — full offset model (decomp-derived, NTSC 1.0 addresses)\n';
+txt += 'REVERSE BOTTLE ADVENTURE, full offset model (decomp-derived, NTSC 1.0 addresses)\n';
 txt += '='.repeat(110) + '\n';
 txt += 'items[ buttonItems[3] ] = <bottle value>   where buttonItems[3] is the ITEM ID on C-Right.\n';
 txt += 'Writable values: 0x14 empty, 0x18 fairy, 0x19 fish, 0x1C blue fire, 0x1D bug, 0x1F half-milk*\n';
@@ -471,7 +484,7 @@ txt += '='.repeat(110) + '\n';
 for (const r of rows) {
   txt += `\n${r.offsetHex} (${r.offset})  C-Right = ${r.cRightItemName || r.cRightItemId}   @${r.ntsc10Address}\n`;
   txt += `    target : ${r.target}   [${r.region}]\n`;
-  txt += `    reach  : ${r.reachable ? `YES (${r.age})` : 'NO'} — ${r.howToGetOnCRight}\n`;
+  txt += `    reach  : ${r.reachable ? `YES (${r.age})` : 'NO'}, ${r.howToGetOnCRight}\n`;
   if (r.reachabilityNotes) txt += `             ${r.reachabilityNotes}\n`;
   if (r.adultTradeStage) txt += `    adult trade stage ${r.adultTradeStage}/11\n`;
   if (r.childTradeStage) txt += `    child trade stage ${r.childTradeStage}/12\n`;

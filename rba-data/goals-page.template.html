@@ -1,8 +1,8 @@
-<title>OoT Bingo v10.6 — goal index</title>
+<title>OoT Bingo v10.6 goal index</title>
 <style>
 /* ============================================================
    Palette. Every fg/bg pair below is verified against WCAG AA
-   in both themes by build_goals_page.js — the build fails if a
+   in both themes by build_goals_page.js, the build fails if a
    pair regresses. Colour is never the only channel for meaning:
    every state also carries a glyph and a word.
    ============================================================ */
@@ -34,7 +34,10 @@
   --mono: "Cascadia Mono", "SF Mono", ui-monospace, "Segoe UI Mono", Menlo, Consolas, monospace;
   --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
 
-  --step--2: 0.72rem;
+  /* Was a fixed 0.72rem: the only step that did not scale, while carrying the goal name inside
+     every board square and the difficulty/time line under it. On a projector those stayed at
+     11.5px while the h1 reached 40px. Floor is unchanged so narrow screens are unaffected. */
+  --step--2: clamp(0.72rem, 0.68rem + 0.14vw, 0.88rem);
   --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
   --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
   --step-1: clamp(1.1rem, 1.04rem + 0.3vw, 1.25rem);
@@ -166,7 +169,7 @@ code {
 .bar-col.empty .bar-total { border-color: var(--rule); }
 .bar-axis {
   display: flex; gap: 2px; font-family: var(--mono);
-  font-size: 0.6rem; color: var(--fg-faint); font-variant-numeric: tabular-nums;
+  font-size: clamp(0.6rem, 0.56rem + 0.13vw, 0.76rem); color: var(--fg-faint); font-variant-numeric: tabular-nums;
 }
 .bar-axis span { flex: 1 1 0; text-align: center; }
 .chart-key { font-size: var(--step--2); color: var(--fg-faint); font-family: var(--mono); display: flex; gap: 1.2rem; flex-wrap: wrap; }
@@ -215,7 +218,7 @@ ol.rowlist .sq {
 ol.rowlist .gname { color: var(--fg); font-weight: 600; line-height: 1.35; }
 ol.rowlist .gname button {
   /* padded to clear the WCAG 2.2 24px minimum target rather than leaning on the
-     inline-target exception — this is the panel's primary interaction */
+     inline-target exception, this is the panel's primary interaction */
   background: none; border: none; padding: 0.2rem 0; margin: 0; cursor: pointer;
   min-height: 1.6rem;
   font: inherit; color: inherit; text-align: left; text-decoration: underline;
@@ -249,15 +252,15 @@ ol.rowlist .gmarks { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 0
 
 /* ---------- whole board ----------
    A board is generated from (version, seed, mode), so the page carries ootbingo's own generator
-   and reproduces the exact squares. The board is real tabular data — a 5x5 grid with meaningful
-   row and column headers — so it is marked up as a table rather than a div grid, which also gives
+   and reproduces the exact squares. The board is real tabular data, a 5x5 grid with meaningful
+   row and column headers, so it is marked up as a table rather than a div grid, which also gives
    screen readers the ROW3 / COL2 coordinates for free. */
 /* A 5x5 grid of goal names cannot fit a phone: at 375px the columns land at ~49px, which turns
    "8 Different Unused Keys in Gerudo Training Grounds" into an unreadable sliver. So the board
-   keeps a legible minimum width and scrolls inside its own box — the page itself must never
+   keeps a legible minimum width and scrolls inside its own box, the page itself must never
    scroll horizontally. */
 /* min-width:0 is load-bearing. .rowpanel is a flex column, so its children default to
-   min-width:auto and grow to their content instead of letting the wrapper scroll — which pushes
+   min-width:auto and grow to their content instead of letting the wrapper scroll, which pushes
    the whole PAGE sideways. Capping with max-width:100% too, so this survives a future reparent. */
 .boardwrap, .linewrap { overflow-x: auto; min-width: 0; max-width: 100%; }
 table.board { border-collapse: collapse; width: 100%; min-width: 34rem; table-layout: fixed; }
@@ -267,7 +270,7 @@ table.board th {
 }
 /* The ROW label column, and the empty corner cell above it.
    `table-layout: fixed` takes every column width from the FIRST row only, and that row begins with
-   the empty corner cell — which had no width, so it was handed an equal sixth of the table. The
+   the empty corner cell, which had no width, so it was handed an equal sixth of the table. The
    width declared here on the row headers was in later rows and therefore ignored, leaving a band of
    dead space down the left as wide as a whole goal column. The corner has to carry the width too. */
 table.board th[scope="row"],
@@ -282,10 +285,10 @@ button.cell {
 }
 button.cell:hover { border-color: var(--accent); }
 button.cell .cn { font-size: var(--step--2); line-height: 1.3; font-weight: 600; }
-button.cell .cd { font-family: var(--mono); font-size: 0.62rem; color: var(--fg-faint); margin-top: auto; }
+button.cell .cd { font-family: var(--mono); font-size: clamp(0.62rem, 0.58rem + 0.13vw, 0.78rem); color: var(--fg-faint); margin-top: auto; }
 button.cell .cm { display: flex; flex-wrap: wrap; gap: 0.15rem; }
 button.cell .cm .g { font-size: 0.7rem; line-height: 1; }
-/* a highlighted line: never colour alone — the cell also gains a heavy border and a ring */
+/* a highlighted line: never colour alone, the cell also gains a heavy border and a ring */
 button.cell.inline { border-color: var(--accent); border-width: 2px; background: var(--accent-soft); }
 table.board th.inline { color: var(--accent); font-weight: 700; }
 
@@ -404,7 +407,7 @@ button.goalrow[aria-expanded="true"] { background: var(--accent-soft); }
 }
 .goalrow .nums .d { color: var(--fg); font-weight: 700; }
 
-/* state markers — glyph + word + colour, never colour alone */
+/* state markers, glyph + word + colour, never colour alone */
 .mark {
   display: inline-flex; align-items: center; gap: 0.3rem;
   font-family: var(--mono); font-size: var(--step--2);
@@ -441,6 +444,23 @@ button.goalrow[aria-expanded="true"] { background: var(--accent-soft); }
 .card p.strongline { color: var(--fg); }
 .card ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem; }
 
+/* Location lists: one row per area, and the area name has to survive on one line.
+   Sentence case rather than the uppercase .kv uses -- all-caps costs roughly 15% in letter height
+   before it reads as fast, which is a bad trade on names as long as "Gerudo Training Ground".
+   A hairline per row does the grouping so the columns do not need a gutter wide enough to see. */
+.locgrid { display: grid; grid-template-columns: minmax(8.5rem, max-content) 1fr; font-size: var(--step--1); }
+.locgrid dt {
+  font-family: var(--sans); font-weight: 600; letter-spacing: 0; text-transform: none;
+  color: var(--fg); white-space: nowrap;
+  padding: 0.4rem 1.25rem 0.4rem 0; border-top: 1px solid var(--rule);
+}
+.locgrid dd {
+  margin: 0; color: var(--fg-muted); padding: 0.4rem 0; border-top: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; gap: 0.15rem 0.9rem;
+}
+.locgrid dt:first-of-type, .locgrid dd:first-of-type { border-top: 0; padding-top: 0; }
+.locgrid .place { white-space: nowrap; }
+.locgrid .n { font-family: var(--mono); font-size: 0.86em; color: var(--fg-faint); margin-left: 0.28rem; }
 .kv { display: grid; grid-template-columns: 7rem 1fr; gap: 0.2rem 0.75rem; font-size: var(--step--1); }
 .kv dt { font-family: var(--mono); font-size: var(--step--2); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-faint); }
 .kv dd { margin: 0; color: var(--fg-muted); }
@@ -450,11 +470,11 @@ button.goalrow[aria-expanded="true"] { background: var(--accent-soft); }
 .recipe.is-break { border-left-color: var(--loss); border-left-style: dashed; }
 .recipe .rname { font-family: var(--mono); font-size: var(--step--1); color: var(--fg); }
 .recipe .rmeta { font-family: var(--mono); font-size: var(--step--2); color: var(--fg-faint); }
-/* modifier table — the action is the point, the raw value is the footnote */
+/* modifier table, the action is the point, the raw value is the footnote */
 table.modtable { border-collapse: collapse; width: 100%; font-size: var(--step--2); }
 table.modtable caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 table.modtable th {
-  font-family: var(--mono); font-weight: 500; font-size: 0.66rem;
+  font-family: var(--mono); font-weight: 500; font-size: clamp(0.66rem, 0.62rem + 0.13vw, 0.8rem);
   letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-faint);
   text-align: left; padding: 0 0.6rem 0.35rem 0; border-bottom: 1px solid var(--rule);
   white-space: nowrap;
@@ -467,7 +487,7 @@ table.modtable tr:last-child td { border-bottom: none; }
 table.modtable td.act { font-family: var(--mono); white-space: nowrap; }
 table.modtable td.act .verb { color: var(--fg); }
 table.modtable tr.is-empty td.act .verb { color: var(--loss); }
-/* Was opacity: 0.55, which dropped this row's text to ~2.4:1 — a real AA failure that a
+/* Was opacity: 0.55, which dropped this row's text to ~2.4:1, a real AA failure that a
    token-pair checker is structurally blind to, because the tokens themselves still pass. These
    rows carry real content ("not available here"), so they get a muted colour instead. */
 table.modtable tr.is-off td { color: var(--fg-muted); }
@@ -476,15 +496,20 @@ table.modtable tr.is-off td .modnote { color: var(--fg-faint); }
 table.modtable tr.is-off td.act .verb { text-decoration: line-through; text-decoration-color: var(--rule-strong); }
 table.modtable td.act .hmhow {
   display: block; white-space: normal; max-width: 26rem; margin-top: 0.15rem;
-  font-family: var(--sans); font-size: 0.68rem; line-height: 1.45; color: var(--fg-muted);
+  font-family: var(--sans); font-size: clamp(0.68rem, 0.64rem + 0.13vw, 0.82rem); line-height: 1.45; color: var(--fg-muted);
 }
+table.modtable td.act .hmroute {
+  display: block; white-space: normal; max-width: 26rem; margin: 0.35rem 0 0; padding-left: 1.1rem;
+  font-family: var(--sans); font-size: clamp(0.68rem, 0.64rem + 0.13vw, 0.82rem); line-height: 1.45; color: var(--fg-muted);
+}
+table.modtable td.act .hmroute li { margin-bottom: 0.2rem; }
 table.modtable td.act .cond {
-  display: block; font-size: 0.62rem; letter-spacing: 0.08em;
+  display: block; font-size: clamp(0.62rem, 0.58rem + 0.13vw, 0.78rem); letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--perm);
 }
 table.modtable td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 table.modtable td.num b { color: var(--fg); font-weight: 700; }
-table.modtable td.num .iname { display: block; color: var(--fg-faint); font-size: 0.66rem; }
+table.modtable td.num .iname { display: block; color: var(--fg-faint); font-size: clamp(0.66rem, 0.62rem + 0.13vw, 0.8rem); }
 table.modtable td.res { width: 99%; }
 /* three outcomes per write. glyph + colour + a screen-reader label, so the
    distinction survives greyscale and colour-vision deficiency alike */
@@ -497,6 +522,17 @@ table.modtable td.res .fx.clears { color: var(--loss); }
 table.modtable td.res .fx.never { color: var(--perm); }
 .modnote { font-size: var(--step--2); color: var(--fg-faint); line-height: 1.5; }
 
+.trapnote { margin-bottom: 1rem; }
+.trapnote:last-child { margin-bottom: 0; }
+.trapwho {
+  font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em;
+  color: var(--fg-muted); margin: 0 0 0.3rem;
+}
+.trapwho .off { color: var(--fg-faint); margin-left: 0.5rem; }
+.trapnote ul { margin: 0; padding-left: 1.05rem; }
+.trapnote li { font-size: var(--step--1); margin-bottom: 0.25rem; }
+.trapsrc { margin: 0.4rem 0 0; font-size: 0.72rem; color: var(--fg-faint); }
+.trapsrc a { color: var(--accent); }
 .trap {
   border-left: 3px solid var(--perm); background: var(--perm-soft);
   padding: 0.6rem 0.8rem; font-size: var(--step--1); color: var(--fg); line-height: 1.55;
@@ -556,12 +592,12 @@ figure.ytbox figcaption { font-family: var(--mono); font-size: var(--step--2); c
 .popbar .said { font-size: var(--step--1); color: var(--gain); }
 /* Conflict pills are graded by what bingo's own synergy numbers say about the pair, so the
    strongest warnings are not drowned by the 147 pairs bingo actually likes. Border style differs
-   as well as colour, and each group carries a worded heading — never colour alone. */
+   as well as colour, and each group carries a worded heading, never colour alone. */
 .pill.vc { color: var(--loss); border-color: var(--loss); border-style: solid; font-weight: 600; }
-.pill.vp { color: var(--fg-soft); border-color: var(--fg-faint); border-style: dotted; }
+.pill.vp { color: var(--fg-muted); border-color: var(--fg-faint); border-style: dotted; }
 .vtail { margin-left: 0.35rem; font-size: 0.86em; }
 .vtail.vc { color: var(--loss); }
-.vtail.vp { color: var(--fg-soft); }
+.vtail.vp { color: var(--fg-muted); }
 
 .empty {
   padding: 3rem 0; text-align: center; color: var(--fg-faint);
@@ -659,7 +695,7 @@ footer.end {
       <span class="radio"><input type="radio" name="rba" id="rba-any" value="any" checked><label for="rba-any">any</label></span>
       <span class="radio"><input type="radio" name="rba" id="rba-s" value="s"><label for="rba-s">RBA can complete it</label></span>
       <span class="radio"><input type="radio" name="rba" id="rba-e" value="e"><label for="rba-e">RBA helps</label></span>
-      <span class="radio"><input type="radio" name="rba" id="rba-d" value="d"><label for="rba-d">RBA writes it</label></span>
+      <span class="radio"><input type="radio" name="rba" id="rba-d" value="d"><label for="rba-d">RBA can break it</label></span>
       <span class="radio"><input type="radio" name="rba" id="rba-none" value="none"><label for="rba-none">untouched</label></span>
     </fieldset>
     </div>
@@ -788,23 +824,20 @@ footer.end {
     return out;
   }
 
-  var COMMUNITY_NOTE =
-    "Community-sourced. Racer knowledge relayed from the bingo Discord — not derived from the " +
-    "decompilation or the goal list like the rest of this page, and cross-checked only against " +
-    "bingo's own synergy data.";
+  var COMMUNITY_NOTE = "Sourced from the bingo Discord.";
 
   /* Which C-Right item writes which dungeon's byte.
      dungeonItems[] is indexed by scene id from 0x34 and RBA's offset IS the C-Right item id, so the
      pairing is forced rather than chosen. It runs out after Spirit: the next byte would need the
      Kokiri Sword on C-Right, which cannot be equipped there. Unreachable rows are kept and marked
-     in words — knowing Shadow is impossible matters as much as knowing Water is 0x39. */
+     in words, knowing Shadow is impossible matters as much as knowing Water is 0x39. */
   /* Which C-Right item writes which inventory slot.
-     Emptying the bottle puts an Empty Bottle into the slot, and that is what fills it — so for a
+     Emptying the bottle puts an Empty Bottle into the slot, and that is what fills it, so for a
      slot-filling goal this is the list of items worth putting on C-Right. Two of them do not fill
      a spare slot at all: Green and Blue Potion land on the adult and child trade items. */
   /* The strength field, for the six goals that live in it.
      A coloured gauntlet is not a value RBA writes. The Pocket Cucco write sets one bit worth 4, and
-     which colour you end up with is decided by the strength upgrade you ALREADY owned — so the
+     which colour you end up with is decided by the strength upgrade you ALREADY owned, so the
      answer to "how do I get Blue Gauntlets" is "own Silver first, then write". That rule sat in the
      recipe and never reached the page, and the two halves live on different bytes at different
      trade stops, which is also why Cojiro undoes it. */
@@ -832,10 +865,10 @@ footer.end {
       tr.appendChild(el("td", "num", String(v.strength)));
       var td = el("td");
       td.appendChild(document.createTextNode(v.colour));
-      // Black Gauntlets is a real state with no goal behind it — say so rather than implying a target
-      if (!v.isGoal) td.appendChild(el("span", "modnote", " — not a v10.6 goal"));
+      // Black Gauntlets is a real state with no goal behind it, say so rather than implying a target
+      if (!v.isGoal) td.appendChild(el("span", "modnote", ", not a v10.6 goal"));
       tr.appendChild(td);
-      tr.appendChild(el("td", null, v.prior || "nothing — no strength upgrade at all"));
+      tr.appendChild(el("td", null, v.prior || "nothing, no strength upgrade at all"));
       tr.appendChild(el("td", null, v.icon));
       tb.appendChild(tr);
     });
@@ -852,7 +885,7 @@ footer.end {
       trap.appendChild(document.createTextNode(
         "The Pocket Cucco byte (" + hi.off + ", trade stop 2) holds the bit worth 4. The low strength bits live on the " +
         "Cojiro byte (" + lo.off + ", trade stop 3), and every value RBA can write there is under 64, so those bits are " +
-        "always cleared. Writing Cojiro after setting a colour drops the strength to 4 — Black Gauntlets, which is not a " +
+        "always cleared. Writing Cojiro after setting a colour drops the strength to 4, Black Gauntlets, which is not a " +
         "v10.6 goal. The trade sequence only moves forward, so the Cucco byte cannot be redone."));
       box.appendChild(trap);
     }
@@ -864,7 +897,7 @@ footer.end {
     box.appendChild(el("h3", null, "Which item fills which slot"));
     var safe = rows.filter(function (r) { return !r.warn; }).length;
     box.appendChild(el("p", "strongline",
-      safe + " of the " + rows.length + " reachable C-Right items write a spare slot. Emptying the bottle is what fills it."));
+      safe + " of the " + rows.length + " items listed here write a spare slot. Emptying the bottle is what fills it."));
 
     var wrap = el("div", "linewrap");
     var t = el("table", "lines");
@@ -883,7 +916,7 @@ footer.end {
         var sp = el("span", "risk bad");
         var gl = el("span", null, "✖"); gl.setAttribute("aria-hidden", "true");
         sp.appendChild(gl);
-        sp.appendChild(document.createTextNode(r.slot + " — overwrites a trade item"));
+        sp.appendChild(document.createTextNode(r.slot + ", overwrites a trade item"));
         td.appendChild(sp);
       } else {
         td.appendChild(document.createTextNode(r.slot));
@@ -900,14 +933,11 @@ footer.end {
   function dungeonMapCard(rows) {
     var box = el("div", "card span");
     box.appendChild(el("h3", null, "Which item writes which dungeon"));
-    var reach = rows.filter(function (r) { return r.item; }).length;
-    box.appendChild(el("p", "strongline",
-      reach + " of the " + rows.length + " dungeon bytes can be written — the adult trade sequence covers the first four, the magic arrows the next three."));
-
     var wrap = el("div", "linewrap");
     var t = el("table", "lines");
     var thead = el("thead"), hr = el("tr");
-    ["Dungeon", "C-Right item", "Offset"].forEach(function (h) {
+    // the byte offset is for the RBA Explorer, not for someone routing a square
+    ["Dungeon", "C-Right item"].forEach(function (h) {
       var th = el("th", null, h); th.scope = "col"; hr.appendChild(th);
     });
     thead.appendChild(hr); t.appendChild(thead);
@@ -919,15 +949,18 @@ footer.end {
       if (r.item) {
         td.appendChild(document.createTextNode(r.item));
       } else {
-        // glyph + word, never colour alone
+        /* Glyph only, but the meaning still has to reach a screen reader: the cross was
+           aria-hidden and the words were what got announced, so deleting them outright would have
+           left an empty cell. The text moves into .vh (clipped, still read aloud) and doubles as
+           the hover title. */
         var sp = el("span", "risk bad");
+        sp.setAttribute("title", "no item can sit on C-Right");
         var gl = el("span", null, "✖"); gl.setAttribute("aria-hidden", "true");
         sp.appendChild(gl);
-        sp.appendChild(document.createTextNode("no item can sit on C-Right"));
+        sp.appendChild(el("span", "vh", "no item can sit on C-Right"));
         td.appendChild(sp);
       }
       tr.appendChild(td);
-      tr.appendChild(el("td", "num", r.off));
       tb.appendChild(tr);
     });
     t.appendChild(tb);
@@ -940,7 +973,7 @@ footer.end {
 
   /* Videos load only when asked. The button holds its own figure once created and toggles it after,
      so a goal with ten clips costs nothing until a reader opens one. Nothing here trusts the source
-     text as markup — every string goes through textContent, and hrefs are rendered as-is only after
+     text as markup, every string goes through textContent, and hrefs are rendered as-is only after
      the parser has already resolved them to a YouTube id or a plain URL. */
   function toggleVideo(btn, run) {
     if (btn._fig) {
@@ -966,7 +999,7 @@ footer.end {
     a.rel = "noopener noreferrer";
     cap.appendChild(a);
     // a strict CSP (an embedded artifact) blocks the frame; the link is the way out
-    cap.appendChild(el("span", null, " — if the player stays blank, the link opens it."));
+    cap.appendChild(el("span", null, ", if the player stays blank, the link opens it."));
     fig.appendChild(cap);
 
     var host = btn.closest("li,p,div");
@@ -979,13 +1012,13 @@ footer.end {
   }
 
   /* Many links in the source lost their label in translation and fall back to the word "video".
-     Visually that is fine — the sentence around them says what they are — but a screen reader
+     Visually that is fine, the sentence around them says what they are, but a screen reader
      navigating by link would hear "video" seven times in one card. Borrow the phrase that precedes
      the link, which is exactly what the sentence uses to introduce it. */
   function videoName(prevText, ctx) {
     var lead = String(prevText || "").replace(/\s*[:–—-]\s*$/, "").trim();
     lead = lead.split(/[.;]/).pop().replace(/^[\s(]+/, "").trim();
-    // the translation dropped some opening brackets, leaving "no HoverSlide)" — close the gap
+    // the translation dropped some opening brackets, leaving "no HoverSlide)", close the gap
     if ((lead.match(/\)/g) || []).length > (lead.match(/\(/g) || []).length) {
       lead = lead.replace(/\)\s*$/, "").trim();
     }
@@ -995,7 +1028,7 @@ footer.end {
   /* YouTube's /embed/ endpoint refuses a null origin, which is exactly what a page opened straight
      off disk has. Rather than offer a play button that expands into a dead grey box, fall back to a
      plain link when the page is not being served over http(s). Open goals-page.html through any
-     local server — or deployed — and the inline players come back. */
+     local server, or deployed, and the inline players come back. */
   var CAN_EMBED = location.protocol === "http:" || location.protocol === "https:";
 
   function ytHref(yt) {
@@ -1011,7 +1044,7 @@ footer.end {
         la.target = "_blank";
         la.rel = "noopener noreferrer";
         la.setAttribute("aria-label",
-          (/^video$/i.test(r.text) ? videoName(prevText, ctx) : r.text) + " — watch on YouTube");
+          (/^video$/i.test(r.text) ? videoName(prevText, ctx) : r.text) + ", watch on YouTube");
         host.appendChild(la);
         return;
       }
@@ -1024,7 +1057,7 @@ footer.end {
         b.appendChild(g);
         b.appendChild(document.createTextNode(r.text));
         var spoken = /^video$/i.test(r.text) ? videoName(prevText, ctx) : r.text;
-        b.setAttribute("aria-label", spoken + " — play video");
+        b.setAttribute("aria-label", spoken + ", play video");
         r._spoken = spoken; // reused for the iframe title
         b.addEventListener("click", function () { toggleVideo(b, r); });
         host.appendChild(b);
@@ -1039,6 +1072,43 @@ footer.end {
         host.appendChild(document.createTextNode(r.text));
       }
     });
+  }
+
+  /* ---------- sourced RBA traps ----------
+     The section that used to live here was a hand-written list of conclusions with nothing behind
+     it, which is why it was removed. This is the same class of content under a gate: the prose is
+     routing advice credited to the video it came from, traps_notes.js re-derives every claim it
+     makes from rba-offsets.json at build time, and attachment to this goal was computed from the
+     note's subjects and archetype rather than assigned by hand.
+
+     Only the routing prose appears. What each write gives and takes is already on the page from the
+     recipe effects; restating it here is how the old section ended up saying things twice. */
+  function trapsCard(list) {
+    var box = el("div", "card span");
+    box.appendChild(el("h3", null, "Possible RBA traps"));
+
+    list.forEach(function (t) {
+      var blk = el("div", "trapnote");
+      var h = el("p", "trapwho");
+      h.appendChild(document.createTextNode(t.item));
+      h.appendChild(el("span", "off", t.off));
+      blk.appendChild(h);
+
+      var ul = el("ul");
+      t.lines.forEach(function (line) { ul.appendChild(el("li", null, line)); });
+      blk.appendChild(ul);
+
+      var src = el("p", "trapsrc");
+      src.appendChild(document.createTextNode("from "));
+      var a = el("a", null, "triforce3250 - OoT Bingo Tutorial - RBA Traps");
+      a.href = "https://youtu.be/" + t.src;
+      a.rel = "noopener";
+      src.appendChild(a);
+      blk.appendChild(src);
+
+      box.appendChild(blk);
+    });
+    return box;
   }
 
   function tipsCard(refs, goalName) {
@@ -1094,7 +1164,6 @@ footer.end {
     box.appendChild(el("h3", null, loc.title));
 
     if (loc.costs) {
-      box.appendChild(el("p", "strongline", loc.lead));
       var wrap = el("div", "linewrap");
       var t = el("table", "lines");
       var head = el("thead"), hr = el("tr");
@@ -1124,12 +1193,23 @@ footer.end {
       var slack = loc.total - loc.need;
       box.appendChild(el("p", "strongline",
         loc.need + " of " + loc.total +
-        (slack > 0 ? " — " + slack + " can be skipped." : " — the whole set, with nothing to spare.")));
-      box.appendChild(el("p", null, loc.lead));
-      var dl = el("dl", "kv");
+        (slack > 0 ? ", " + slack + " can be skipped." : ", the whole set, with nothing to spare.")));
+      /* Not .kv: that grid is built for short keys ("Present", "Absent") in a 7rem column, and a
+         dungeon name does not fit, so every row wrapped to two or three lines. The count also
+         belongs behind the place name rather than beside it -- you scan for the room, then check
+         how many. */
+      var dl = el("dl", "locgrid");
       loc.groups.forEach(function (grp) {
         dl.appendChild(el("dt", null, grp.area));
-        dl.appendChild(el("dd", null, grp.items.join(" · ")));
+        var dd = el("dd");
+        grp.items.forEach(function (it) {
+          var m = /^(.*?)\s*\u00d7\s*(\d+)$/.exec(it);
+          var sp = el("span", "place");
+          sp.appendChild(document.createTextNode(m ? m[1] : it));
+          if (m) sp.appendChild(el("span", "n", "\u00d7" + m[2]));
+          dd.appendChild(sp);
+        });
+        dl.appendChild(dd);
       });
       box.appendChild(dl);
     }
@@ -1149,7 +1229,7 @@ footer.end {
     if (touchesRba) out.push(["routed", "▲", "RBA interaction"]);
     if (g.rba && g.rba.e) out.push(["helped", "◆", "RBA shortcut"]);
     if (dk.overwrite && dk.overwrite.length) out.push(["touches", "◈", "RBA overwrites this"]);
-    if (g.only) out.push(["only", "●", "RBA only — not in normal play"]);
+    if (g.only) out.push(["only", "●", "RBA only, not in normal play"]);
     return out;
   }
 
@@ -1162,23 +1242,17 @@ footer.end {
     var wrap = el("div", "recipe" + (relation === "d" ? " is-break" : ""));
     /* A goal about one dungeon was already narrowed to that dungeon's item by `ctx`. A goal that
        spans several was not, and listing seven items as a slash-run tells the reader nothing about
-       which one reaches which dungeon — so pair them up explicitly instead. */
-    var spread = !cr.n && r.pairs;
+       which one reaches which dungeon, so pair them up explicitly instead. */
+    var spread = !cr.n && r.pairs;   // dungeon-items: one byte per dungeon, listed in its own card
     if (spread) {
-      wrap.appendChild(el("p", "rname", "One item per dungeon on C-Right — " + off));
-      var dl = el("dl", "kv");
-      r.pairs.forEach(function (p) {
-        dl.appendChild(el("dt", null, p.dungeon));
-        dl.appendChild(el("dd", null, p.item + " · " + p.off));
-      });
-      wrap.appendChild(el("p", "rmeta", tgt + " · " + r.age + (stage ? " · " + stage : "")));
-      wrap.appendChild(dl);
-      // the table below is per byte, not per board — easy to read as global otherwise
+      wrap.appendChild(el("p", "rname", "One item per dungeon on C-Right"));
+      wrap.appendChild(el("p", "rmeta", r.age));
+      // the table below is per byte, not per board, easy to read as global otherwise
       wrap.appendChild(el("p", "modnote",
         "Each write lands on one dungeon's byte. The results below are what a single write does to " +
-        "whichever dungeon you picked — reaching several means repeating it with that dungeon's item."));
+        "whichever dungeon you picked. Reaching several means repeating it with that dungeon's item."));
     } else {
-      wrap.appendChild(el("p", "rname", name + " on C-Right — " + off));
+      wrap.appendChild(el("p", "rname", name + " on C-Right, " + off));
       wrap.appendChild(el("p", "rmeta", tgt + " · " + r.age + (stage ? " · " + stage : "")));
     }
     // the plainest sentence about what this write does; it was shipped but never shown
@@ -1190,7 +1264,7 @@ footer.end {
 
     /* The value written is whatever ends up in the bottle on B. Naming the
        action matters more than the number: catching writes what you caught,
-       but emptying always writes 20 — the write you did not ask for. */
+       but emptying always writes 20, the write you did not ask for. */
     var tbl = el("table", "modtable");
     var cap = el("caption", null, "What you do with the bottle on B, and what it writes");
     tbl.appendChild(cap);
@@ -1215,6 +1289,14 @@ footer.end {
       if (hm) {
         act.appendChild(el("span", "cond", unavailable ? "not available here" : "needs a setup"));
         act.appendChild(el("span", "hmhow", hm.how));
+        /* Only present where 26 cannot occur naturally, so the ordering is forced and worth
+           spelling out. Everywhere else the condition is the whole answer and routing is the
+           player's call, validate_claims.js enforces that split. */
+        if (hm.route && hm.route.length) {
+          var steps = el("ol", "hmroute");
+          hm.route.forEach(function (line) { steps.appendChild(el("li", null, line)); });
+          act.appendChild(steps);
+        }
       } else if (m && m.conditional) {
         act.appendChild(el("span", "cond", "conditional"));
       }
@@ -1225,7 +1307,7 @@ footer.end {
       tr.appendChild(val);
       /* A write assigns the whole byte, so there are exactly two outcomes: what it turns on and
          what it turns off. Bits RBA cannot write back used to get a third row of their own, but
-         they are losses like any other — whether you can re-obtain them is a routing question, not
+         they are losses like any other, whether you can re-obtain them is a routing question, not
          part of the transaction. They are folded into "you lose" in build_web_data.js. */
       var res = el("td", "res");
       var fx = r.fx && r.fx[v];
@@ -1251,17 +1333,6 @@ footer.end {
     tbl.appendChild(tb);
     wrap.appendChild(tbl);
 
-    /* The traps. 44 of them across 13 recipes, and until now they existed only in the generated
-       writeups — even though "the RBA traps" is the first thing this project claims to be about.
-       They belong next to the write that causes them, not in a separate document. */
-    if (r.traps && r.traps.length) {
-      var tw = el("div", "trap");
-      tw.appendChild(el("span", "tag", r.traps.length === 1 ? "Trap" : r.traps.length + " traps"));
-      var tl = el("ul");
-      r.traps.forEach(function (t) { tl.appendChild(el("li", null, t)); });
-      tw.appendChild(tl);
-      wrap.appendChild(tw);
-    }
     if (r.also && r.also.length) {
       var aw = el("div", "rowalert ok");
       var at = el("div", "atitle");
@@ -1281,7 +1352,7 @@ footer.end {
   function buildDetail(g) {
     var d = el("div", "detail");
 
-    /* spawn window — the target only exists during a window of game state. Worth its own card
+    /* spawn window, the target only exists during a window of game state. Worth its own card
        because the failure mode is the reverse of a missing prerequisite: further quest progress is
        what closes the window. */
     if (g.sw) {
@@ -1295,26 +1366,21 @@ footer.end {
       wt.appendChild(el("span", "tag", "Routing"));
       wt.appendChild(document.createTextNode(g.sw.route));
       win.appendChild(wt);
-      if (g.sw.trap) {
-        var rt = el("div", "trap");
-        rt.appendChild(el("span", "tag", "RBA trap"));
-        rt.appendChild(document.createTextNode(g.sw.trap));
-        win.appendChild(rt);
-      }
       if (g.sw.why) win.appendChild(el("p", null, g.sw.why));
       if (g.sw.drop) win.appendChild(el("p", null, "On death: " + g.sw.drop));
       d.appendChild(win);
     }
 
     /* Community location / cost data.
-       Deliberately built from the SAME vocabulary as every other card — .card.span, an h3, a
-       strongline, a .kv grid — with one addition: a .modnote naming the source. Everything else on
+       Deliberately built from the SAME vocabulary as every other card, .card.span, an h3, a
+       strongline, a .kv grid, with one addition: a .modnote naming the source. Everything else on
        a goal card is a proved byte offset or a value read out of the goal list, and racer knowledge
        must not inherit that authority just by sitting in the same layout. */
     if (g.loc) d.appendChild(locationCard(g.loc));
     var gaunt = gauntletCard(g);
     if (gaunt) d.appendChild(gaunt);
     if (g.tips && g.tips.length) d.appendChild(tipsCard(g.tips, g.n));
+    if (g.traps && g.traps.length) d.appendChild(trapsCard(g.traps));
     if (g.smap) d.appendChild(slotMapCard(g.smap));
     if (g.dmap) d.appendChild(dungeonMapCard(g.dmap));
 
@@ -1332,7 +1398,7 @@ footer.end {
           sub: "The byte holds a value rather than a set of independent switches, so whether a write helps or hurts depends on what you already have. Read the table before assuming it costs you anything." },
       ];
       /* One block per RECIPE, not one per relation.
-         Eight goals — the seven "Map & Compass in X" and Golden Scale — are both routed and
+         Eight goals, the seven "Map & Compass in X" and Golden Scale, are both routed and
          destroyed by the same recipe, because one bottle value helps and another wipes it. Grouping
          by relation rendered that recipe twice in full: same header, same six-row table, same three
          traps, one after the other. Worse, it buried the actual point, which is that a single write
@@ -1353,7 +1419,7 @@ footer.end {
         // a recipe that both helps and hurts is a warning in itself, not two separate findings
         var both = info.heads.length > 1;
         box.appendChild(el("p", "strongline",
-          both ? info.heads.join(", and ") + " — the same write, depending on which value you use:"
+          both ? info.heads.join(", and ") + ", the same write, depending on which value you use:"
                : info.heads[0] + ":"));
         info.subs.forEach(function (s) { box.appendChild(el("p", null, s)); });
         // mark it as a break only when destroying is all it does here
@@ -1361,7 +1427,7 @@ footer.end {
         box.appendChild(recipeBlock(k, rel, g.rba.note && g.rba.note[k], g.rba.ctx));
       });
       /* The per-recipe "cannot be written back" callout used to sit here. It said the same thing
-         the effects table now folds into "you lose" — a cleared bit is a loss whether or not RBA
+         the effects table now folds into "you lose", a cleared bit is a loss whether or not RBA
          can put it back, and whether YOU can get it back is a routing question. Removed with the
          table's third column so the two cannot disagree. */
       d.appendChild(box);
@@ -1403,7 +1469,7 @@ footer.end {
        space. The stats are already on the summary row, so this just marks the panel as empty. */
     if (!d.querySelector(".card")) {
       var bare = el("div", "card span");
-      bare.appendChild(el("p", null, "n/a"));
+      bare.appendChild(el("p", null, "RBA does not touch this square, and there are no notes for it yet."));
       d.appendChild(bare);
     }
 
@@ -1418,7 +1484,7 @@ footer.end {
   var open = {};
 
   function render() {
-    // NB: wrap, don't pass `matches` directly — Array.filter hands the callback
+    // NB: wrap, don't pass `matches` directly, Array.filter hands the callback
     // (value, index, array), and the index would land in `ignoreMode`.
     var rows = sortRows(GOALS.filter(function (g) { return matches(g); }));
 
@@ -1489,7 +1555,7 @@ footer.end {
     otherEl.innerHTML = "";
     if (hiddenByMode > 0) {
       otherEl.appendChild(document.createTextNode(
-        hiddenByMode + " more " + (hiddenByMode === 1 ? "match" : "matches") + " only on " + other + " boards — "));
+        hiddenByMode + " more " + (hiddenByMode === 1 ? "match" : "matches") + " only on " + other + " boards, "));
       var swap = el("button", "clear", "switch to " + other);
       swap.type = "button";
       swap.addEventListener("click", function () {
@@ -1545,7 +1611,7 @@ footer.end {
     var parts = [];
     for (var i = 1; i <= maxD; i++) if (histShown[i]) parts.push("difficulty " + i + ": " + histShown[i]);
     chartDesc.textContent = parts.length
-      ? "Goals shown by difficulty — " + parts.join(", ") + "."
+      ? "Goals shown by difficulty, " + parts.join(", ") + "."
       : "No goals shown.";
   }
 
@@ -1572,7 +1638,7 @@ footer.end {
   function loadRow(row, updateUrl) {
     state.row = row;
     // A board is generated in one mode. If the row clearly belongs to the other
-    // one, follow it — otherwise its squares just vanish from the index.
+    // one, follow it, otherwise its squares just vanish from the index.
     var inNormal = 0, inShort = 0;
     row.set.forEach(function (n) {
       var g = byName[n];
@@ -1609,8 +1675,8 @@ footer.end {
      and OBS wants a URL far more often than it wants a second browser window.
 
      The squares are passed by NAME rather than as seed+line on purpose. The two pages disagree
-     about the order of BL-TR — this page uses the generator's own INDICES_PER_ROW ([4,8,12,16,20],
-     top-right first) while ootbingo's popout emits it bottom-left first — so naming the squares is
+     about the order of BL-TR, this page uses the generator's own INDICES_PER_ROW ([4,8,12,16,20],
+     top-right first) while ootbingo's popout emits it bottom-left first, so naming the squares is
      the only way to guarantee the strip shows exactly what is on screen here, in the same order,
      without touching a port that verify_board_synergy.js checks against the real library. */
   var POPOUT_W = 480, POPOUT_H = 1080;   // 4:9, the column left beside a 4:3 capture on a 16:9 canvas
@@ -1619,8 +1685,8 @@ footer.end {
     var p = new URLSearchParams();
     p.set("title", title);
     names.forEach(function (n) { p.append("goal", n); });
-    /* Send the seed along when there is one. The popout does NOT regenerate from it — the named
-       squares above win — but it prints it in the header, which is how a strip on a stream stays
+    /* Send the seed along when there is one. The popout does NOT regenerate from it, the named
+       squares above win, but it prints it in the header, which is how a strip on a stream stays
        traceable to a board. A pasted row carries no seed, so the header just omits it. */
     if (board && board.spec) {
       p.set("seed", board.spec.seed);
@@ -1644,7 +1710,7 @@ footer.end {
       var w = Math.round(h * POPOUT_W / POPOUT_H);
       var win = window.open(url, "sohtools-popout",
         "width=" + w + ",height=" + h + ",menubar=no,toolbar=no,location=no,status=no,scrollbars=no");
-      if (!win) { say(bar, "Your browser blocked the popup — use Copy link instead."); return; }
+      if (!win) { say(bar, "Your browser blocked the popup, use Copy link instead."); return; }
       /* Browsers disagree about whether width/height mean the outer window or the viewport, and the
          difference is the whole title bar. Correct it once the window can be measured. */
       setTimeout(function () {
@@ -1663,7 +1729,7 @@ footer.end {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(
           function () { say(bar, "Copied."); },
-          function () { say(bar, "Could not copy — the link is in the address bar of the popout."); }
+          function () { say(bar, "Could not copy, the link is in the address bar of the popout."); }
         );
       } else {
         say(bar, "Clipboard unavailable in this browser.");
@@ -1770,35 +1836,6 @@ footer.end {
         if (row.set.indexOf(victim) !== -1 && victim !== g.n) clashes.push([g.n, victim, (g.bv || {})[victim] || "u"]);
       });
     });
-    var alert = el("div", "rowalert" + (clashes.length ? "" : " ok"));
-    var at = el("div", "atitle");
-    var ag = el("span", null, clashes.length ? "✖" : "✓");
-    ag.setAttribute("aria-hidden", "true");
-    at.appendChild(ag);
-    var rowC = clashes.filter(function (c) { return c[2] === "c"; }).length;
-    at.appendChild(document.createTextNode(clashes.length
-      ? clashes.length + (clashes.length === 1 ? " clash" : " clashes") + " inside this row"
-        + (rowC ? ", " + rowC + " corroborated by bingo" : "")
-      : "no RBA clashes inside this row"));
-    alert.appendChild(at);
-    if (clashes.length) {
-      var ul = el("ul");
-      clashes.forEach(function (c) {
-        var li2 = el("li");
-        li2.appendChild(document.createTextNode("Routing "));
-        li2.appendChild(el("b", null, c[0]));
-        li2.appendChild(document.createTextNode(" with RBA can invalidate "));
-        li2.appendChild(el("b", null, c[1]));
-        li2.appendChild(document.createTextNode("."));
-        /* Say what bingo thinks of the pair. Without this every clash reads equally severe,
-           and most of them are pairs the goal list actively likes. */
-        if (c[2] === "c") li2.appendChild(el("span", "vtail vc", " bingo rates this pair badly too."));
-        if (c[2] === "p") li2.appendChild(el("span", "vtail vp", " bingo rates this pair well — your call."));
-        ul.appendChild(li2);
-      });
-      alert.appendChild(ul);
-    }
-    rowLoaded.appendChild(alert);
 
     /* setup shared by three or more squares is worth doing once */
     var tally = {};
@@ -1823,13 +1860,13 @@ footer.end {
       rowLoaded.appendChild(warn);
     }
 
-    rowStatus.textContent = "Loaded row " + row.title + " — " + known.length + " of " +
+    rowStatus.textContent = "Loaded row " + row.title + ", " + known.length + " of " +
       row.set.length + " squares matched" + (clashes.length ? ", " + clashes.length + " RBA clashes found" : "");
   }
 
   /* ================= whole board =================
      A bingo board is a pure function of (version, seed, mode), so pasting a board link is enough
-     to rebuild all 25 squares — and, more usefully, to rank the 12 winnable lines.
+     to rebuild all 25 squares, and, more usefully, to rank the 12 winnable lines.
 
      The synergy number shown here is the generator's OWN figure, not an approximation. That is
      possible only because we have the seed: part of the generator's synergy is
@@ -1946,7 +1983,7 @@ footer.end {
         sortEl.insertBefore(new Option("Board order", "board"), sortEl.firstChild);
       }
       sortEl.value = "board"; state.sort = "board";
-      rowStatus.textContent = "Filtered to " + line.label + " — 5 squares, synergy " +
+      rowStatus.textContent = "Filtered to " + line.label + ", 5 squares, synergy " +
         fmtSyn(line.ex.total) + (line.clashes.length ? ", " + line.clashes.length + " RBA clashes" : "");
     } else {
       clearRowSelection();
@@ -1960,7 +1997,7 @@ footer.end {
 
   /* Glyph + word + colour, so the verdict survives greyscale and colour-blindness.
      Banded against the PROFILE's allowed range rather than against zero. The generator only ever
-     emits lines inside [minimumSynergy, maximumSynergy] — for normal that is [-3, 7] — so almost
+     emits lines inside [minimumSynergy, maximumSynergy], for normal that is [-3, 7], so almost
      every line of a real board is positive, and a plain "positive / negative" verdict would read
      "helps" twelve times and rank nothing. Thirds of the achievable band actually separate them. */
   function verdictOf(v, mode) {
@@ -2171,11 +2208,6 @@ footer.end {
     bits.appendChild(el("span", null, "time vs board budget " + fmtSyn(line.ex.timeDifference)));
     bits.appendChild(el("span", null, "= " + fmtSyn(line.ex.total)));
     box.appendChild(bits);
-    box.appendChild(el("p", null,
-      "Synergy is the generator's own score for this line, in minutes. " +
-      "“Goal overlap” is how much these five goals share; “row bonuses” are whole-row " +
-      "categories that only pay out when all five squares carry them; “time vs board budget” is how " +
-      "far the squares sit from the length the seed asked for at those positions."));
 
     if (line.ex.contributions && line.ex.contributions.length) {
       var top = line.ex.contributions.slice(0, 6);
@@ -2188,35 +2220,6 @@ footer.end {
       box.appendChild(p);
     }
 
-    var alert = el("div", "rowalert" + (line.clashes.length ? "" : " ok"));
-    var at = el("div", "atitle");
-    var ag = el("span", null, line.clashes.length ? "✖" : "✓");
-    ag.setAttribute("aria-hidden", "true");
-    at.appendChild(ag);
-    var lineC = line.clashes.filter(function (c) { return c[2] === "c"; }).length;
-    at.appendChild(document.createTextNode(line.clashes.length
-      ? line.clashes.length + (line.clashes.length === 1 ? " clash" : " clashes") + " inside this line"
-        + (lineC ? ", " + lineC + " corroborated by bingo" : "")
-      : "no RBA clashes inside this line"));
-    alert.appendChild(at);
-    if (line.clashes.length) {
-      var ul = el("ul");
-      line.clashes.forEach(function (c) {
-        var li = el("li");
-        li.appendChild(document.createTextNode("Routing "));
-        li.appendChild(el("b", null, c[0]));
-        li.appendChild(document.createTextNode(" with RBA can invalidate "));
-        li.appendChild(el("b", null, c[1]));
-        li.appendChild(document.createTextNode("."));
-        /* Say what bingo thinks of the pair. Without this every clash reads equally severe,
-           and most of them are pairs the goal list actively likes. */
-        if (c[2] === "c") li.appendChild(el("span", "vtail vc", " bingo rates this pair badly too."));
-        if (c[2] === "p") li.appendChild(el("span", "vtail vp", " bingo rates this pair well — your call."));
-        ul.appendChild(li);
-      });
-      alert.appendChild(ul);
-    }
-    box.appendChild(alert);
 
     var tally = {};
     line.names.forEach(function (n) {
@@ -2239,7 +2242,8 @@ footer.end {
       var w = el("p", "rowshared");
       w.style.color = "var(--loss)";
       w.textContent = line.unknown.length + " goal" + (line.unknown.length === 1 ? "" : "s") +
-        " in this line are not in the v" + DATA.v + " RBA dataset, so they carry no markers: " +
+        " in this line " + (line.unknown.length === 1 ? "is" : "are") + " not in the " + DATA.v +
+        " goal list, so " + (line.unknown.length === 1 ? "it carries" : "they carry") + " no markers: " +
         line.unknown.join(", ");
       box.appendChild(w);
     }

@@ -89,7 +89,15 @@
         }
 
         .site-nav a[aria-current="page"] {
-            color: var(--secondary-color);
+/* The one rule in this file with no literal fallback. The generated pages define --accent but
+   not --secondary-color, so this resolved to nothing and the current page looked like every
+   other link on both showcase pages. */
+            /* Not colour alone: this file's own header sits on a fixed #1e1e1e bar, and the page
+               accent lands at 4.45:1 there -- just under AA. A lighter literal clears it at 5.98,
+               and the underline means the marker survives for anyone who cannot see the hue. */
+            color: var(--secondary-color, #a48bf0);
+            text-decoration: underline;
+            text-underline-offset: 0.25em;
         }
 
 @media (max-width: 640px) {

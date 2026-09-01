@@ -67,8 +67,8 @@ fs.writeFileSync(path.join(OUT, 'rba-design.html'), wrapStandalone(page, 'Revers
 const SITE = path.join(__dirname, '..', 'rba');
 fs.mkdirSync(SITE, { recursive: true });
 fs.writeFileSync(path.join(SITE, 'index.html'), wrapSitePage(page, {
-  title: 'Reverse Bottle Adventure — soh.tools',
-  description: 'What Reverse Bottle Adventure actually does: the six values it can write, the byte each C-Right item points at, and what every write costs you.',
+  title: 'Reverse Bottle Adventure - soh.tools',
+  description: 'What Reverse Bottle Adventure writes, for every item that fits on C-Right.',
   url: 'https://soh.tools/rba/',
 }));
 

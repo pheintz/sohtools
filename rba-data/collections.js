@@ -4,7 +4,7 @@
  * GOLD SKULLTULAS: the complete 100-token list, transcribed from
  * zeldaspeedruns.com/oot/generalknowledge/gold-skulltulas-locations-and-methods (updated 2026-07-26).
  * The per-area totals below sum to exactly 100 and every bingo skulltula goal's stated count is
- * reproduced by the area groupings in SKULL_AREA_GROUPS — see `verifyCounts()` at the bottom, which
+ * reproduced by the area groupings in SKULL_AREA_GROUPS, see `verifyCounts()` at the bottom, which
  * the build runs as an assertion.
  *
  * age: 'child' | 'adult' | 'both'
@@ -194,7 +194,7 @@ const HEART_PIECES = {
   'Ice Cavern HP': { area: 'Ice Cavern', count: 1 },
   'Lon Lon Ranch HP': { area: 'Lon Lon Ranch', count: 1, note: 'Bingo splits Lon Lon into llrday / llrnight / llrboth synergies; this piece is reachable in either.' },
   'Lost Dog HP': { area: 'Kakariko Village', count: 1, note: 'Return Richard the dog at night.' },
-  '37th Heart Piece (Child Fortress)': { area: "Gerudo's Fortress", count: 1, note: 'The child-era Gerudo Fortress piece — the one that pushes a 100% file past 36.' },
+  '37th Heart Piece (Child Fortress)': { area: "Gerudo's Fortress", count: 1, note: 'The child-era Gerudo Fortress piece, the one that pushes a 100% file past 36.' },
 };
 
 /*
@@ -210,7 +210,7 @@ const HEART_PIECES = {
  *   - silver rupees were listed as existing in Dodongo's Cavern. They do not.
  *   - the gold rupee set had "DMC Song of Time block" as one of the six. It is Fire Temple after
  *     the elevator, and the one that could not be confirmed is Dead Hand's room in the Bottom of
- *     the Well — which the recorded `ganonchu` reasoning had in fact pointed at.
+ *     the Well, which the recorded `ganonchu` reasoning had in fact pointed at.
  */
 const UNSOURCED = {
   smallKeys: {

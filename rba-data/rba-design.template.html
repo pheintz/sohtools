@@ -1,4 +1,4 @@
-<title>Reverse Bottle Adventure — soh.tools</title>
+<title>Reverse Bottle Adventure - soh.tools</title>
 <style>
 :root {
   --ink: #14111c;
@@ -8,7 +8,7 @@
   --ember: #d9603f;
   --brass: #c2953a;
 
-  /* tokens — light ground by default */
+  /* tokens, light ground by default */
   --bg: var(--paper);
   --bg-slab: #e3e0ec;
   --bg-cell: #d8d4e4;
@@ -322,6 +322,11 @@ td.bit.dead {
 .verdict .vsentence { font-size: var(--step--1); color: var(--fg-muted); }
 /* Boss Key / Compass / Map are the same three names for all twenty dungeon bytes, so the chips
    alone never said WHICH dungeon this item writes. Naming it once scopes the whole verdict. */
+.verdict .vitem {
+  font-size: var(--step-1); font-weight: 600; color: var(--fg);
+  margin: 0 0 0.55rem; display: flex; align-items: baseline; gap: 0.5rem;
+}
+.verdict .voff { font-family: var(--mono); font-size: 0.72em; color: var(--fg-faint); font-weight: 400; }
 .verdict .vscope {
   font-family: var(--mono); font-size: 0.78em; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem;
@@ -349,7 +354,7 @@ td.bit.dead {
    away as the separate escape hatch it is, and the category row sits tight against the items it
    governs.
 
-   The hairline is COMMON REGION, which NN/g rates stronger than either — used once, at the lowest
+   The hairline is COMMON REGION, which NN/g rates stronger than either, used once, at the lowest
    strength that works, because the same article warns that reaching for borders is what produces
    busy, cluttered designs. Indentation does most of the work; the rule only anchors it. */
 .picker { display: flex; flex-direction: column; gap: 0; }
@@ -787,12 +792,24 @@ footer.end {
   function renderVerdict(t) {
     verdictEl.innerHTML = "";
 
+    /* The selected chip is hidden whenever you browse to another category, which leaves the panel
+       describing an item nothing on screen names. This heading is the answer to "what am I looking
+       at", so it stays put no matter which tab is open. */
+    var who = document.createElement("p");
+    who.className = "vitem";
+    who.appendChild(document.createTextNode(t.item));
+    var off = document.createElement("span");
+    off.className = "voff";
+    off.textContent = "0x" + t.off.toString(16).toUpperCase();
+    who.appendChild(off);
+    verdictEl.appendChild(who);
+
     /* The three bulk shapes have one sentence each; chips would just repeat the same six bottles
        sixty times over and say nothing about what you walk away with. */
     var m;
     var sentence = null;
     if ((m = /^Inventory\.items\[\d+\] = (SLOT_[A-Z0-9_]+)$/.exec(t.target)))
-      sentence = "Copies your bottle into the " + slotWord(m[1]) + " slot \u2014 whatever was there is gone.";
+      sentence = "Copies your bottle into the " + slotWord(m[1]) + " slot, whatever was there is gone.";
     else if ((m = /^Inventory\.ammo\[\d+\] = ammo for (SLOT_[A-Z0-9_]+)$/.exec(t.target)))
       sentence = "Sets " + slotWord(m[1]) + " ammo to between 20 and 31.";
     else if ((m = /^Inventory\.dungeonKeys\[\d+\] = (.+)$/.exec(t.target)))
@@ -831,7 +848,7 @@ footer.end {
     if (!gives.length && !costs.length) {
       var none = document.createElement("p");
       none.className = "vsentence";
-      none.textContent = "Nothing to gain or lose here \u2014 no system reads this byte.";
+      none.textContent = "Nothing to gain or lose here, no system reads this byte.";
       verdictEl.appendChild(none);
       return;
     }
@@ -857,7 +874,7 @@ footer.end {
     deadLabelEl.textContent = "every bit of the byte " + t.item + " points at";
 
     /* All eight bits, not just the ones that die. Listing only the doomed ones answered "what do I
-       lose" but left "is Zelda's Lullaby safe?" unanswerable — a bit that survives every write was
+       lose" but left "is Zelda's Lullaby safe?" unanswerable, a bit that survives every write was
        simply absent, which reads as missing data rather than as safety. */
     for (var b = 0; b < 8; b++) {
       var name = t.holds ? t.holds[b] : null;
@@ -900,9 +917,9 @@ footer.end {
     });
     if (inert) {
       deadNoteEl.textContent = ((t.writes[MODS[0].v] || {}).x || [])[0]
-        || "Nothing reads this byte \u2014 the write lands and no item changes.";
+        || "Nothing reads this byte, the write lands and no item changes.";
     } else if (t.numeric) {
-      deadNoteEl.textContent = whatItIs(t.target) + " holds a number, not switches \u2014 a write leaves it reading "
+      deadNoteEl.textContent = whatItIs(t.target) + " holds a number, not switches, a write leaves it reading "
         + VALUES.join(", ") + ".";
     } else {
       deadNoteEl.textContent = "";

@@ -95,8 +95,8 @@ fs.writeFileSync(path.join(OUT, 'goals-page.html'), standalone);
 const SITE = path.join(__dirname, '..', 'bingo');
 fs.mkdirSync(SITE, { recursive: true });
 fs.writeFileSync(path.join(SITE, 'index.html'), wrapSitePage(fragment, {
-  title: 'OoT Bingo goal index — soh.tools',
-  description: 'Every OoT Bingo v10.6 goal with its listed length, how Reverse Bottle Adventure touches it, and per-line synergy for a whole board or row.',
+  title: 'OoT Bingo goal index - soh.tools',
+  description: 'OoT Bingo v10.6 goal list and board.',
   url: 'https://soh.tools/bingo/',
 }));
 

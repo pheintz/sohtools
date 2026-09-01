@@ -156,7 +156,26 @@ for (const [key, list] of Object.entries(ungrantable)) {
   for (const x of list) txt += `      bit ${x.bit}: ${x.label}\n`;
 }
 txt += '\n' + '='.repeat(78) + '\n';
-const allProblems = [...problems, ...compositeProblems];
+/* ---------- circular satisfies ----------
+   The six writable values ARE the six bottle contents. A goal that is one of those contents is a
+   PRECONDITION of performing the write, never a result of it: to write blue fire you must already
+   have caught blue fire in the bottle on B, at which point the goal is done and no RBA happened.
+   The reachability audit above cannot see this -- the byte genuinely can hold that value. The flaw
+   is in the causality, not the data, which is why it survived until someone read the card. */
+const BOTTLE_CONTENT_GOALS = [
+  /^blue fire$/i, /^bottled fairy$/i, /^bottled fish$/i, /^bottled bug/i,
+  /^milk$/i, /^empty bottle$/i, /^half milk$/i,
+];
+const circular = [];
+for (const r of RECIPES) {
+  for (const goal of r.satisfies || []) {
+    if (!BOTTLE_CONTENT_GOALS.some((re) => re.test(goal))) continue;
+    circular.push(r.key + '.satisfies lists "' + goal + '", a bottle content — you must already ' +
+      'hold it to perform the write, so RBA cannot be how you get it');
+  }
+}
+
+const allProblems = [...problems, ...compositeProblems, ...circular];
 txt += allProblems.length ? `\nOVERCLAIMS (${allProblems.length}):\n  ` + allProblems.join('\n  ') + '\n'
   : '\nNo recipe claims to satisfy a goal that RBA cannot actually reach.\n';
 if (notes.length) txt += `\nCheck the wording on these (${notes.length}):\n  ` + notes.join('\n  ') + '\n';
@@ -215,6 +234,14 @@ for (const r of RECIPES) {
   const how = String(r.halfMilk.how || '');
   if (!/26/.test(how)) {
     halfMilkProblems.push(`${r.key}.halfMilk.how should state what 26 means on this byte`);
+  }
+  /* `route` is the escape hatch, and only where 26 cannot occur in normal play: the byte's other
+     bits are unused by the game, so the player must write them and the ordering really is forced.
+     Anywhere 26 is naturally reachable, prescribing steps is the overreach the rule above blocks. */
+  if (r.halfMilk.route && !/unused by the game/.test(how)) {
+    halfMilkProblems.push(
+      `${r.key}.halfMilk.route prescribes steps, but 26 is reachable in normal play on this byte — ` +
+      `state the condition and let the player route it`);
   }
   if (/catch a fairy|save and quit|buy the|learn /i.test(how)) {
     halfMilkProblems.push(

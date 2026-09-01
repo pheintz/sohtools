@@ -19,6 +19,7 @@ const steps = [
   'verify_board_synergy.js', //                   -> out/board-synergy-verification.txt (FAILS on drift)
   'tkc_tips.js',           // sources/tkc-*.md    -> out/tkc-tips.json (FAILS on an unmatched heading)
   'build_web_data.js',     //                     -> out/web-goals.json
+  'traps_notes.js',       // sources/rba-traps-*.md -> out/traps-notes.json (FAILS on a stale claim)
   'build_goals_page.js',   //                     -> out/goals-page.html
   'build_rba_page.js',     //                     -> out/rba-design.html
   'validate_rba_page.js', //                    -> out/rba-page-validation.txt (FAILS on page/generator drift)

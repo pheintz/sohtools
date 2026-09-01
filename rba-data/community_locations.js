@@ -65,7 +65,7 @@ const STALFOS = [
 ];
 
 /* ---------------- bean patches / soft soil ----------------
-   Ten patches. Nine carry a gold skulltula; Zora's River is the one that does not — which is
+   Ten patches. Nine carry a gold skulltula; Zora's River is the one that does not, which is
    exactly why the bingo goal is "All 9 Soft Soil Skulltulas" while "Plant 7 Magic Beans" tops out
    below ten. collections.js already held the nine; the tenth was missing until now. */
 const BEAN_PATCHES = [
@@ -82,8 +82,8 @@ const BEAN_PATCHES = [
 ];
 
 /* ---------------- scarecrow (Pierre) spots ----------------
-   Not tied to a goal directly — the rules only mention Scarecrow's Song to say it does not count
-   toward "X Songs" — but Pierre spots are hookshot anchors, so they matter for reaching several
+   Not tied to a goal directly, the rules only mention Scarecrow's Song to say it does not count
+   toward "X Songs", but Pierre spots are hookshot anchors, so they matter for reaching several
    heart pieces and skulltulas. */
 const SCARECROW_SPOTS = [
   { area: 'Death Mountain Crater', count: 2 },
@@ -107,7 +107,7 @@ const SCARECROW_SPOTS = [
  * trade sequence at a stop, which puts the run in the `tq` column. So choosing an RBA route
  * silently re-prices the heart pieces, and this is the table that says by how much.
  *
- * Qualifiers are kept rather than flattened: `approx` (~), `atLeast` (+), `each` (x — the line
+ * Qualifiers are kept rather than flattened: `approx` (~), `atLeast` (+), `each` (x, the line
  * prices more than one piece at that rate). `mapsTo` is filled in ONLY where the shorthand is
  * unambiguous against collections.js; the rest keep their raw label and are listed by the
  * validator as unmapped rather than guessed at.
