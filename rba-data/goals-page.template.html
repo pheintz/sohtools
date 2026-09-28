@@ -133,51 +133,6 @@ code {
 }
 .masthead .rule { height: 3px; background: var(--fg); grid-column: 1 / -1; margin-top: 0.3rem; }
 .masthead .ver { color: var(--fg-faint); }
-/* ---------- summary ---------- */
-.summary {
-  background: var(--bg-slab);
-  border: 1px solid var(--rule);
-  border-radius: 3px;
-  padding: 0.9rem 1.1rem;
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: 1fr;
-  margin-bottom: 1.25rem;
-}
-@media (min-width: 52rem) { .summary { grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); align-items: start; } }
-
-.stats { display: flex; flex-direction: column; gap: 0.7rem; }
-.stat { display: flex; flex-direction: column; gap: 0.1rem; }
-.stat .num {
-  font-family: var(--mono); font-size: var(--step-2); line-height: 1;
-  font-variant-numeric: tabular-nums; color: var(--fg);
-}
-.stat .lab { font-size: var(--step--2); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-faint); font-family: var(--mono); }
-
-.chart { display: flex; flex-direction: column; gap: 0.5rem; }
-.bars { display: flex; align-items: flex-end; gap: 2px; height: 4.25rem; }
-.bar-col { flex: 1 1 0; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; position: relative; }
-.bar-total {
-  width: 100%;
-  border: 1px solid var(--rule-strong);
-  border-bottom: none;
-  background: repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--bg-cell) 3px, var(--bg-cell) 6px);
-  display: flex; align-items: flex-end;
-  min-height: 2px;
-}
-.bar-shown { width: 100%; background: var(--accent); min-height: 0; }
-.bar-col.empty .bar-total { border-color: var(--rule); }
-.bar-axis {
-  display: flex; gap: 2px; font-family: var(--mono);
-  font-size: clamp(0.6rem, 0.56rem + 0.13vw, 0.76rem); color: var(--fg-faint); font-variant-numeric: tabular-nums;
-}
-.bar-axis span { flex: 1 1 0; text-align: center; }
-.chart-key { font-size: var(--step--2); color: var(--fg-faint); font-family: var(--mono); display: flex; gap: 1.2rem; flex-wrap: wrap; }
-.chart-key i { font-style: normal; display: inline-flex; align-items: center; gap: 0.35rem; }
-.key-swatch { width: 0.7rem; height: 0.7rem; display: inline-block; }
-.key-swatch.shown { background: var(--accent); }
-.key-swatch.all { border: 1px solid var(--rule-strong); background: repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--bg-cell) 3px, var(--bg-cell) 6px); }
-
 /* ---------- row permalink ----------
    Accepts the same query shape ootbingo's bingo-popout.html uses:
    ?title=COL1&goal=…&goal=…  (title once, goal repeated per square). */
@@ -590,6 +545,7 @@ figure.ytbox figcaption { font-family: var(--mono); font-size: var(--step--2); c
   border: 1px solid var(--rule); border-radius: 0.25rem; padding: 0.1rem 0.4rem;
 }
 .popbar .said { font-size: var(--step--1); color: var(--gain); }
+.popbar .opt { display: inline-flex; align-items: center; gap: 0.35rem; font-size: var(--step--1); color: var(--fg-muted); cursor: pointer; }
 /* Conflict pills are graded by what bingo's own synergy numbers say about the pair, so the
    strongest warnings are not drowned by the 147 pairs bingo actually likes. Border style differs
    as well as colour, and each group carries a worded heading, never colour alone. */
@@ -641,25 +597,6 @@ footer.end {
     <div id="boardLoaded" hidden></div>
     <div id="rowLoaded" hidden></div>
     <p class="vh" id="rowStatus" aria-live="polite" role="status"></p>
-  </section>
-
-  <section class="summary" aria-labelledby="sumh">
-    <h2 id="sumh" class="vh">Summary of the goals currently shown</h2>
-    <div class="stats">
-      <div class="stat"><span class="num" id="statCount">269</span><span class="lab">goals shown</span></div>
-      <div class="stat"><span class="num" id="statMedian">&mdash;</span><span class="lab">median length</span></div>
-      <div class="stat"><span class="num" id="statRba">&mdash;</span><span class="lab">touched by RBA</span></div>
-    </div>
-    <div class="chart">
-      <p class="eyebrow" id="charth">Difficulty spread</p>
-      <div class="bars" id="bars" role="img" aria-labelledby="charth" aria-describedby="chartdesc"></div>
-      <div class="bar-axis" id="barAxis"></div>
-      <p class="chart-key">
-        <i><span class="key-swatch shown"></span> shown by the current filter</i>
-        <i><span class="key-swatch all"></span> all goals in this mode</i>
-      </p>
-      <p class="vh" id="chartdesc"></p>
-    </div>
   </section>
 
   <form class="controls" id="controls" role="search" aria-label="Filter goals">
@@ -1244,7 +1181,15 @@ footer.end {
     }
     // the plainest sentence about what this write does; it was shipped but never shown
     if (r.sum) wrap.appendChild(el("p", "strongline", r.sum));
-    if (note) wrap.appendChild(el("p", null, note));
+    /* A note is either plain prose or runs, the same { text } / { text, url } / { text, yt } shape
+       TKC's sections use. Runs go through appendRuns so a hand-written note gets the identical
+       inline player and link treatment instead of a second, nearly-alike renderer. */
+    if (note) {
+      var np = el("p");
+      if (typeof note === "string") np.appendChild(document.createTextNode(note));
+      else appendRuns(np, note, name);
+      wrap.appendChild(np);
+    }
     // preconditions: without these the route does not work at all
     if (r.how) wrap.appendChild(el("p", null, "Getting it on C-Right: " + r.how));
     if (r.display) wrap.appendChild(el("p", null, r.display));
@@ -1437,7 +1382,7 @@ footer.end {
 
     /* "The square" and "The intended way" were on every goal, so no detail panel could ever come out
        empty. Without them seven goals have nothing else to show, and the expander opened onto blank
-       space. The stats are already on the summary row, so this just marks the panel as empty. */
+       space, so this just marks the panel as empty. */
     if (!d.querySelector(".card")) {
       var bare = el("div", "card span");
       bare.appendChild(el("p", null, "RBA does not touch this square, and there are no notes for it yet."));
@@ -1537,53 +1482,6 @@ footer.end {
       otherEl.appendChild(swap);
     }
 
-    renderSummary(rows);
-  }
-
-  /* ---------- summary ---------- */
-  var barsEl = document.getElementById("bars");
-  var axisEl = document.getElementById("barAxis");
-  var chartDesc = document.getElementById("chartdesc");
-
-  function renderSummary(rows) {
-    var all = GOALS.filter(function (g) { return !!modeOf(g); });
-    document.getElementById("statCount").textContent = rows.length;
-
-    var times = rows.map(function (g) { return modeOf(g)[1]; }).sort(function (a, b) { return a - b; });
-    document.getElementById("statMedian").textContent = times.length
-      ? (times[Math.floor(times.length / 2)] + " min") : "—";
-
-    var touched = rows.filter(function (g) { return !!g.rba; }).length;
-    document.getElementById("statRba").textContent = touched + " / " + rows.length;
-
-    var maxD = 25;
-    var histAll = new Array(maxD + 1).fill(0);
-    var histShown = new Array(maxD + 1).fill(0);
-    all.forEach(function (g) { histAll[modeOf(g)[0]]++; });
-    rows.forEach(function (g) { histShown[modeOf(g)[0]]++; });
-    var peak = Math.max.apply(null, histAll) || 1;
-
-    barsEl.innerHTML = "";
-    axisEl.innerHTML = "";
-    for (var d = 1; d <= maxD; d++) {
-      var col = el("div", "bar-col" + (histAll[d] === 0 ? " empty" : ""));
-      var total = el("div", "bar-total");
-      total.style.height = (histAll[d] / peak * 100) + "%";
-      var shown = el("div", "bar-shown");
-      shown.style.height = histAll[d] ? (histShown[d] / histAll[d] * 100) + "%" : "0%";
-      total.appendChild(shown);
-      col.appendChild(total);
-      barsEl.appendChild(col);
-
-      var ax = el("span", null, d % 5 === 0 ? String(d) : "");
-      axisEl.appendChild(ax);
-    }
-
-    var parts = [];
-    for (var i = 1; i <= maxD; i++) if (histShown[i]) parts.push("difficulty " + i + ": " + histShown[i]);
-    chartDesc.textContent = parts.length
-      ? "Goals shown by difficulty, " + parts.join(", ") + "."
-      : "No goals shown.";
   }
 
   /* ---------- row permalink ----------
@@ -1652,7 +1550,7 @@ footer.end {
      without touching a port that verify_board_synergy.js checks against the real library. */
   var POPOUT_W = 480, POPOUT_H = 1080;   // 4:9, the column left beside a 4:3 capture on a 16:9 canvas
 
-  function popoutUrl(title, names) {
+  function popoutUrl(title, names, withTimer) {
     var p = new URLSearchParams();
     p.set("title", title);
     names.forEach(function (n) { p.append("goal", n); });
@@ -1664,13 +1562,26 @@ footer.end {
       if (board.spec.version) p.set("version", board.spec.version);
       if (board.spec.mode) p.set("mode", board.spec.mode);
     }
-    p.set("timer", "1");
+    /* This used to be unconditional, which made the stopwatch mandatory for everyone opening a
+       popout from here even though the page itself defaults it off. It is a scene decision, not a
+       property of the row, so it belongs on the control bar. */
+    if (withTimer) p.set("timer", "1");
     return new URL("popout.html?" + p.toString(), location.href).toString();
   }
 
   function popoutControls(title, names) {
     var bar = el("div", "popbar");
-    var url = popoutUrl(title, names);
+
+    /* Label-wrapped so it needs no id: popoutControls is built twice on this page, once for a
+       pasted row and once per line in the board detail, and ids would collide. */
+    var optLabel = el("label", "opt");
+    var timerBox = document.createElement("input");
+    timerBox.type = "checkbox";
+    timerBox.checked = true;
+    optLabel.appendChild(timerBox);
+    optLabel.appendChild(document.createTextNode("Stopwatch"));
+
+    function currentUrl() { return popoutUrl(title, names, timerBox.checked); }
 
     var open = el("button", "btn", "Open stream popout");
     open.type = "button";
@@ -1679,7 +1590,7 @@ footer.end {
          partly offscreen on a 1080p display once window chrome is added. */
       var h = Math.max(540, Math.min(POPOUT_H, (screen.availHeight || POPOUT_H) - 80));
       var w = Math.round(h * POPOUT_W / POPOUT_H);
-      var win = window.open(url, "sohtools-popout",
+      var win = window.open(currentUrl(), "sohtools-popout",
         "width=" + w + ",height=" + h + ",menubar=no,toolbar=no,location=no,status=no,scrollbars=no");
       if (!win) { say(bar, "Your browser blocked the popup, use Copy link instead."); return; }
       /* Browsers disagree about whether width/height mean the outer window or the viewport, and the
@@ -1698,7 +1609,7 @@ footer.end {
     copy.addEventListener("click", function () {
       /* An OBS Browser Source takes a URL, so this is the path a streamer actually uses. */
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(
+        navigator.clipboard.writeText(currentUrl()).then(
           function () { say(bar, "Copied."); },
           function () { say(bar, "Could not copy, the link is in the address bar of the popout."); }
         );
@@ -1708,6 +1619,7 @@ footer.end {
     });
     bar.appendChild(copy);
 
+    bar.appendChild(optLabel);
     bar.appendChild(el("span", "dims", POPOUT_W + " × " + POPOUT_H));
     return bar;
   }

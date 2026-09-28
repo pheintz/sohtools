@@ -8,7 +8,7 @@ const OUT = path.join(__dirname, 'out');
 
 // dataset.json is the joined copy — goals-v10.6.json has rba/intendedRoute still null.
 const goals = JSON.parse(fs.readFileSync(path.join(OUT, 'dataset.json'), 'utf8')).goals;
-const { RECIPES, TRADE_SEQUENCE_CONSTRAINT } = require('./rba_recipes');
+const { RECIPES, TRADE_SEQUENCE_CONSTRAINT, noteMarkdown } = require('./rba_recipes');
 const conflicts = JSON.parse(fs.readFileSync(path.join(OUT, 'conflicts.json'), 'utf8'));
 
 const MOD_NAMES = { 20: 'empty bottle', 24: 'fairy', 25: 'fish', 28: 'blue fire', 29: 'bug', 31: 'half-milk' };
@@ -48,7 +48,7 @@ function recipeBlock(r, name, relation) {
     const st = typeof r.stage === 'object' ? `${r.stage.sequence} stage ${r.stage.position}` : r.stage;
     s += `Requires being at **${st}**.\n\n`;
   }
-  if (note) s += `${note}\n\n`;
+  if (note) s += `${noteMarkdown(note)}\n\n`;
   s += 'Writes:\n\n';
   for (const [v, effect] of Object.entries(r.modifiers || {})) {
     s += `- ${fmtModifier(Number(v))} → ${effect}\n`;

@@ -175,6 +175,9 @@ body {
   transition: opacity 0.12s linear, filter 0.12s linear;
 }
 .tok[data-on="1"] { opacity: 1; filter: none; }
+/* Right-clicked away. ootbingo drops the token out of the flow rather than dimming it, so a
+   row of six songs becomes a row of four and the strip stays honest about what is left. */
+.tok.gone { display: none; }
 .counter { display: flex; align-items: center; gap: 0.4rem; }
 .counter img { width: var(--icon); height: var(--icon); image-rendering: pixelated; }
 .cnum {
@@ -452,6 +455,15 @@ var BingoLibrary;(()=>{"use strict";var e={785:(e,t,r)=>{Object.defineProperty(t
               b.dataset.on = on;
               b.setAttribute("aria-pressed", on === "1" ? "true" : "false");
             });
+            /* Right-click removes the token, matching ootbingo's tracker: a goal like
+               "6 Songs" lists every candidate, and a racer prunes the ones the row will not use
+               so the strip shows only what is still live. Right-clicking the square puts them
+               back. stopPropagation keeps it off the square's own handler. */
+            b.addEventListener("contextmenu", function (ev) {
+              ev.preventDefault();
+              ev.stopPropagation();
+              b.classList.add("gone");
+            });
             r.appendChild(b);
           });
           if (r.childNodes.length) wrap.appendChild(r);
@@ -473,7 +485,7 @@ var BingoLibrary;(()=>{"use strict";var e={785:(e,t,r)=>{Object.defineProperty(t
         function bump(d) {
           cur += d;
           if (cur > tr.den) cur = 0;
-          if (cur < 0) cur = tr.den;
+          if (cur < 0) cur = 0;   // ootbingo clamps here rather than wrapping to the maximum
           val.textContent = String(cur);
         }
         btn.addEventListener("click", function (ev) { ev.stopPropagation(); bump(1); });
@@ -497,6 +509,14 @@ var BingoLibrary;(()=>{"use strict";var e={785:(e,t,r)=>{Object.defineProperty(t
       paint();
     }
     li.addEventListener("click", toggle);
+    li.addEventListener("contextmenu", function (ev) {
+      /* The undo for the token removal above. A token's own handler stops propagation, so this
+         only runs on the square itself. */
+      var gone = li.querySelectorAll(".tok.gone");
+      if (!gone.length) return;
+      ev.preventDefault();
+      Array.prototype.forEach.call(gone, function (t) { t.classList.remove("gone"); });
+    });
     li.addEventListener("keydown", function (ev) {
       if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(); }
     });

@@ -347,6 +347,32 @@ const RECIPES = [
       31: "Song of Time + Song of Storms + ALL THREE STONES (needs target == 26 = Song of Storms + Goron's Ruby + Zora's Sapphire)",
     },
     satisfies: ["Kokiri's Emerald", "Goron's Ruby", "Zora's Sapphire"],
+    /* Routing, not mechanics. Relayed from the bingo Discord by the repo owner and corroborated
+       twice in TKC's writeup, which puts the Odd Mushroom in a Gerudo Fortress chest a child can
+       reach, and separately has child entering the Kakariko potion shop "without resetting".
+       Bingo's own weights back it up. Nothing in the intended route (three stones, then the
+       castle moat) goes near Gerudo Fortress or the song RBA, yet the goal carries gfchild 2.5
+       and poachers 2.5, both of which only make sense if the trade quest is what you are running.
+       Note this is also the one place the recipe's `age: adult` is not the whole story: the
+       second route never becomes an adult at all.
+       The two linked videos, recorded here in case a link dies, are 2DollarGargoyle's
+       "OoT 37th Heartpiece/Child Cojiro (child fortress)" (EPtLNkdWleo) and
+       "Granny's house Megaflip for Odd potion as child N64 safe" (Y4ykZbUagqk). The first is
+       titled for Cojiro because the chest gives the Odd Mushroom and a reset turns it into
+       Cojiro, which is the same fact the note gives as a reason to walk. */
+    enables: ['Ocarina of Time'],
+    /* Runs rather than a string, because this note carries links. The shape is the one TKC's
+       parser emits, so the page draws it with the same appendRuns() and the two read alike. */
+    enablesNotes: {
+      'Ocarina of Time': [
+        { text: 'RBA does not write the ocarina itself, it writes the gate. The moat cutscene fires for child Link once all three stones are set, so a 28 or 29 write opens it, and 29 keeps Song of Time as well. ' },
+        { text: 'What the route costs is holding the Odd Potion as a child. Either carry one back in time from the adult trade quest, or take the Odd Mushroom from the Gerudo Fortress chest as a child (' },
+        { text: 'path', yt: { id: 'EPtLNkdWleo' } },
+        { text: ') and trade it to the granny in Kakariko. Resetting turns the mushroom back into Cojiro, so you have to walk there rather than save and reset, and child gets into the potion shop with this ' },
+        { text: 'megaflip', yt: { id: 'Y4ykZbUagqk' } },
+        { text: '.' },
+      ],
+    },
     permanentLoss: ['Stone of Agony (32)', "Gerudo's Card (64)", 'Gold Skulltula count icon flag (128)'],
     destroysPermanently: ['Stone of Agony', "Gerudo's Card"],
     destroys: ['Stone of Agony', "Gerudo's Card"],
@@ -649,7 +675,22 @@ const CHILD_SEQUENCE_CONSTRAINT = {
   ],
 };
 
-module.exports = { MOD, RECIPES, COMBINATIONS, TRADE_SEQUENCE_CONSTRAINT, CHILD_SEQUENCE_CONSTRAINT };
+/* A *Notes value is either a string or an array of runs, in the shape TKC's parser emits:
+   { text }, { text, url }, { text, yt: { id, t } }. Runs let a hand-written note carry links and be
+   drawn by the page's own appendRuns(). The two text outputs flatten them and keep the URL rather
+   than dropping it, because a coverage report that quietly loses a route video is worse than an
+   ugly one. */
+function ytUrl(yt) { return 'https://www.youtube.com/watch?v=' + yt.id + (yt.t ? '&t=' + yt.t : ''); }
+function noteText(note) {
+  if (!note || typeof note === 'string') return note;
+  return note.map((r) => r.text + (r.yt ? ' (' + ytUrl(r.yt) + ')' : r.url ? ' (' + r.url + ')' : '')).join('');
+}
+function noteMarkdown(note) {
+  if (!note || typeof note === 'string') return note;
+  return note.map((r) => (r.yt ? '[' + r.text + '](' + ytUrl(r.yt) + ')' : r.url ? '[' + r.text + '](' + r.url + ')' : r.text)).join('');
+}
+
+module.exports = { MOD, RECIPES, COMBINATIONS, TRADE_SEQUENCE_CONSTRAINT, CHILD_SEQUENCE_CONSTRAINT, noteText, noteMarkdown };
 
 if (require.main === module) {
   const fs = require('fs');

@@ -318,6 +318,12 @@ td.bit.dead {
 }
 .verdict .chip.give { background: var(--gain-soft); color: var(--gain); }
 .verdict .chip.cost { background: var(--loss-soft); color: var(--loss); }
+/* Forty-one of the sixty items write one whole field rather than a set of switches: an ammo count,
+   a key count, or a single inventory slot. Those had no chip at all, just a muted sentence, which
+   left the one noun a reader is hunting for -- what does this write -- as the least prominent text
+   on the card. Same row and chip as gives/costs, in a third neutral colour, because whether the
+   write helps or hurts depends on what you were holding. */
+.verdict .chip.set { background: var(--accent-soft); color: var(--accent); }
 .verdict .chip .qual { opacity: 0.75; font-size: 0.88em; }
 .verdict .vsentence { font-size: var(--step--1); color: var(--fg-muted); }
 /* Boss Key / Compass / Map are the same three names for all twenty dungeon bytes, so the chips
@@ -804,22 +810,22 @@ footer.end {
     who.appendChild(off);
     verdictEl.appendChild(who);
 
-    /* The three bulk shapes have one sentence each; chips would just repeat the same six bottles
-       sixty times over and say nothing about what you walk away with. */
-    var m;
-    var sentence = null;
-    if ((m = /^Inventory\.items\[\d+\] = (SLOT_[A-Z0-9_]+)$/.exec(t.target)))
-      sentence = "Copies your bottle into the " + slotWord(m[1]) + " slot, whatever was there is gone.";
-    else if ((m = /^Inventory\.ammo\[\d+\] = ammo for (SLOT_[A-Z0-9_]+)$/.exec(t.target)))
-      sentence = "Sets " + slotWord(m[1]) + " ammo to between 20 and 31.";
-    else if ((m = /^Inventory\.dungeonKeys\[\d+\] = (.+)$/.exec(t.target)))
-      sentence = "Sets " + m[1] + " small keys to between 20 and 31.";
+    /* The three bulk shapes write one whole field rather than a set of switches, so there is one
+       thing to name rather than a list. They used to say it in a muted sentence under the item
+       name, which is where the eye goes last; the target now gets the same row and chip the
+       bitfield items use, so every item on the picker answers "what does this write" the same way
+       and in the same place. */
+    var m, verb = null, target = null, qual = null;
+    if ((m = /^Inventory\.items\[\d+\] = (SLOT_[A-Z0-9_]+)$/.exec(t.target))) {
+      verb = "writes"; target = slotWord(m[1]) + " slot"; qual = "your bottle, over whatever was there";
+    } else if ((m = /^Inventory\.ammo\[\d+\] = ammo for (SLOT_[A-Z0-9_]+)$/.exec(t.target))) {
+      verb = "sets"; target = slotWord(m[1]) + " ammo"; qual = "to between 20 and 31";
+    } else if ((m = /^Inventory\.dungeonKeys\[\d+\] = (.+)$/.exec(t.target))) {
+      verb = "sets"; target = m[1] + " small keys"; qual = "to between 20 and 31";
+    }
 
-    if (sentence) {
-      var p = document.createElement("p");
-      p.className = "vsentence";
-      p.textContent = sentence;
-      verdictEl.appendChild(p);
+    if (target) {
+      verdictEl.appendChild(vrow(verb, [chip(target, "set", qual)]));
       return;
     }
 

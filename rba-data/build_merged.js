@@ -8,7 +8,7 @@ const OUT = path.join(__dirname, 'out');
 
 const goals = JSON.parse(fs.readFileSync(path.join(OUT, 'goals-v10.6.json'), 'utf8'));
 const offsets = JSON.parse(fs.readFileSync(path.join(OUT, 'rba-offsets.json'), 'utf8'));
-const { RECIPES, TRADE_SEQUENCE_CONSTRAINT, CHILD_SEQUENCE_CONSTRAINT } = require('./rba_recipes');
+const { RECIPES, TRADE_SEQUENCE_CONSTRAINT, CHILD_SEQUENCE_CONSTRAINT, noteText } = require('./rba_recipes');
 const { GATES, ITEMS, SPAWN_WINDOWS } = require('./prerequisites');
 const COMMUNITY = require('./community_locations');
 const { SKULLS, SKULL_AREA_GROUPS, SKULL_DUNGEON_GROUPS, SOFT_SOIL_NOTE, HEART_PIECES, UNSOURCED, verifyCounts } = require('./collections');
@@ -125,7 +125,7 @@ for (const kind of ['satisfiedBy', 'enabledBy', 'destroyedBy']) {
   lines.push(`\n### ${kind} (${set.length} goals)`);
   for (const g of set.sort((a, b) => a.name.localeCompare(b.name))) {
     for (const e of g.rba[kind]) {
-      lines.push(`  ${g.name.padEnd(42)} <- ${e.recipe} [C-Right ${e.cRight} ${e.offset}, ${e.age}]${e.note ? `  — ${e.note}` : ''}`);
+      lines.push(`  ${g.name.padEnd(42)} <- ${e.recipe} [C-Right ${e.cRight} ${e.offset}, ${e.age}]${e.note ? `  — ${noteText(e.note)}` : ''}`);
     }
   }
 }
