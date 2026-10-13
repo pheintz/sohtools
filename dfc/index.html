@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Damage Flag Corruption - soh.tools</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="soh.tools">
+<meta property="og:title" content="Damage Flag Corruption - soh.tools">
+<meta property="og:description" content="Code-checked reference for Ocarina of Time's damage flag corruption glitch: the stale hit frame by frame, what can start it, which targets read it, and why the rest can't.">
+<meta property="og:url" content="https://soh.tools/dfc/">
+<meta name="theme-color" content="#673AB7">
+<link rel="stylesheet" href="../css/site-header.css?v=934a802d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: field reference in the same visual system as the Bottle Setup Matrix. Corrections first, then the frame-by-frame mechanism, the four target rules, starters, frame strips, freeze sources, the target table, heap fillers, open items. */
+:root {
+  --bg: #f3f5f7; --surface: #ffffff; --ink: #17202a; --muted: #5a6774; --rule: #d8dee5;
+  --accent: #2b52c4; --accent-soft: #e6ecfb;
+  --ok: #1e7a4c; --ok-soft: #e1f2e9; --pred: #6a48b3; --pred-soft: #ece6f8;
+  --no: #6f7b87; --no-soft: #eceff2; --warn: #a3402a; --warn-soft: #fbe7e1; --hot: #9a6a00; --hot-soft: #f8edd2;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --step--1: 0.8125rem; --step-0: 0.9375rem; --step-1: 1.125rem; --step-2: 1.5rem; --step-3: clamp(2rem, 1.4rem + 2.6vw, 3rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141a; --surface: #161d26; --ink: #e5eaf0; --muted: #94a2b0; --rule: #2a3542; --accent: #84a5ff; --accent-soft: #1d2a4a;
+    --ok: #63cf94; --ok-soft: #15301f; --pred: #b6a1ff; --pred-soft: #282041; --no: #8d99a6; --no-soft: #1f2731;
+    --warn: #f19a83; --warn-soft: #3a1d16; --hot: #e9b64b; --hot-soft: #33280f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141a; --surface: #161d26; --ink: #e5eaf0; --muted: #94a2b0; --rule: #2a3542; --accent: #84a5ff; --accent-soft: #1d2a4a;
+  --ok: #63cf94; --ok-soft: #15301f; --pred: #b6a1ff; --pred-soft: #282041; --no: #8d99a6; --no-soft: #1f2731;
+  --warn: #f19a83; --warn-soft: #3a1d16; --hot: #e9b64b; --hot-soft: #33280f; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.55; }
+.wrap { max-width: 76rem; margin: 0 auto; padding-inline: 16px; padding-block: 2.5rem 4rem; display: grid; gap: 3rem; }
+@media (min-width: 720px) { .wrap { padding-inline: 2rem; } }
+h1, h2, h3 { font-family: var(--font-display); font-stretch: 82%; line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: var(--step-3); font-weight: 800; } h2 { font-size: var(--step-2); font-weight: 750; } h3 { font-size: var(--step-1); font-weight: 700; }
+p { margin: 0; max-width: 72ch; } a { color: var(--accent); }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+.eyebrow { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 1.1rem; min-width: 0; }
+.lede { display: grid; gap: 1rem; } .lede p { font-size: var(--step-1); }
+.facts { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; color: var(--muted); font-size: var(--step--1); } .facts b { color: var(--ink); font-weight: 600; }
+.chip { display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; line-height: 1; padding: 0.3em 0.45em; border-radius: 4px; white-space: nowrap; letter-spacing: 0.03em; background: var(--no-soft); color: var(--no); }
+.chip.ok { background: var(--ok-soft); color: var(--ok); } .chip.pred { background: var(--pred-soft); color: var(--pred); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); } .chip.hot { background: var(--hot-soft); color: var(--hot); }
+.tbl { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; vertical-align: top; padding: 0.6rem 0.75rem; border-top: 1px solid var(--rule); }
+thead th { border-top: 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+tbody th { font-weight: 600; }
+th small, td small { display: block; font-weight: 400; color: var(--muted); font-size: var(--step--1); margin-top: 0.15rem; }
+tr.grp th { background: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-block: 0.45rem; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.t-fix { min-width: 46rem; } .t-start { min-width: 58rem; } .t-target { min-width: 68rem; } .t-freeze { min-width: 46rem; } .t-heap { min-width: 40rem; }
+.t-fix td:first-child { width: 34%; }
+.steps { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 0.65rem; max-width: 84ch; counter-reset: none; }
+.steps li { display: grid; grid-template-columns: 6.2rem 1fr; gap: 0.9rem; align-items: baseline; }
+.steps .fr { font-family: var(--font-mono); font-size: var(--step--1); font-weight: 600; color: var(--accent); white-space: nowrap; }
+.steps li > div { min-width: 0; }
+@media (max-width: 520px) { .steps li { grid-template-columns: 1fr; gap: 0.15rem; } }
+.rules { display: grid; gap: 1rem; } @media (min-width: 860px) { .rules { grid-template-columns: 1fr 1fr; } }
+.rule { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.15rem; display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
+.rule h3 { font-size: var(--step-0); font-family: var(--font-body); font-weight: 600; font-stretch: 100%; }
+.rule .k { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.strip { min-width: 54rem; }
+.strip th, .strip td { text-align: center; padding: 0.45rem 0.4rem; font-size: var(--step--1); }
+.strip tbody th { text-align: left; white-space: nowrap; font-weight: 600; }
+.strip td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; border-left: 1px solid var(--rule); }
+.strip td.on { background: var(--ok-soft); color: var(--ok); font-weight: 600; }
+.strip td.key { background: var(--hot-soft); color: var(--hot); font-weight: 600; }
+.strip td.off { color: var(--muted); }
+.note { color: var(--muted); font-size: var(--step--1); max-width: 84ch; }
+.callout { border: 1px solid var(--warn); background: var(--warn-soft); border-radius: 6px; padding: 1rem 1.2rem; display: grid; gap: 0.5rem; max-width: 84ch; }
+.callout b { color: var(--warn); }
+.bits { display: flex; flex-wrap: wrap; gap: 0.35rem 0.6rem; font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); max-width: 84ch; }
+.bits span b { color: var(--ink); font-weight: 600; }
+ul.plain { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem; max-width: 84ch; }
+.cols { display: grid; gap: 1rem; } @media (min-width: 900px) { .cols { grid-template-columns: 1fr 1fr; } }
+.cols > * { min-width: 0; }
+footer { color: var(--muted); font-size: var(--step--1); display: grid; gap: 0.4rem; border-top: 1px solid var(--rule); padding-top: 1.2rem; }
+</style>
+<style>
+/* soh.tools palette: the site's amethyst on lavender paper / ink, replacing the artifact's blue. */
+:root {
+  --bg: #edebf2; --surface: #f7f6fa; --ink: #1b1725; --muted: #5d566f; --rule: #cbc5d9;
+  --accent: #6742c9; --accent-soft: #ece5fb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14111c; --surface: #1e1a2a; --ink: #ece9f4; --muted: #a49bbb; --rule: #2e2840;
+    --accent: #a98cf5; --accent-soft: #1a152b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14111c; --surface: #1e1a2a; --ink: #ece9f4; --muted: #a49bbb; --rule: #2e2840;
+  --accent: #a98cf5; --accent-soft: #1a152b; color-scheme: dark;
+}
+body { margin: 0; }
+</style>
+</head>
+<body>
+<script src="../scripts/site-header.js?v=87e4f64c"></script>
+<div class="wrap">
+
+<header class="lede">
+  <div class="eyebrow">Ocarina of Time · vanilla N64 · checked against the decomp and the NTSC 1.0 ROM</div>
+  <h1>Damage Flag Corruption</h1>
+  <p>Hit something with a weapon that is its own actor, freeze the target before it processes the hit, let the weapon actor die, and put something new in the memory it used. When the target thaws, its hit record still points into the dead weapon, and it acts on whatever bytes are there now.</p>
+  <div class="facts">
+    <span>Companion to the <a href="../bottle-matrix/">Bottle Setup Matrix</a> (heap words per setup)</span>
+    <span>Offsets are <b>retail N64</b> (SoH headers are 0x10 larger past 0x13C)</span>
+    <span>Updated <b>Oct 13 2026</b></span>
+  </div>
+</header>
+
+<section id="corrections">
+  <div class="eyebrow">Check of the community notes</div>
+  <h2>What the code changes in the current notes</h2>
+  <p>Most of the community explanation holds up. These are the places where the code says something more specific or different.</p>
+  <div class="tbl">
+    <table class="t-fix">
+      <thead><tr><th>Claim in the notes</th><th>What the code says</th></tr></thead>
+      <tbody>
+        <tr><td>The seed hits the ground on the next frame and breaks (clank), which frees it.</td><td>The clank is the seed reacting to its own hit on the target, in its update on the <b>same frame</b> the hit is detected. <code>Actor_Kill</code> only marks it; the memory is freed on the <b>next</b> frame, when the actor list is walked again.</td></tr>
+        <tr><td>Switches (and BG actors) can never work, because they update before Link.</td><td>They update before Link, so a bottle pressed on the hit frame is too late for them. But a bottle pressed <b>one frame earlier</b> works, because a seed keeps flying for 4 frames after the shot even during the cutscene. What actually rules out the switches and walls tried so far is that their hurtbox rejects seeds and spins, and that they react to the hit flag alone (see the target table).</td></tr>
+        <tr><td>Nothing with a damage table can work (Anubis, Tailpasaran).</td><td>Right for the damage number and the damage effect: both come from the table during the collision pass and are zeroed while the target is frozen. Wrong for code that re-reads the attacker's flags in its own update: <code>Actor_SetDropFlag</code> (freeze timers on 22 enemies) and the bosses that call <code>CollisionCheck_GetSwordDamage</code> on the stale record.</td></tr>
+        <tr><td>Arrows work on boulders, red boulders and little rocks.</td><td>Only by culling. The arrow timer route needs the target 2250 to 2475 units away, and these hurtboxes switch off when Link is farther than 800 units (boulder) or 600 units (bronze boulder, small rock, pot).</td></tr>
+        <tr><td>Seed 80 and arrow 150 units per frame, the speeds written in En_Arrow (and in an earlier version of these notes).</td><td>Positions advance by velocity × <code>R_UPDATE_RATE</code> × 0.5 = ×1.5. A seed moves <b>120</b> units per frame, an arrow <b>225</b>.</td></tr>
+        <tr><td><code>params &gt;= ARROW_NORMAL_LIT</code> may have been meant for lit arrows only.</td><td><code>ARROW_NORMAL_LIT</code> is 0, so the test is <code>params &gt;= 0</code>: every projectile Link fires. It leaves out the two negative types, the cutscene nut (−10, which has its own <code>isCsNut</code> exception) and the silent arrow (−1, fired by the arrow trap actor).</td></tr>
+        <tr><td>After a hit the arrow uses a 50 frame timer. Or is it 60?</td><td>Both exist. Hitting an actor starts a bounce with timer 50. Sticking in a wall or floor uses 60 (20 for negative arrow types).</td></tr>
+        <tr><td>The spin needs magic.</td><td>It needs the magic meter. A quickspin spawns the spin actor without spending magic, as long as the meter is acquired and idle. A charged blue spin does spend magic. A spin without the meter is done by Link's sword itself, which is never freed.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="mechanism">
+  <div class="eyebrow">Seed on a boulder, NTSC 1.0, matches a tester's memory trace</div>
+  <h2>One hit, frame by frame</h2>
+  <ol class="steps">
+    <li><span class="fr">Frame k−1</span><div>The boulder's update registers its hurtbox (only while Link is within 800 units). The seed's <b>draw</b> registers a hitbox swept from last frame's tip to this frame's tip.</div></li>
+    <li><span class="fr">Frame k, start</span><div>The collision pass runs before any actor updates. Seed bit <code>0x00000004</code> is in the boulder mask <code>0x4FC1FFFE</code>, so the hit lands: the boulder gets <code>AC_HIT</code> and a pointer to the seed's damage record (seed + <code>0x198</code>), and the seed gets <code>AT_HIT</code>. The damage table math also runs here.</div></li>
+    <li><span class="fr">Frame k, Link</span><div>Actors update in category order: switch, BG, <b>player</b>, explosive, NPC, enemy, <b>prop</b>, item action, misc, boss, door, chest. The freeze test for each category reads Link's flags at the moment that category comes up. The bottle takes effect in Link's update and sets state flags 28 and 29.</div></li>
+    <li><span class="fr">Frame k, boulder</span><div>Props freeze on <code>DEAD | 28</code>, so the boulder skips its update. It doesn't read the hit, and it doesn't re-register its hurtbox, which is what would clear the hit flag and the pointer. The frozen branch also zeroes its damage number.</div></li>
+    <li><span class="fr">Frame k, seed</span><div>Item actions never freeze by category, but <code>EnArrow_Update</code> refuses to run during a blocking cutscene unless Link fired something in the last 4 frames (<code>unk_A73</code>). Inside that window the seed runs, sees its own hit, plays the clank and kills itself.</div></li>
+    <li><span class="fr">Frame k+1</span><div>The dead seed is deleted and its 0x280 byte heap block (0x250 instance + 0x30 header) is free.</div></li>
+    <li><span class="fr">During the cutscene</span><div>The bottle releases its contents. On N64 the item's overlay code is allocated first, first fit, so it lands on the seed's old block. Seed + <code>0x198</code> now holds a MIPS instruction; for fish it is <code>E426xxxx</code>, a <code>swc1</code> whose low half is a relocated address.</div></li>
+    <li><span class="fr">Thaw frame</span><div>The collision pass runs first, but the boulder isn't in the hurtbox list, so nothing overwrites its record. Then its update reads <code>AC_HIT</code>, follows the stale pointer, finds bit 30 (hammer jump) in <code>E426xxxx</code>, and breaks.</div></li>
+  </ol>
+</section>
+
+<section id="rules">
+  <div class="eyebrow">Necessary conditions</div>
+  <h2>What a target needs</h2>
+  <div class="rules">
+    <div class="rule">
+      <h3>1. Its hurtbox accepts the starting weapon</h3>
+      <p>The collision pass only registers a hit if the weapon's flags share a bit with the target's hurtbox mask. The swap happens after that test, so it can't create a hit the mask would refuse.</p>
+      <div class="k">seed 0x4 · arrow 0x20 · fire/ice/light arrow 0x800/0x1000/0x2000 · magic spin 0x400000 / 0x800000 / 0x1000000 (Kokiri / Biggoron / Master) · charged past 85% uses jump bits 0x2000000 / 0x4000000 / 0x8000000</div>
+    </div>
+    <div class="rule">
+      <h3>2. Its own update reads the attacker's data</h3>
+      <p>The target must look through the stored pointer later: the attacker's flags (<code>acHitElem-&gt;atDmgInfo.dmgFlags</code>), its damage byte, or the attacker actor itself (<code>ac-&gt;id</code>, position, facing). Targets that act on <code>AC_HIT</code> alone, or only on the table damage, get nothing from the swap.</p>
+    </div>
+    <div class="rule">
+      <h3>3. It is frozen on the frame the hit is detected</h3>
+      <p>Bottles set state 28, which freezes switch, BG, explosive, enemy, prop, misc, boss and chest actors. NPC, item action, door and player actors never freeze for a bottle. Categories that update after Link need the bottle on the hit frame; switch and BG need it one frame earlier.</p>
+    </div>
+    <div class="rule">
+      <h3>4. Its hurtbox is on when the weapon arrives</h3>
+      <p>Some targets only register a hurtbox near Link. Boulders: 800 units (xz). Bronze boulders, small rocks, pots: 600. Torches and beehives: always. Flobbery muscle blocks: only while raised.</p>
+    </div>
+  </div>
+  <p class="note">On the weapon side, the weapon actor has to die during the freeze, and the new allocation has to cover its damage word: seed or arrow + <code>0x198</code>, spin + <code>0x154</code>.</p>
+</section>
+
+<section id="starters">
+  <div class="eyebrow">Hitbox providers</div>
+  <h2>What can start it</h2>
+  <div class="tbl">
+    <table class="t-start">
+      <thead><tr><th>Weapon</th><th>Hitbox actor</th><th>How it dies during the freeze</th><th>Timing</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><th>Slingshot seed<small>child</small></th><td>En_Arrow (seed)<small>word at +0x198, block 0x280</small></td><td>Dies on its own hit, in its update. During the cutscene it only runs while <code>unk_A73</code> is non-zero: the shot frame and the 3 after it.</td><td>Hit detected on F2 (target 0 to 120 units out) or F3 (120 to 240). Bottle on that frame; switch and BG targets need the bottle on F2 and the hit on F3.</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Magic spin<small>quickspin with meter, or charged blue spin</small></th><td>En_M_Thunder<small>word at +0x154, block 0x1F0</small></td><td>The cutscene kills it: its update calls <code>Actor_Kill</code> whenever <code>Play_InCsMode</code> is true, which state 29 makes true on the bottle frame.</td><td>The spin actor lives 16 frames after release and hits every frame its cylinder touches the target. Press the bottle on any frame Link can act while it's alive. Radius: Kokiri 50, others 100; charged past 85%: Kokiri 100, others 200.</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Arrow<small>adult; fire/ice/light are the same actor</small></th><td>En_Arrow (arrow)<small>+0x198; block 0x280 plus two 0x50 SkelAnime blocks</small></td><td>Never on a hit: it bounces (50 frames) or sticks (60). Only its 12 frame flight timer deletes it, and the timer is checked before hits.</td><td>Timer route: the 11th flight step crosses the target (2250 to 2475 units), a second shot on F9 to F11 keeps <code>unk_A73</code> alive, bottle on F12. Or the culling route.</td><td><span class="chip hot">Situational</span></td></tr>
+        <tr><th>Deku nut</th><td>none of its own<small>the flash, En_M_Fire1, does the hitting</small></td><td>A thrown nut has no collider at all. The flash is a misc actor, so the bottle freezes it and it never dies while frozen.</td><td>Culling only, and the flash leaves a small 0x1C0 hole.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Boomerang</th><td>En_Boom</td><td>Misc category: frozen by the bottle, and it only dies when Link catches it.</td><td>—</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Hookshot</th><td>Arms_Hook</td><td>Retracts instead of dying; it lives while the hookshot is in hand.</td><td>—</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Bombs, Bombchus</th><td>En_Bom</td><td>Explosive category: frozen by the bottle, so the explosion never ends during the freeze.</td><td>—</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Sword, stick, hammer, plain spin</th><td>Link's own weapon colliders</td><td>Part of Link; never freed.</td><td>—</td><td><span class="chip">No</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note"><code>unk_A73</code> is set to 4 when Link fires the bow, slingshot or hookshot, or throws the boomerang, and is decremented at the very start of his update. A projectile therefore runs during a cutscene on its shot frame and the 3 frames after. Gohma clears it while her eye is tracking you, which also shuts her eye.</p>
+</section>
+
+<section id="strips">
+  <div class="eyebrow">F0 is the frame the shot takes effect</div>
+  <h2>Frame strips</h2>
+  <div class="cols">
+    <div class="tbl">
+      <table class="strip" style="min-width:30rem">
+        <thead><tr><th>Seed</th><th>F0</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th></tr></thead>
+        <tbody>
+          <tr><th>Travel after update</th><td>0</td><td>120</td><td>240</td><td>360</td><td>frozen</td></tr>
+          <tr><th>Path checked this frame</th><td class="off">—</td><td class="off">—</td><td class="key">0–120</td><td class="key">120–240</td><td class="off">240–360</td></tr>
+          <tr><th><code>unk_A73</code></th><td class="on">4</td><td class="on">3</td><td class="on">2</td><td class="on">1</td><td class="off">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">A hit found on F2 or F3 kills the seed that frame (the clank). A hit found on F4 or later leaves the seed hanging alive for the whole cutscene, so the target thaws and reads a live seed: an ordinary slingshot hit. That is why the seed has to hit within 2 or 3 frames.</p>
+  </div>
+  <div class="tbl">
+    <table class="strip">
+      <thead><tr><th>Arrow route</th><th>F0</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>F5</th><th>F6</th><th>F7</th><th>F8</th><th>F9</th><th>F10</th><th>F11</th><th>F12</th></tr></thead>
+      <tbody>
+        <tr><th>Arrow 1 timer after update</th><td>12</td><td>11</td><td>10</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td><td class="key">0, deleted</td></tr>
+        <tr><th>Travel after update</th><td>0</td><td>225</td><td>450</td><td>675</td><td>900</td><td>1125</td><td>1350</td><td>1575</td><td>1800</td><td>2025</td><td>2250</td><td>2475</td><td class="off">—</td></tr>
+        <tr><th>Path checked this frame</th><td class="off">—</td><td class="off">—</td><td>0–225</td><td>225–450</td><td>450–675</td><td>675–900</td><td>900–1125</td><td>1125–1350</td><td>1350–1575</td><td>1575–1800</td><td>1800–2025</td><td>2025–2250</td><td class="key">2250–2475</td></tr>
+        <tr><th><code>unk_A73</code>, 2nd shot on F9</th><td class="on">4</td><td class="on">3</td><td class="on">2</td><td class="on">1</td><td class="off">0</td><td class="off">0</td><td class="off">0</td><td class="off">0</td><td class="off">0</td><td class="on">4</td><td class="on">3</td><td class="on">2</td><td class="key">1</td></tr>
+        <tr><th>Link</th><td>release</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2nd shot</td><td colspan="2">leave aim</td><td class="key">bottle</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">An arrow that touches an actor on F2 to F11 starts its 50 frame bounce instead, then hangs frozen and never dies. Only the hit that is found on F12 meets the timer first. The second shot can be on F9, F10 or F11 (leaving 1 to 3 on F12); F8 is too early. Gravity starts on F5 and has dropped the arrow about 17 units by F11. The path figures run from the release point; the hitbox tip sits about 15 units ahead of the arrow, and the target's own radius widens the window.</p>
+  <div class="callout">
+    <p><b>The missing piece for torches is memory.</b> The second arrow survives the cutscene, frozen in the air, and keeps its block. Arrow 1 frees 0x280 bytes plus two 0x50 SkelAnime blocks. If arrow 2 (or anything else alive) starts right after them, the hole is only 0x320 bytes. Fish code needs 0x2110 contiguous bytes and bug code 0x2520, so neither can land. The fish instance fits instead, and fish + <code>0x198</code> is a collider limb byte: <code>00000000</code>, no fire bit, no light. For a fire bit (fish <code>E426xxxx</code> has bit 17, bugs <code>00808825</code> have bit 11) nothing alive may start within that many bytes after arrow 1. Compare the two arrow addresses on a failed and a working attempt.</p>
+  </div>
+</section>
+
+<section id="freeze">
+  <div class="eyebrow">What holds the target</div>
+  <h2>Freeze sources</h2>
+  <div class="tbl">
+    <table class="t-freeze">
+      <thead><tr><th>Source</th><th>Link's flags</th><th>Freezes</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><th>Bottle use<small>drop, pour, drink</small></th><td class="num">28 + 29</td><td>switch, BG, explosive, enemy, prop, misc, boss, chest</td><td>Set in Link's item handler on the frame it takes effect. The item's actor spawns later in the animation, after the weapon is freed.</td></tr>
+        <tr><th>Bottle catch<small>swinging the bottle at a bug, fish, fairy…</small></th><td class="num">28 + 29</td><td>same</td><td>Set on the frame something is caught.</td></tr>
+        <tr><th>Ocarina</th><td class="num">28 + 29, then ocarina mode</td><td>same, then <b>every</b> actor without the ocarina update flag</td><td>Ocarina mode freezes item actions too, and frozen actors are never deleted, so a dead seed's memory is not freed until the ocarina closes. Every song spawns an Oceff effect actor whose code sits in the fixed absolute slot, so only its 0x140–0x170 instance can land in a hole. Song of Storms then spawns En_Okarina_Effect (code 0x3B0, instance 0x144).</td></tr>
+        <tr><th>Magic spells</th><td class="num">28 + 29</td><td>same</td><td>Set when the spell actor spawns. Spell code lives in the fixed absolute slot, so it never lands in a hole.</td></tr>
+        <tr><th>Trade items</th><td class="num">talking + 28 + 29</td><td>same</td><td>Showing an exchange item to someone.</td></tr>
+        <tr><th>Talking</th><td class="num">talking</td><td>switch, BG, explosive, enemy, misc, boss, chest. <b>Not props.</b></td><td>Talking isn't a blocking cutscene, so projectiles keep flying normally. No bottle item can be released during a talk, so there is no filler.</td></tr>
+        <tr><th>Culling</th><td class="num">none</td><td>any off-screen actor without the culling-disabled flag</td><td>The off-screen test is made in the previous frame's draw. Torches, bosses, Door_Killer and Gerudo guards never cull.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Always exempt from the category freeze: the actor Link is talking to, Navi, the actor Link is holding, and actors whose parent is Link.</p>
+</section>
+
+<section id="targets">
+  <div class="eyebrow">Every actor that reads the attacker late, plus the common dead ends</div>
+  <h2>Targets</h2>
+  <div class="bits">
+    <span><b>1</b> stick</span><span><b>2</b> seed</span><span><b>3</b> explosive</span><span><b>4</b> boomerang</span><span><b>5</b> arrow</span><span><b>6</b> hammer swing</span><span><b>7</b> hookshot</span><span><b>8–10</b> slash K/M/B</span><span><b>11–13</b> fire/ice/light arrow</span><span><b>17–19</b> fire/ice/light magic</span><span><b>20</b> shield</span><span><b>22–24</b> spin K/B/M</span><span><b>25–27</b> jump K/B/M</span><span><b>30</b> hammer jump</span>
+  </div>
+  <div class="tbl">
+    <table class="t-target">
+      <thead><tr><th>Target</th><th>Freezes as</th><th>Started by</th><th>Stale word needs → result</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr class="grp"><th colspan="5">Confirmed by testers</th></tr>
+        <tr><th>Boulder<small>Obj_Bombiwa</small></th><td>prop<small>hurtbox within 800 units</small></td><td>seed, spin; arrow by culling</td><td>bit 6 or 30 → breaks</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Bronze ("red") boulder<small>Obj_Hamishi</small></th><td>prop<small>within 600</small></td><td>seed, spin; arrow by culling</td><td>bit 6 or 30 → counts one hit. It needs <b>two</b> hammer hits to break.</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Small rock<small>En_Ishi</small></th><td>prop<small>within 600</small></td><td>seed, spin; arrow by culling</td><td>bit 3, 6 or 30 → breaks (small rocks only)</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Torch<small>Obj_Syokudai</small></th><td>prop<small>never culls; hurtbox always on</small></td><td>arrow only (flame mask <code>0x00020820</code>)</td><td>bit 11 or 17 → an unlit torch lights</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Beehive<small>Obj_Comb</small></th><td>prop</td><td>seed, arrow (mask <code>0x4001FFFE</code> has no spin bits)</td><td>none of bits 1, 2, 5, 6, 11–16, 30 → falls and drops its item; otherwise it only wobbles. A <code>00000000</code> word (fairy, poe, potion) works.</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Flobbery Muscle Block<small>En_Brob</small></th><td>enemy<small>hurtbox only while raised</small></td><td>seed, spin, arrow</td><td>bit 4 (any match, it's an <code>&amp;</code>) → stunned like a boomerang hit; bit 8 → shock</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Volvagia<small>Boss_Fd2 in a hole, Boss_Fd flying</small></th><td>boss<small>never culls</small></td><td>spin (spin + fairy reads 4.0f/5.0f, bit 30); seed only with an adult slingshot</td><td>In a hole: bit 6 or 30 → face exposed and −2 HP. Exposed: sword-bit damage, else 2 (4 with bit 12). Flying: −2, −4 with bit 12 (never below 2 HP this way).</td><td><span class="chip ok">Works</span></td></tr>
+        <tr><th>Ganondorf<small>Boss_Ganon</small></th><td>boss</td><td>seed (adult slingshot only); he is in the air in these states</td><td>After his ball hits him, or while charging the big attack: bit 13 → knocked down and vulnerable</td><td><span class="chip ok">Works</span></td></tr>
+        <tr class="grp"><th colspan="5">Predicted from code, untested</th></tr>
+        <tr><th>Gohma<small>Boss_Goma</small></th><td>boss</td><td>seed</td><td>Floor-stunned, eye open: sword damage from the stale word: 1 (bits 8, 22), 2 (1, 6, 9, 24, 25), 4 (10, 23, 27, 30), 8 (26). Fish code gives 1, 2 or 4, depending on its relocated low half.</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr><th>King Dodongo<small>Boss_Dodongo</small></th><td>boss</td><td>seed, spin</td><td>Vulnerable or lying down: sword damage from the stale word, same scale. While inhaling, the interrupt needs bit 2 or 4, so a swap can lose it.</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr><th>Morpha<small>Boss_Mo</small></th><td>boss</td><td>spin</td><td>Tentacle: bit 17 → tentacle cut. Core: bit 7 without bit 20 → frees the core like the hookshot. The default spin-slot words (<code>AFA40018</code>, <code>8FA40028</code>, <code>8FA4003C</code>) have neither, so this needs a setup.</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr><th>Ganon<small>Boss_Ganon2</small></th><td>boss</td><td>spin</td><td>Face: bit 13 → stunned, like a light arrow. None of the default spin-slot words has bit 13, so this needs a setup. Tail hits already do damage.</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr><th>Dark Link<small>En_Torch2</small></th><td>boss</td><td>spin</td><td>Knocked back for 0 damage; bits 17, 18 or 28 → frozen for (byte at word + 5) frames. Spin + fish: 164 frames.</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr><th>22 enemy types<small>Actor_SetDropFlag(…, true)</small></th><td>enemy</td><td>by hurtbox</td><td>bits 17, 18 or 28 → frozen for (byte at word + 5) frames. List and words on the <a href="../bottle-matrix/">Bottle Setup Matrix</a>.</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr><th>Fake door<small>Door_Killer</small></th><td>BG<small>bottle one frame early</small></td><td>seed, arrow</td><td>bit 3 or 6 and none of 1, 2, 5, 7–16 → breaks; any of those → wobbles</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr><th>Red ice<small>Bg_Ice_Shelter</small></th><td>BG<small>bottle one frame early; culls</small></td><td>seed, spin</td><td>Melts if the attacker's <b>actor id</b> is blue fire. That needs a blue fire <b>instance</b> starting exactly where the weapon was, so on N64 blue fire's code must already be loaded (another blue fire alive in the room).</td><td><span class="chip pred">Prediction</span></td></tr>
+        <tr class="grp"><th colspan="5">Can't work</th></tr>
+        <tr><th>Rusty floor switch<small>Obj_Switch</small></th><td>switch</td><td>—</td><td>Mask <code>0x40000040</code>: hammer only, so a seed or spin never registers.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Bombable / mud walls<small>Bg_Breakwall</small></th><td>BG</td><td>—</td><td>Mask <code>0x00000048</code> (explosive, hammer swing), and it breaks on the hit flag alone. Writing a bomb bit into the seed works only because the hit then registers directly.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Sun switch<small>Obj_Lightswitch</small></th><td>switch</td><td>—</td><td>Mask <code>0x00200000</code> (mirror ray only); reacts to the hit flag alone.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Trial barrier<small>Demo_Kekkai</small></th><td>item action, never frozen</td><td>—</td><td>Mask <code>0x00002000</code> (light arrow), decided at the collision pass. An out-of-range spin table index would only read the jump flags or sound IDs stored next to it (<code>08000000</code>, <code>02000000</code>, <code>182F182E</code>), never <code>0x2000</code>.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Grotto<small>Door_Ana</small></th><td>item action, never frozen</td><td>—</td><td>Mask <code>0x00000048</code>.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Barinade<small>Boss_Va</small></th><td>boss</td><td>—</td><td>Body mask is boomerang only, except while stunned (sword, boomerang, stick). Its boomerang reactions check that the attacker <b>is</b> En_Boom (<code>ac-&gt;id</code>), which a seed with boomerang bits isn't. Phase 4 damage is the table damage, zeroed while frozen.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Damage-table enemies<small>Anubis, Tailpasaran, most enemies</small></th><td>enemy</td><td>—</td><td>Damage and effect are fixed at the collision pass from the real weapon, then zeroed while frozen. Only the freeze-timer read above survives.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Gerudo guard<small>En_Ge2</small></th><td>NPC, never frozen</td><td>—</td><td>Bottles don't freeze NPCs.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Eye and crystal switches<small>Obj_Switch</small></th><td>switch</td><td>—</td><td>React to the hit flag alone. The eye switch only reads which way the attacker faced.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Pots<small>Obj_Tsubo</small></th><td>prop</td><td>—</td><td>A seed already breaks them; a stale word can only stop the break.</td><td><span class="chip">No</span></td></tr>
+        <tr><th>Twinrova, Phantom Ganon</th><td>boss</td><td>—</td><td>They read late, but any hit in their vulnerable state already does damage.</td><td><span class="chip">No gain</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="heap">
+  <div class="eyebrow">N64 ZeldaArena, first fit, 0x30 byte headers (GameCube: 0x10)</div>
+  <h2>What lands in the hole</h2>
+  <p>When the bottle item spawns, its overlay code is allocated first, then its instance. Both take the first free block that is big enough. If the item's code is already loaded (another one of it is alive, or it's the fairy, whose code Navi keeps loaded), only the instance is allocated, and the stale word becomes a field of the new actor.</p>
+  <div class="cols">
+    <div class="tbl">
+      <table class="t-heap">
+        <thead><tr><th>Actor</th><th>Code block</th><th>Instance block</th></tr></thead>
+        <tbody>
+          <tr><th>Seed / arrow (En_Arrow)</th><td class="num">resident</td><td class="num">0x280 (+2 × 0x50 for arrows)</td></tr>
+          <tr><th>Magic spin (En_M_Thunder)</th><td class="num">resident</td><td class="num">0x1F0</td></tr>
+          <tr><th>Bomb</th><td class="num">resident</td><td class="num">0x230</td></tr>
+          <tr><th>Bombchu</th><td class="num">0x16D0</td><td class="num">0x210</td></tr>
+          <tr><th>Fish</th><td class="num">0x2140</td><td class="num">0x280</td></tr>
+          <tr><th>Bugs (3 spawn)</th><td class="num">0x2550</td><td class="num">0x350 each</td></tr>
+          <tr><th>Blue fire</th><td class="num">0x1220</td><td class="num">0x1E0</td></tr>
+          <tr><th>Fairy</th><td class="num">resident (Navi)</td><td class="num">0x2F0</td></tr>
+          <tr><th>Song of Storms effect</th><td class="num">0x3E0</td><td class="num">0x180</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl">
+      <table class="t-heap">
+        <thead><tr><th>Code at the weapon's address</th><th>Seed / arrow word</th><th>Spin word</th></tr></thead>
+        <tbody>
+          <tr><th>Fish</th><td class="num">E426xxxx</td><td class="num">AFA40018</td></tr>
+          <tr><th>Bugs</th><td class="num">00808825</td><td class="num">8FA40028</td></tr>
+          <tr><th>Blue fire</th><td class="num">02002025</td><td class="num">8FA4003C</td></tr>
+          <tr><th>Fish instance instead</th><td class="num">00000000</td><td class="num">—</td></tr>
+          <tr><th>Fairy, poe, potion (testers)</th><td class="num">00000000</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="note">Block sizes include the header, read from the ROM's actor table. A setup only shifts where things land; the <a href="../bottle-matrix/">Bottle Setup Matrix</a> has the per-setup words.</p>
+  <div class="rule">
+    <h3>Check of the Ganondorf setup</h3>
+    <p>Bomb at A, seed at A + 0x230, bomb gone, bugs released: bug 1 at A, bug 2 at A + 0x350. Bug 2 + <code>0x78</code> is its <code>floorPoly</code> pointer, which sits exactly on seed + <code>0x198</code>. The sizes match N64 (bomb 0x200 data + 0x30 header, bug 0x320 + 0x30). Bug 2 − seed = bug block − bomb block = 0x120 whatever the header size, so the same layout also lines up on GameCube. Ganondorf only needs bit 13 (0x2000) of that pointer, so it depends on which floor triangle bug 2 lands on. On NTSC 1.0, look for a bug at seed + 0x120 (bug 1 will be at seed − 0x230).</p>
+  </div>
+  <p class="note">Ship of Harkinian has no overlays and uses the system allocator, so stale words there are not reproducible.</p>
+</section>
+
+<section id="open">
+  <div class="eyebrow">Not settled</div>
+  <h2>Open items</h2>
+  <ul class="plain">
+    <li><b><code>AFBF0014</code> after Song of Storms.</b> It is <code>sw ra, 0x14(sp)</code>, a function prologue. Neither Storms actor explains it at the plain offset: Oceff_Storm's code never lands in holes, and En_Okarina_Effect has <code>02002025</code> at +0x198 (this word is at its +0x18, +0x84, +0xCC and +0x328). If that code is the source, it started 0x190 bytes before the seed, meaning the block in front of the seed was free too. The seed's address and the effect's address would settle it.</li>
+    <li><b><code>0C0131DC</code></b> is <code>jal 0x8004C770</code>, a call into the main code segment, so its value depends on the game version. It isn't in any NTSC 1.0 or GameCube PAL actor overlay.</li>
+    <li><b>The video's cancel-aim recipe.</b> Cancelling the aim within 4 frames of a shot launches the nocked arrow instead of deleting it. After that window, cancelling deletes the nocked arrow and frees its block, which can merge holes. That may be what made the video's layout work.</li>
+    <li><b>Saria's Song in the forest.</b> Story flags that change which actors a scene spawns change the heap, so the same setup can read a different word. The exact actors weren't checked.</li>
+  </ul>
+</section>
+
+<footer>
+  <span>Sources: zeldaret/oot decomp (z_en_arrow.c, z_en_m_thunder.c, z_player.c, z_actor.c, z_collision_check.c and each target's file) and actor table data read from the NTSC 1.0 ROM.</span>
+  <span>"Confirmed" means testers reported it working; "Prediction" means the code path exists and nobody has tried it yet.</span>
+</footer>
+
+</div>
+</body>
+</html>

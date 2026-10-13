@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bottle Setup Matrix - soh.tools</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="soh.tools">
+<meta property="og:title" content="Bottle Setup Matrix - soh.tools">
+<meta property="og:description" content="What the bottle-cutscene damage glitch does to Ocarina of Time enemies and bosses, and how setups shift it on N64 and GameCube.">
+<meta property="og:url" content="https://soh.tools/bottle-matrix/">
+<meta name="theme-color" content="#673AB7">
+<link rel="stylesheet" href="../css/site-header.css?v=934a802d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: companion to the Bottle Damage Map. Correction first, then the freeze mechanism, who can be frozen, bosses, how setups shift the heap, the matrix with a platform toggle, picks, timing and limits. */
+:root {
+  --bg: #f3f5f7; --surface: #ffffff; --ink: #17202a; --muted: #5a6774; --rule: #d8dee5;
+  --accent: #2b52c4; --accent-soft: #e6ecfb;
+  --hit: #1e7a4c; --hit-soft: #e1f2e9; --light: #9a6a00; --light-soft: #f8edd2;
+  --stun: #6a48b3; --stun-soft: #ece6f8; --freeze: #0d6f86; --freeze-soft: #dcf1f6;
+  --none: #6f7b87; --none-soft: #eceff2; --warn: #a3402a; --warn-soft: #fbe7e1;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --step--1: 0.8125rem; --step-0: 0.9375rem; --step-1: 1.125rem; --step-2: 1.5rem; --step-3: clamp(2rem, 1.4rem + 2.6vw, 3rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141a; --surface: #161d26; --ink: #e5eaf0; --muted: #94a2b0; --rule: #2a3542; --accent: #84a5ff; --accent-soft: #1d2a4a;
+    --hit: #63cf94; --hit-soft: #15301f; --light: #e9b64b; --light-soft: #33280f; --stun: #b6a1ff; --stun-soft: #282041;
+    --freeze: #5fd0ea; --freeze-soft: #0f2c35; --none: #8d99a6; --none-soft: #1f2731; --warn: #f19a83; --warn-soft: #3a1d16; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141a; --surface: #161d26; --ink: #e5eaf0; --muted: #94a2b0; --rule: #2a3542; --accent: #84a5ff; --accent-soft: #1d2a4a;
+  --hit: #63cf94; --hit-soft: #15301f; --light: #e9b64b; --light-soft: #33280f; --stun: #b6a1ff; --stun-soft: #282041;
+  --freeze: #5fd0ea; --freeze-soft: #0f2c35; --none: #8d99a6; --none-soft: #1f2731; --warn: #f19a83; --warn-soft: #3a1d16; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.55; }
+.wrap { max-width: 76rem; margin: 0 auto; padding-inline: 16px; padding-block: 2.5rem 4rem; display: grid; gap: 3rem; }
+@media (min-width: 720px) { .wrap { padding-inline: 2rem; } }
+h1, h2, h3 { font-family: var(--font-display); font-stretch: 82%; line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: var(--step-3); font-weight: 800; } h2 { font-size: var(--step-2); font-weight: 750; } h3 { font-size: var(--step-1); font-weight: 700; }
+p { margin: 0; max-width: 72ch; } a { color: var(--accent); }
+code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
+.eyebrow { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 1.1rem; min-width: 0; }
+.lede { display: grid; gap: 1rem; } .lede p { font-size: var(--step-1); }
+.facts { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; color: var(--muted); font-size: var(--step--1); } .facts b { color: var(--ink); font-weight: 600; }
+.callout { border: 1px solid var(--warn); background: var(--warn-soft); border-radius: 6px; padding: 1rem 1.2rem; display: grid; gap: 0.5rem; max-width: 80ch; }
+.callout b { color: var(--warn); }
+.chip { display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; line-height: 1; padding: 0.3em 0.45em; border-radius: 4px; white-space: nowrap; letter-spacing: 0.03em; background: var(--none-soft); color: var(--none); }
+.chip.hit { background: var(--hit-soft); color: var(--hit); } .chip.light { background: var(--light-soft); color: var(--light); }
+.chip.stun { background: var(--stun-soft); color: var(--stun); } .chip.freeze { background: var(--freeze-soft); color: var(--freeze); }
+.chip.maybe { background: transparent; box-shadow: inset 0 0 0 1px currentColor; font-weight: 500; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.45rem 0.9rem; align-items: center; font-size: var(--step--1); color: var(--muted); }
+.legend span.item { display: inline-flex; gap: 0.35rem; align-items: center; }
+.tbl { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; vertical-align: top; padding: 0.65rem 0.8rem; border-top: 1px solid var(--rule); }
+thead th { border-top: 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+tbody th { font-weight: 600; }
+tbody th small, td small { display: block; font-weight: 400; color: var(--muted); font-size: var(--step--1); margin-top: 0.15rem; }
+.t-enemy { min-width: 50rem; } .t-boss { min-width: 40rem; } .t-setup { min-width: 46rem; }
+.yes { color: var(--hit); font-weight: 600; } .no { color: var(--muted); }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.steps { margin: 0; padding-left: 1.4rem; display: grid; gap: 0.55rem; max-width: 78ch; } .steps li::marker { color: var(--muted); font-family: var(--font-mono); }
+.toggle { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.toggle button { font: inherit; font-size: var(--step--1); padding: 0.5rem 0.85rem; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+.toggle button[aria-pressed="true"] { background: var(--accent); color: var(--surface); font-weight: 600; }
+.toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.matrix { min-width: 72rem; }
+.matrix th.grp { text-align: center; border-left: 1px solid var(--rule); }
+.matrix td { font-size: var(--step--1); border-left: 1px solid var(--rule); min-width: 7.4rem; }
+.matrix td.first, .matrix th.first { border-left: 0; }
+.matrix .word { display: block; font-family: var(--font-mono); font-weight: 600; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.matrix .op { display: block; font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); margin-bottom: 0.3rem; }
+.matrix .chips { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.matrix td.dim { color: var(--muted); }
+.matrix td.na { color: var(--muted); background: var(--bg); }
+.matrix tbody th { min-width: 11rem; }
+.cols { display: grid; gap: 1rem; } @media (min-width: 900px) { .cols { grid-template-columns: 1fr 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.2rem; display: grid; gap: 0.6rem; min-width: 0; align-content: start; }
+.picks { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.45rem; font-size: var(--step--1); }
+.picks li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.6rem; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 0.45rem; }
+.picks li:first-child { border-top: 0; padding-top: 0; }
+.rules { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; } .rules li { display: grid; gap: 0.1rem; } .rules span { color: var(--muted); font-size: var(--step--1); }
+ul.plain { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.4rem; max-width: 78ch; } ul.plain li::marker { color: var(--muted); }
+.small { font-size: var(--step--1); color: var(--muted); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+<style>
+/* soh.tools palette: the site's amethyst on lavender paper / ink, replacing the artifact's blue. */
+:root {
+  --bg: #edebf2; --surface: #f7f6fa; --ink: #1b1725; --muted: #5d566f; --rule: #cbc5d9;
+  --accent: #6742c9; --accent-soft: #ece5fb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14111c; --surface: #1e1a2a; --ink: #ece9f4; --muted: #a49bbb; --rule: #2e2840;
+    --accent: #a98cf5; --accent-soft: #1a152b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14111c; --surface: #1e1a2a; --ink: #ece9f4; --muted: #a49bbb; --rule: #2e2840;
+  --accent: #a98cf5; --accent-soft: #1a152b; color-scheme: dark;
+}
+body { margin: 0; }
+</style>
+</head>
+<body>
+<script src="../scripts/site-header.js?v=87e4f64c"></script>
+<div class="wrap">
+  <header class="lede">
+    <span class="eyebrow">Ocarina of Time · bottle-cutscene damage glitch</span>
+    <h1>Bottle Setup Matrix</h1>
+    <p>What the bottle glitch does to enemies and bosses, and how an actor that dies just before the weapon changes the result. The mechanism, frame timing and the full list of targets are on <a href="../dfc/">Damage Flag Corruption</a>. Every value here comes from the game's code and from N64 NTSC 1.0 and GameCube PAL ROM bytes. Testers have confirmed the mechanism on N64 (a seed + fish memory trace showed the predicted <code>E426xxxx</code> word) and several targets; the enemy freezes below are still untested.</p>
+    <div class="facts">
+      <span><b>Enemies that can be frozen:</b> 22 types, up to 255 frames</span>
+      <span><b>Bosses:</b> no freeze timer; their own flag checks only</span>
+      <span><b>One bomb before the weapon:</b> shifts 0x230 on N64 and Wii VC, 0x210 on GameCube</span>
+    </div>
+    <div class="callout" role="note">
+      <p><b>Updated October 13, 2026.</b> An arrow also allocates two small animation tables right after itself, so it leaves a bigger hole than a seed: the arrow rows are separate. A Bombchu's explosion is a separate bomb that has to be over before the bottle press. On N64 every heap block has a 0x30-byte header (GameCube: 0x10), so one bomb shifts by 0x230 there. King Dodongo's inhale, Barinade and Volvagia's flying phase are corrected in the boss table.</p>
+    </div>
+  </header>
+
+  <section id="how" aria-labelledby="how-h">
+    <h2 id="how-h">How the freeze works</h2>
+    <ol class="steps">
+      <li><b>The setup is the usual one.</b> A seed or magic spin hits on the bottle frame. The target freezes in the bottle cutscene, the weapon dies, and the bottled thing is allocated into its memory.</li>
+      <li><b>The target thaws with damage and reaction reset to 0.</b> The game zeroes them on every frame an actor is frozen. Most enemies only run their damage code when one of the two is non-zero, so the hit does nothing on its own.</li>
+      <li><b>22 enemy types call <code>Actor_SetDropFlag</code> first, with its freeze option on.</b> It reads the attack's flags through the stale pointer. If bit 17, 18 or 28 is set (fire magic, ice magic, unknown 1), it sets the enemy's <code>freezeTimer</code> to the attack's damage byte, the byte 5 after the flags. Bit 19 (light magic) does the same if no arrow bit is set. This is the hit-stop Din's Fire uses.</li>
+      <li><b>While the timer runs, <code>Actor_UpdateAll</code> skips the enemy.</b> It is still drawn but does not move. It registers no hurtbox, attack or push collision, so it cannot be hit and cannot hurt you. A color flash it set that frame stays on until the timer ends, because that timer only counts down during updates.</li>
+      <li><b>The word decides everything.</b> The freeze lasts the damage byte minus 1 frames. A word without those bits, or a damage byte of 0 or 1, gives no freeze. The enemy's own damage reaction still runs or not as in step 2.</li>
+    </ol>
+  </section>
+
+  <section id="enemies" aria-labelledby="enemies-h">
+    <h2 id="enemies-h">Enemies that can be frozen</h2>
+    <p>Every enemy that calls <code>Actor_SetDropFlag</code> with freeze on. All of them are in categories the bottle cutscene freezes. Seeds are child-only; the spin needs the magic meter.</p>
+    <div class="tbl"><table class="t-enemy">
+      <thead><tr><th scope="col">Enemy</th><th scope="col">Seed</th><th scope="col">Spin</th><th scope="col">What else the corrupted hit does</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Biri<small>En_Bili</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Bari<small>En_Vali</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Tailpasaran<small>En_Tp</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Only the segment that was hit freezes.</td></tr>
+        <tr><th scope="row">Stinger, Jabu-Jabu<small>En_Eiyer</small></th><td>surfaced</td><td>surfaced</td><td>Nothing. While buried it only accepts boomerang, bombs and nuts.</td></tr>
+        <tr><th scope="row">Stinger, Water Temple<small>En_Weiyer</small></th><td class="no">adult</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Octorok<small>En_Okuta</small></th><td class="yes">yes</td><td class="yes">yes</td><td>It survives. Any normal hit kills it.</td></tr>
+        <tr><th scope="row">Deku Baba<small>En_Dekubaba</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Mad Scrub<small>En_Dekunuts</small></th><td class="yes">yes</td><td class="yes">yes</td><td>If it is in its flower, it pops out and runs, as from any hit.</td></tr>
+        <tr><th scope="row">Hint scrub<small>En_Hintnuts</small></th><td class="yes">yes</td><td class="yes">yes</td><td>It burrows. It checks the attacker's id through the stale pointer, and only a deflected nut counts as a stun.</td></tr>
+        <tr><th scope="row">Business scrub<small>En_Shopnuts</small></th><td class="yes">yes</td><td class="yes">yes</td><td>It pops out to sell, as from any hit.</td></tr>
+        <tr><th scope="row">Keese, all kinds<small>En_Firefly</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Guay<small>En_Crow</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Peahat, adult<small>En_Peehat</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Red flash and damage sound, 0 damage.</td></tr>
+        <tr><th scope="row">Wolfos<small>En_Wf</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Red flash and flinch, 0 damage.</td></tr>
+        <tr><th scope="row">Stalchild<small>En_Skb</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Red flash and flinch, once it has risen.</td></tr>
+        <tr><th scope="row">Redead, Gibdo<small>En_Rd</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing. Not while rising from a coffin.</td></tr>
+        <tr><th scope="row">Floormaster<small>En_Floormas</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Wallmaster<small>En_Wallmas</small></th><td class="yes">yes</td><td class="yes">yes</td><td>Nothing.</td></tr>
+        <tr><th scope="row">Gerudo fighter<small>En_GeldB</small></th><td class="no">adult</td><td class="yes">yes</td><td>Red flash and flinch, 0 damage.</td></tr>
+        <tr><th scope="row">Iron Knuckle<small>En_Ik</small></th><td class="no">adult</td><td class="yes">yes</td><td>Nothing; its "no reaction" check returns right after the freeze.</td></tr>
+        <tr><th scope="row">Dark Link<small>En_Torch2</small></th><td class="no">adult</td><td class="yes">yes</td><td>Small knockback, 0 damage.</td></tr>
+        <tr><th scope="row">Poe Sisters<small>En_Po_Sisters</small></th><td class="no">no</td><td class="yes">yes</td><td>Joelle, Beth and Amy freeze. Meg's code clears the timer on a 0-damage hit, so she never freezes. Meg's fakes vanish.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">Bubbles (<code>En_Bb</code>) set a freeze from the damage byte too, but only for a real fire or ice reaction, which a delayed hit never has. Stalfos, Lizalfos, Dodongos, Armos, Moblins, Tektites and Torch Slugs call the function with freeze off.</p>
+  </section>
+
+  <section id="bosses" aria-labelledby="bosses-h">
+    <h2 id="bosses-h">Bosses</h2>
+    <p>No boss calls <code>Actor_SetDropFlag</code>, so no boss can be timer-frozen. Iron Knuckle and Dark Link are the exceptions in the boss category; both are in the table above. Real bosses read the word with their own checks.</p>
+    <div class="tbl"><table class="t-boss">
+      <thead><tr><th scope="col">Boss</th><th scope="col">What a corrupted hit can do</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Queen Gohma</th><td>On the ceiling, any hit to the eye knocks her down. On the floor with the eye open, a nut or slingshot bit stuns her. While stunned, a sword bit does sword-table damage. While her eye follows you she clears Link's "just fired" counter, so a seed fired then can't die in the cutscene.</td></tr>
+        <tr><th scope="row">King Dodongo</th><td>Only after he swallows a real explosive (lying down, then vulnerable): a sword bit on his head does sword-table damage. While he inhales, the word only decides whether he stops: a slingshot or boomerang bit makes him walk off. The swallow is a position check on bomb actors, so a corrupted hit can't fake it.</td></tr>
+        <tr><th scope="row">Barinade</th><td>Can't be used. The body only accepts boomerang hits (plus sword and stick while stunned), its boomerang reactions check that the attacker is the boomerang actor itself, and its phase 4 damage is the hit's table damage, which is 0 after a freeze.</td></tr>
+        <tr><th scope="row">Phantom Ganon</th><td>Second phase, while he is stunned or blocking: a word with no arrow, slingshot or hookshot bit stuns him and takes 2, or the sword-table amount if it has a sword bit. Only sword bits can finish him.</td></tr>
+        <tr><th scope="row">Volvagia</th><td>Armored, in a hole: a hammer bit exposes the face and takes 2. Exposed: sword table, else 4 with the ice-arrow bit or 2; the hookshot bit makes it 0. Flying: any hit takes 2, or 4 with the ice-arrow bit, never below 2 HP. Confirmed by testers.</td></tr>
+        <tr><th scope="row">Morpha</th><td>Tentacle: a fire-magic bit cuts it. Core: a sword bit damages and stuns it when it is out of the water; a hookshot bit without the shield bit cuts it free while it rides a tentacle.</td></tr>
+        <tr><th scope="row">Bongo Bongo</th><td>Immune. Hands and eye only react to non-zero damage or reaction.</td></tr>
+        <tr><th scope="row">Twinrova</th><td>Only while stunned: sword table or 2, none below 3 HP without a sword bit; the hookshot bit makes it 0.</td></tr>
+        <tr><th scope="row">Ganondorf</th><td>The light-arrow bit stuns him after his ball hits him or while he charges the big attack. While vulnerable: sword table or 2. Confirmed by testers, with a seed and a bug whose floor pointer landed on the slot.</td></tr>
+        <tr><th scope="row">Ganon</th><td>The light-arrow bit stuns him while he faces you. While stunned, a Master Sword bit damages the tail.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">All bosses are fought as adult except Gohma, King Dodongo and Barinade, so for the rest only the spin applies in normal play. Seeds are child-only in vanilla, and an arrow only works from 2250 to 2475 units away.</p>
+  </section>
+
+  <section id="setups" aria-labelledby="setups-h">
+    <h2 id="setups-h">Setups: what died just before the weapon</h2>
+    <p>The bottled code is allocated at the start of the free space the dead weapon leaves. If actors that sat right before the weapon in memory died first, that free space starts earlier, and the weapon's damage slot lands further into the bottled code. The shift is the total size of those blocks: each actor rounded up to 16 bytes plus a header of 0x30 on N64 and 0x10 on GameCube, plus its code if the code unloads with it.</p>
+    <div class="cols">
+      <div class="card">
+        <h3>Doing a setup</h3>
+        <ul class="rules">
+          <li><b>Make the setup actor first.</b><span>Pull the bomb, release the Bombchu, throw the boomerang.</span></li>
+          <li><b>Allocate the weapon while it is alive.</b><span>The seed is allocated when you aim the slingshot. The spin's hitbox is allocated when you start charging, so a held charge can outlast a bomb's fuse.</span></li>
+          <li><b>Let it die before the bottle.</b><span>Bombs last 70 frames of fuse and 10 of explosion. Bombchus die the frame after they explode, but their explosion is a separate bomb that lasts about 11 more frames. Anything still alive at the bottle press is frozen for the whole cutscene and never freed.</span></li>
+          <li><b>Keep the heap quiet.</b><span>Nothing else may be allocated in between, and no earlier free block may be big enough for the setup actor or the bottled code. An arrow needs more than that; see Arrows.</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Bombchus</h3>
+        <p class="small">They work, with a much bigger shift. Bombchu code is loaded when the first one appears and unloaded when the last one dies. Bomb code stays loaded for the whole scene. One Bombchu therefore shifts by its code plus its body: 0x18E0 on N64, 0x18A0 on GameCube. A Bombchu whose code another Bombchu keeps loaded shifts by its body only: 0x210 on N64, which is the same shift as GameCube's bomb, and 0x1F0 on GameCube.</p>
+        <p class="small">A Bombchu's explosion spawns a separate bomb that lives about 11 frames, placed right after the weapon. Press the bottle at least about 12 frames after the Bombchu blows up. If the explosion is still going, the cutscene freezes it in place, and it closes off the hole behind the weapon: fish and bug code no longer fit (the hole is 0x1B60 bytes after one Bombchu and a seed on N64; fish code needs 0x2140), so fish, bug and fairy give a normal hit in every Bombchu row. Blue fire's code may still fit; its flames then fill the hole, and the value depends on their state.</p>
+      </div>
+      <div class="card">
+        <h3>Arrows</h3>
+        <p class="small">An arrow is not a seed. A real arrow (normal, fire, ice or light) also allocates two small animation tables right after itself: 0x50 bytes each on N64, 0x30 on GameCube. It shifts by 0x320 on N64 and 0x2C0 on GameCube, where a seed or Deku Nut shifts by 0x280 and 0x260. Arrows are adult-only, so only the magic spin can follow one.</p>
+        <p class="small">The tables go into the first free block of 0x20 bytes or more anywhere in the heap, and any actor that died earlier in the room leaves one. If one exists, the tables go there instead, and the arrow shifts like a seed: use the seed rows.</p>
+        <p class="small">An arrow can also be the weapon, but only when its hit is found on its last flight frame (see Damage Flag Corruption). It then reads the same words as the seed column, as long as nothing alive, such as the second arrow, sits in the hole behind it.</p>
+      </div>
+    </div>
+    <div class="tbl"><table class="t-setup">
+      <thead><tr><th scope="col">Setup</th><th scope="col">N64, Wii VC</th><th scope="col">GameCube</th><th scope="col">Notes</th></tr></thead>
+      <tbody id="setup-body"></tbody>
+    </table></div>
+  </section>
+
+  <section id="matrix" aria-labelledby="matrix-h">
+    <h2 id="matrix-h">The matrix</h2>
+    <div class="legend" aria-label="Legend">
+      <span class="item"><span class="chip freeze">FREEZE n</span>enemies freeze n frames</span>
+      <span class="item"><span class="chip hit">HAMMER</span>boulders, armored Volvagia</span>
+      <span class="item"><span class="chip light">LIGHT</span>Ganondorf, Ganon</span>
+      <span class="item"><span class="chip stun">NUT/SEED</span>Gohma stun</span>
+      <span class="item"><span class="chip">S4</span>sword-table damage</span>
+      <span class="item"><span class="chip hit maybe">HAMMER?</span>depends on the address</span>
+      <span class="item"><span class="mono small">ver</span>&nbsp;this game version only</span>
+    </div>
+    <div class="toggle" role="group" aria-label="Platform">
+      <button type="button" id="plat-n64" aria-pressed="true">N64 and Wii VC</button>
+      <button type="button" id="plat-gc" aria-pressed="false">GameCube</button>
+    </div>
+    <div class="tbl"><table class="matrix" id="matrix-table"></table></div>
+    <p class="small" id="matrix-note"></p>
+  </section>
+
+  <section id="picks" aria-labelledby="picks-h">
+    <h2 id="picks-h">What to use</h2>
+    <p class="small" id="picks-plat"></p>
+    <div class="cols" id="picks-cols"></div>
+  </section>
+
+  <section id="timing" aria-labelledby="timing-h">
+    <h2 id="timing-h">When things happen</h2>
+    <ul class="rules">
+      <li><b>Before F</b><span>During the cutscene a seed only runs on its shot frame and the 3 after it, so its hit has to be found 2 or 3 frames after the shot (up to 120 or 240 units away). The magic spin is killed by the cutscene on the bottle frame.</span></li>
+      <li><b>Frame F</b><span>The hit is found at the start of the frame, and the bottle press takes effect in Link's update. Enemies, props and bosses update after Link, so they freeze that same frame. Switches and BG actors update before him and need the bottle one frame earlier.</span></li>
+      <li><b>F+37, F+76</b><span>The fairy (F+37), or the fish, bug or blue fire (F+76), is allocated. For the last three its code loads first, into the hole.</span></li>
+      <li><b>F+120 fish, bug, blue fire; F+131 fairy</b><span>The cutscene ends. Enemies thaw, read the word, and the freeze timer starts. Bosses and switches thaw on the same frame or the next.</span></li>
+      <li><b>F+120 + n</b><span>A frozen enemy updates again. Spin + fish with no setup: about 163 frames after the thaw, roughly 8 seconds at 20 frames per second.</span></li>
+    </ul>
+  </section>
+
+  <section id="limits" aria-labelledby="limits-h">
+    <h2 id="limits-h">Limits</h2>
+    <ul class="plain">
+      <li><b>From the code:</b> the freeze, who calls it, what bosses check, block headers on both platforms (confirmed in machine code), which overlays unload, setup actor sizes from each ROM's actor table, an arrow's two animation tables (its skeleton has 4 limbs), and how long a Bombchu's explosion lasts.</li>
+      <li><b>From the ROMs:</b> every word and damage byte, from the full overlay files including their relocation tables. Other N64 versions have the same instructions; calls into the main game code (marked ver) and relocated addresses differ.</li>
+      <li><b>Assumed:</b> the setup actor and the weapon were the last allocations, no earlier free block fits the bottled code (or, for an arrow, its 0x20-byte tables), every explosion was over before the bottle press, and the bottled code is not already loaded. With another fish, bug or blue fire already in the room only the actor lands, and with any shift nothing lands at all.</li>
+      <li><b>Blue fire with Bombchus</b> lands inside the 18 small flames blue fire spawns, so the value depends on their state.</li>
+      <li><b>Not covered:</b> Ship of Harkinian (no overlays, so its stale reads aren't reproducible) and the debug ROM. <b>The enemy freezes are not tested in game yet.</b></li>
+    </ul>
+  </section>
+</div>
+
+<script type="application/json" id="matrix-data">{"N64":{"label":"N64 / Wii VC (NTSC 1.0 bytes)","H":48,"rows":[{"id":"none","label":"Nothing","desc":"The weapon was the last thing allocated. The normal case.","shift":0,"cells":{"seed|fish":{"k":"code","w":"E426xxxx","op":"swc1","h":"y","l":"m","n":"m","f":"y","fn":1,"s":null,"v":0,"nt":["low 16 bits are part of an address"]},"seed|bug":{"k":"code","w":"00808825","op":"special","h":"n","l":"n","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"02002025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"fairy","w":"00000000","op":"","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":["jointTable[4] x and y, which the wings never move"]},"spin|fish":{"k":"code","w":"AFA40018","op":"sw","h":"n","l":"n","n":"n","f":"y","fn":164,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"8FA40028","op":"lw","h":"n","l":"n","n":"n","f":"y","fn":5,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8FA4003C","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":7,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"fairy","w":"40800000","op":"","h":"y","l":"n","n":"n","f":"n","fn":null,"s":4,"v":0,"nt":["skelAnime.curFrame, 4.0f for enemies (5.0f, 0x40A00000, for bosses)"]}}},{"id":"bomb1","label":"1 bomb","desc":"A bomb (or one pulled from a bomb flower) placed, the weapon readied while it was alive, then the bomb exploded. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":560,"cells":{"seed|fish":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"0C018EFC","op":"jal","h":"y","l":"n","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|blue fire":{"k":"code","w":"54400009","op":"bnel","h":"y","l":"n","n":"y","f":"y","fn":191,"s":1,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"3C01C348","op":"lui","h":"y","l":"n","n":"n","f":"y","fn":129,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"0C012A1D","op":"jal","h":"n","l":"y","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|blue fire":{"k":"code","w":"440E9000","op":"cop1","h":"y","l":"n","n":"n","f":"y","fn":0,"s":4,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb2","label":"2 bombs","desc":"Two bombs placed back to back before the weapon. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":1120,"cells":{"seed|fish":{"k":"code","w":"45020004","op":"cop1","h":"y","l":"n","n":"y","f":"y","fn":0,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"AFBF0024","op":"sw","h":"n","l":"n","n":"y","f":"y","fn":165,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"3C01xxxx","op":"lui","h":"m","l":"m","n":"m","f":"y","fn":52,"s":null,"v":0,"nt":["low 16 bits are the top of an address (0x80xx)"]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"44050000","op":"cop1","h":"y","l":"n","n":"n","f":"y","fn":231,"s":4,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"8FA40018","op":"lw","h":"n","l":"n","n":"n","f":"y","fn":null,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8FB0001C","op":"lw","h":"n","l":"n","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb3","label":"3 bombs","desc":"Three bombs, the most that can be out at once. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":1680,"cells":{"seed|fish":{"k":"code","w":"16190005","op":"bne","h":"n","l":"n","n":"y","f":"y","fn":0,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"0xxxxxxx","op":"jal","h":"m","l":"m","n":"m","f":"m","fn":164,"s":null,"v":0,"nt":["jump target bits depend on where the code loaded"]},"seed|blue fire":{"k":"code","w":"0C018E17","op":"jal","h":"n","l":"n","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"00808025","op":"special","h":"n","l":"n","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"AFB30044","op":"sw","h":"y","l":"n","n":"y","f":"y","fn":178,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chu1","label":"1 Bombchu","desc":"The first Bombchu out. Its code loads with it and unloads when it dies, so both leave the hole. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":6368,"cells":{"seed|fish":{"k":"code","w":"0C01304C","op":"jal","h":"y","l":"y","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|bug":{"k":"code","w":"25F8F830","op":"addiu","h":"n","l":"y","n":"n","f":"n","fn":null,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":216},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"10400006","op":"beq","h":"n","l":"n","n":"y","f":"y","fn":6,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"C42Axxxx","op":"lwc1","h":"y","l":"m","n":"m","f":"y","fn":6,"s":null,"v":0,"nt":["low 16 bits are part of an address"]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":148},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chu2","label":"2 Bombchus","desc":"Two Bombchus released back to back. The code unloads when the last one dies. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":6896,"cells":{"seed|fish":{"k":"code","w":"8FA40018","op":"lw","h":"n","l":"n","n":"n","f":"y","fn":165,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"C7A40040","op":"lwc1","h":"y","l":"n","n":"n","f":"y","fn":13,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":264},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"8C42xxxx","op":"lw","h":"m","l":"m","n":"m","f":"y","fn":64,"s":null,"v":0,"nt":["low 16 bits are part of an address"]},"spin|bug":{"k":"code","w":"44818000","op":"cop1","h":"y","l":"n","n":"n","f":"n","fn":null,"s":4,"v":0,"nt":[]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":196},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chu3","label":"3 Bombchus","desc":"Three Bombchus. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":7424,"cells":{"seed|fish":{"k":"code","w":"450001D4","op":"data","h":"y","l":"n","n":"y","f":"n","fn":null,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"10400011","op":"beq","h":"n","l":"n","n":"y","f":"y","fn":1,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":312},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"00000090","op":"data","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"24020004","op":"addiu","h":"n","l":"n","n":"y","f":"y","fn":110,"s":8,"v":0,"nt":[]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":244},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chubody","label":"1 Bombchu, code stays","desc":"Another Bombchu elsewhere keeps the code loaded, so only this one's body leaves. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":528,"cells":{"seed|fish":{"k":"code","w":"3C014348","op":"lui","h":"y","l":"n","n":"n","f":"y","fn":10,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"3C01C000","op":"lui","h":"n","l":"n","n":"n","f":"y","fn":129,"s":4,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"AFBF0014","op":"sw","h":"n","l":"n","n":"y","f":"y","fn":165,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"00802825","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"0C012921","op":"jal","h":"n","l":"y","n":"y","f":"n","fn":null,"s":1,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|blue fire":{"k":"code","w":"4600320D","op":"cop1","h":"y","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb1chu1","label":"1 bomb + 1 Bombchu","desc":"Both right before the weapon, either order. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":6928,"cells":{"seed|fish":{"k":"code","w":"1000000B","op":"beq","h":"n","l":"n","n":"y","f":"y","fn":191,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"5420000A","op":"bnel","h":"y","l":"n","n":"n","f":"y","fn":1,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":296},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"10000043","op":"beq","h":"y","l":"n","n":"y","f":"y","fn":191,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":228},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"seed1","label":"Seed or Deku Nut","desc":"An earlier seed or Deku Nut still alive when the weapon was readied. Two slingshot shots in quick succession do this by themselves: a seed flies for up to 15 frames.","shift":640,"cells":{"seed|fish":{"k":"code","w":"AFBF0014","op":"sw","h":"n","l":"n","n":"y","f":"y","fn":128,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"E428xxxx","op":"swc1","h":"y","l":"m","n":"m","f":"n","fn":null,"s":null,"v":0,"nt":["low 16 bits are part of an address"]},"seed|blue fire":{"k":"code","w":"34018000","op":"ori","h":"n","l":"n","n":"n","f":"y","fn":6,"s":8,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"1000000B","op":"beq","h":"n","l":"n","n":"y","f":"y","fn":172,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"A622030C","op":"sh","h":"n","l":"n","n":"y","f":"y","fn":108,"s":1,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"0C019984","op":"jal","h":"n","l":"n","n":"y","f":"n","fn":null,"s":1,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"arrow1","label":"Arrow","desc":"Adult, so only the magic spin can follow. An arrow (normal, fire, ice or light) also allocates two small animation tables right after itself, so it leaves a bigger hole than a seed. It has to be gone before the bottle press. If any free block of 0x20 bytes or more exists earlier in the heap, the tables go there instead and the arrow shifts like a seed.","shift":800,"cells":{"seed|fish":{"k":"code","w":"27A4001C","op":"addiu","h":"n","l":"n","n":"y","f":"y","fn":165,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"4612003C","op":"cop1","h":"y","l":"n","n":"y","f":"y","fn":0,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"44819000","op":"cop1","h":"y","l":"n","n":"n","f":"n","fn":null,"s":4,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"C4500024","op":"lwc1","h":"y","l":"n","n":"y","f":"n","fn":null,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"0C009444","op":"jal","h":"y","l":"n","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|blue fire":{"k":"code","w":"85C4008A","op":"lh","h":"n","l":"n","n":"n","f":"y","fn":129,"s":1,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"seed2","label":"2 seeds or nuts","desc":"Two of them.","shift":1280,"cells":{"seed|fish":{"k":"code","w":"AFA60018","op":"sw","h":"n","l":"n","n":"n","f":"y","fn":4,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"2604019C","op":"addiu","h":"n","l":"n","n":"y","f":"y","fn":25,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"02402025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":1,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"0xxxxxxx","op":"jal","h":"m","l":"m","n":"m","f":"m","fn":165,"s":null,"v":0,"nt":["jump target bits depend on where the code loaded"]},"spin|bug":{"k":"code","w":"46088080","op":"cop1","h":"y","l":"n","n":"n","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"26921C24","op":"addiu","h":"n","l":"n","n":"y","f":"y","fn":1,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"arrow2","label":"2 arrows","desc":"Two arrows, each with its two tables. Spin only.","shift":1600,"cells":{"seed|fish":{"k":"code","w":"C432xxxx","op":"lwc1","h":"y","l":"m","n":"m","f":"y","fn":18,"s":null,"v":0,"nt":["low 16 bits are part of an address"]},"seed|bug":{"k":"code","w":"27BD0018","op":"addiu","h":"n","l":"n","n":"n","f":"y","fn":189,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"00808825","op":"special","h":"n","l":"n","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"3C014080","op":"lui","h":"n","l":"n","n":"n","f":"y","fn":1,"s":4,"v":1,"nt":[]},"spin|bug":{"k":"code","w":"00803025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8FB20040","op":"lw","h":"y","l":"n","n":"n","f":"y","fn":179,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"boom","label":"Boomerang","desc":"Thrown, the weapon readied while it flies, then caught. Link may not be able to ready another item while the boomerang is out; unverified.","shift":544,"cells":{"seed|fish":{"k":"code","w":"46122180","op":"cop1","h":"y","l":"y","n":"n","f":"y","fn":166,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"E6260070","op":"swc1","h":"y","l":"n","n":"n","f":"y","fn":106,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"8FA4001C","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":1,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"8FA50020","op":"lw","h":"n","l":"n","n":"n","f":"y","fn":160,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"AFB90010","op":"sw","h":"n","l":"n","n":"n","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"3C01xxxx","op":"lui","h":"m","l":"m","n":"m","f":"y","fn":42,"s":null,"v":0,"nt":["low 16 bits are the top of an address (0x80xx)"]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"item","label":"Collectible","desc":"A rupee, heart or other drop that appeared just before the weapon and was then picked up.","shift":464,"cells":{"seed|fish":{"k":"code","w":"84A4023E","op":"lh","h":"n","l":"n","n":"y","f":"y","fn":1,"s":2,"v":1,"nt":[]},"seed|bug":{"k":"code","w":"02602025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"440C4000","op":"cop1","h":"y","l":"n","n":"n","f":"y","fn":3,"s":4,"v":1,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"27BD0040","op":"addiu","h":"y","l":"n","n":"n","f":"y","fn":224,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"32520003","op":"andi","h":"n","l":"n","n":"y","f":"y","fn":18,"s":1,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"00063403","op":"special","h":"n","l":"y","n":"y","f":"y","fn":169,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"hook","label":"Hookshot","desc":"Adult only. The hookshot actor exists while the hookshot is held out.","shift":576,"cells":{"seed|fish":{"k":"code","w":"E4AC00BC","op":"swc1","h":"y","l":"n","n":"y","f":"y","fn":129,"s":4,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"356C0010","op":"ori","h":"n","l":"n","n":"n","f":"y","fn":44,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"AFA70018","op":"sw","h":"n","l":"n","n":"n","f":"y","fn":167,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"C7A40018","op":"lwc1","h":"y","l":"n","n":"n","f":"y","fn":1,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"A22800AE","op":"sb","h":"n","l":"n","n":"y","f":"y","fn":105,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8FB00028","op":"lw","h":"n","l":"n","n":"n","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb1seed1","label":"1 bomb + seed or nut","desc":"","shift":1200,"cells":{"seed|fish":{"k":"code","w":"02002025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"44806000","op":"cop1","h":"y","l":"y","n":"n","f":"n","fn":null,"s":4,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"0C018E17","op":"jal","h":"n","l":"n","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"E60201B8","op":"swc1","h":"y","l":"n","n":"n","f":"y","fn":0,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"44050000","op":"cop1","h":"y","l":"n","n":"n","f":"y","fn":6,"s":4,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"00A0A025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb1arrow1","label":"1 bomb + arrow","desc":"Spin only. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":1360,"cells":{"seed|fish":{"k":"code","w":"AFA5003C","op":"sw","h":"n","l":"n","n":"y","f":"y","fn":null,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"304E0001","op":"andi","h":"n","l":"n","n":"y","f":"y","fn":64,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"24090005","op":"addiu","h":"n","l":"n","n":"y","f":"n","fn":null,"s":8,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"2405002D","op":"addiu","h":"n","l":"n","n":"y","f":"y","fn":164,"s":8,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"1F200003","op":"bgtz","h":"n","l":"n","n":"y","f":"y","fn":24,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"240600F0","op":"addiu","h":"y","l":"n","n":"n","f":"y","fn":240,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}}]},"GC":{"label":"GameCube (PAL bytes)","H":16,"rows":[{"id":"none","label":"Nothing","desc":"The weapon was the last thing allocated. The normal case.","shift":0,"cells":{"seed|fish":{"k":"code","w":"E426xxxx","op":"swc1","h":"y","l":"m","n":"m","f":"y","fn":1,"s":null,"v":0,"nt":["low 16 bits are part of an address"]},"seed|bug":{"k":"code","w":"00808825","op":"special","h":"n","l":"n","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"02002025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"fairy","w":"00000000","op":"","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":["jointTable[4] x and y, which the wings never move"]},"spin|fish":{"k":"code","w":"AFA40018","op":"sw","h":"n","l":"n","n":"n","f":"y","fn":164,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"8FA40028","op":"lw","h":"n","l":"n","n":"n","f":"y","fn":5,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8FA4003C","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":7,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"fairy","w":"40800000","op":"","h":"y","l":"n","n":"n","f":"n","fn":null,"s":4,"v":0,"nt":["skelAnime.curFrame, 4.0f for enemies (5.0f, 0x40A00000, for bosses)"]}}},{"id":"bomb1","label":"1 bomb","desc":"A bomb (or one pulled from a bomb flower) placed, the weapon readied while it was alive, then the bomb exploded. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":528,"cells":{"seed|fish":{"k":"code","w":"3C014348","op":"lui","h":"y","l":"n","n":"n","f":"y","fn":10,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"3C01C000","op":"lui","h":"n","l":"n","n":"n","f":"y","fn":129,"s":4,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"AFBF0014","op":"sw","h":"n","l":"n","n":"y","f":"y","fn":165,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"00802825","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":4,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"0C012811","op":"jal","h":"n","l":"y","n":"y","f":"n","fn":null,"s":4,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|blue fire":{"k":"code","w":"4600320D","op":"cop1","h":"y","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb2","label":"2 bombs","desc":"Two bombs placed back to back before the weapon. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":1056,"cells":{"seed|fish":{"k":"code","w":"34E7999A","op":"ori","h":"n","l":"n","n":"n","f":"y","fn":198,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"0xxxxxxx","op":"jal","h":"m","l":"m","n":"m","f":"m","fn":130,"s":null,"v":0,"nt":["jump target bits depend on where the code loaded"]},"seed|blue fire":{"k":"code","w":"8FB10020","op":"lw","h":"n","l":"n","n":"n","f":"n","fn":null,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"25CExxxx","op":"addiu","h":"m","l":"m","n":"m","f":"y","fn":206,"s":null,"v":0,"nt":["low 16 bits are part of an address"]},"spin|bug":{"k":"code","w":"8FBF0014","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":98,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"3C014348","op":"lui","h":"y","l":"n","n":"n","f":"y","fn":129,"s":1,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb3","label":"3 bombs","desc":"Three bombs, the most that can be out at once. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":1584,"cells":{"seed|fish":{"k":"code","w":"860F0032","op":"lh","h":"n","l":"n","n":"n","f":"y","fn":1,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"35F80100","op":"ori","h":"n","l":"n","n":"n","f":"y","fn":216,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"8E02011C","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":64,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"03E00008","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":1,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8FBF004C","op":"lw","h":"y","l":"n","n":"y","f":"y","fn":180,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chu1","label":"1 Bombchu","desc":"The first Bombchu out. Its code loads with it and unloads when it dies, so both leave the hole. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":6304,"cells":{"seed|fish":{"k":"code","w":"3C06418C","op":"lui","h":"n","l":"n","n":"y","f":"y","fn":128,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"46060201","op":"cop1","h":"y","l":"n","n":"y","f":"y","fn":18,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":312},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"52020003","op":"beql","h":"y","l":"n","n":"y","f":"y","fn":2,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"AFA20050","op":"sw","h":"y","l":"n","n":"n","f":"y","fn":9,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":244},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chu2","label":"2 Bombchus","desc":"Two Bombchus released back to back. The code unloads when the last one dies. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":6800,"cells":{"seed|fish":{"k":"code","w":"8FBF0014","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":189,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"0xxxxxxx","op":"jal","h":"m","l":"m","n":"m","f":"m","fn":0,"s":null,"v":0,"nt":["jump target bits depend on where the code loaded"]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":360},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"10200010","op":"beq","h":"n","l":"n","n":"n","f":"y","fn":1,"s":0,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"24044807","op":"addiu","h":"n","l":"n","n":"y","f":"y","fn":7,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":292},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chu3","label":"3 Bombchus","desc":"Three Bombchus. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":7296,"cells":{"seed|fish":{"k":"code","w":"3DCCCCCD","op":"data","h":"y","l":"n","n":"y","f":"y","fn":76,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":408},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"3E19999A","op":"data","h":"n","l":"n","n":"n","f":"y","fn":0,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"2458FFFF","op":"addiu","h":"y","l":"y","n":"y","f":"n","fn":null,"s":1,"v":0,"nt":[]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":340},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"chubody","label":"1 Bombchu, code stays","desc":"Another Bombchu elsewhere keeps the code loaded, so only this one's body leaves. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":496,"cells":{"seed|fish":{"k":"code","w":"44816000","op":"cop1","h":"y","l":"y","n":"n","f":"n","fn":null,"s":4,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"02203025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"0C012844","op":"jal","h":"y","l":"y","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|bug":{"k":"code","w":"AFAE0010","op":"sw","h":"n","l":"n","n":"n","f":"y","fn":231,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8FA60030","op":"lw","h":"n","l":"n","n":"n","f":"y","fn":1,"s":2,"v":1,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb1chu1","label":"1 bomb + 1 Bombchu","desc":"Both right before the weapon, either order. Its explosion, a separate bomb placed after the weapon, has to be over before the bottle press too (see Bombchus).","shift":6832,"cells":{"seed|fish":{"k":"code","w":"14400011","op":"bne","h":"n","l":"n","n":"y","f":"y","fn":0,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"C7B20040","op":"lwc1","h":"y","l":"n","n":"n","f":"y","fn":16,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"actor","lb":"spreading flame","in":392},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"A219031A","op":"sb","h":"n","l":"n","n":"n","f":"n","fn":null,"s":1,"v":0,"nt":[]},"spin|blue fire":{"k":"actor","lb":"spreading flame","in":324},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"seed1","label":"Seed or Deku Nut","desc":"An earlier seed or Deku Nut still alive when the weapon was readied. Two slingshot shots in quick succession do this by themselves: a seed flies for up to 15 frames.","shift":608,"cells":{"seed|fish":{"k":"code","w":"46006006","op":"cop1","h":"y","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"02602825","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"46088480","op":"cop1","h":"y","l":"n","n":"n","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"E624006C","op":"swc1","h":"y","l":"n","n":"y","f":"y","fn":38,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"84E2001C","op":"lh","h":"n","l":"n","n":"y","f":"y","fn":164,"s":1,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"arrow1","label":"Arrow","desc":"Adult, so only the magic spin can follow. An arrow (normal, fire, ice or light) also allocates two small animation tables right after itself, so it leaves a bigger hole than a seed. It has to be gone before the bottle press. If any free block of 0x20 bytes or more exists earlier in the heap, the tables go there instead and the arrow shifts like a seed.","shift":704,"cells":{"seed|fish":{"k":"code","w":"0C018CC5","op":"jal","h":"y","l":"n","n":"y","f":"n","fn":null,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|bug":{"k":"code","w":"863800B4","op":"lh","h":"n","l":"n","n":"y","f":"y","fn":6,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"46080282","op":"cop1","h":"y","l":"n","n":"n","f":"y","fn":80,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"27BDFFD0","op":"addiu","h":"y","l":"y","n":"n","f":"y","fn":191,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"A62E0304","op":"sh","h":"n","l":"n","n":"y","f":"y","fn":40,"s":1,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"8CA21C44","op":"lw","h":"y","l":"n","n":"y","f":"y","fn":1,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"seed2","label":"2 seeds or nuts","desc":"Two of them.","shift":1216,"cells":{"seed|fish":{"k":"code","w":"8FA5002C","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":64,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"460C103C","op":"cop1","h":"y","l":"n","n":"y","f":"y","fn":0,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"3C01447A","op":"lui","h":"y","l":"n","n":"n","f":"y","fn":129,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"860F0238","op":"lh","h":"n","l":"n","n":"n","f":"y","fn":14,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"34C6CCCD","op":"ori","h":"y","l":"n","n":"y","f":"y","fn":160,"s":1,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"AFB00038","op":"sw","h":"n","l":"n","n":"n","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"arrow2","label":"2 arrows","desc":"Two arrows, each with its two tables. Spin only.","shift":1408,"cells":{"seed|fish":{"k":"code","w":"E7A40010","op":"swc1","h":"y","l":"n","n":"n","f":"y","fn":4,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"0xxxxxxx","op":"jal","h":"m","l":"m","n":"m","f":"m","fn":0,"s":null,"v":0,"nt":["jump target bits depend on where the code loaded"]},"seed|blue fire":{"k":"code","w":"0C0141C5","op":"jal","h":"y","l":"n","n":"y","f":"n","fn":null,"s":1,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"00000000","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":0,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"02202025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"boom","label":"Boomerang","desc":"Thrown, the weapon readied while it flies, then caught. Link may not be able to ready another item while the boomerang is out; unverified.","shift":512,"cells":{"seed|fish":{"k":"code","w":"3C014120","op":"lui","h":"n","l":"n","n":"n","f":"y","fn":129,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"30690001","op":"andi","h":"n","l":"n","n":"y","f":"y","fn":32,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"27BD0040","op":"addiu","h":"y","l":"n","n":"n","f":"y","fn":224,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"03E00008","op":"special","h":"n","l":"n","n":"n","f":"n","fn":null,"s":1,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"0C0230F3","op":"jal","h":"y","l":"y","n":"y","f":"y","fn":37,"s":2,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|blue fire":{"k":"code","w":"AE020198","op":"sw","h":"n","l":"n","n":"n","f":"y","fn":1,"s":1,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"item","label":"Collectible","desc":"A rupee, heart or other drop that appeared just before the weapon and was then picked up.","shift":432,"cells":{"seed|fish":{"k":"code","w":"24E5013C","op":"addiu","h":"n","l":"n","n":"y","f":"y","fn":191,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"24E741FC","op":"addiu","h":"y","l":"n","n":"y","f":"y","fn":198,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"0C019880","op":"jal","h":"n","l":"n","n":"n","f":"n","fn":null,"s":4,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"0xxxxxxx","op":"jal","h":"m","l":"m","n":"m","f":"m","fn":0,"s":null,"v":0,"nt":["jump target bits depend on where the code loaded"]},"spin|bug":{"k":"code","w":"24A5xxxx","op":"addiu","h":"m","l":"m","n":"m","f":"y","fn":1,"s":null,"v":1,"nt":["low 16 bits are part of an address"]},"spin|blue fire":{"k":"code","w":"00063403","op":"special","h":"n","l":"y","n":"y","f":"y","fn":7,"s":2,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"hook","label":"Hookshot","desc":"Adult only. The hookshot actor exists while the hookshot is held out.","shift":544,"cells":{"seed|fish":{"k":"code","w":"46122180","op":"cop1","h":"y","l":"y","n":"n","f":"y","fn":166,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"E6260070","op":"swc1","h":"y","l":"n","n":"n","f":"y","fn":106,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"8FA4001C","op":"lw","h":"n","l":"n","n":"y","f":"y","fn":1,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"8FA50020","op":"lw","h":"n","l":"n","n":"n","f":"y","fn":160,"s":2,"v":0,"nt":[]},"spin|bug":{"k":"code","w":"AFB90010","op":"sw","h":"n","l":"n","n":"n","f":"n","fn":null,"s":2,"v":0,"nt":[]},"spin|blue fire":{"k":"code","w":"3C01xxxx","op":"lui","h":"m","l":"m","n":"m","f":"y","fn":42,"s":null,"v":0,"nt":["low 16 bits are the top of an address (0x80xx)"]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb1seed1","label":"1 bomb + seed or nut","desc":"","shift":1136,"cells":{"seed|fish":{"k":"code","w":"E60001B8","op":"swc1","h":"y","l":"n","n":"n","f":"n","fn":null,"s":1,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"3C063DCC","op":"lui","h":"y","l":"y","n":"y","f":"y","fn":207,"s":1,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"AFBF004C","op":"sw","h":"y","l":"n","n":"y","f":"y","fn":179,"s":2,"v":0,"nt":[]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"0C018F72","op":"jal","h":"y","l":"n","n":"n","f":"n","fn":null,"s":1,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"spin|bug":{"k":"code","w":"3C0Exxxx","op":"lui","h":"m","l":"m","n":"m","f":"y","fn":206,"s":null,"v":0,"nt":["low 16 bits are the top of an address (0x80xx)"]},"spin|blue fire":{"k":"code","w":"3C0Exxxx","op":"lui","h":"m","l":"m","n":"m","f":"y","fn":206,"s":null,"v":0,"nt":["low 16 bits are the top of an address (0x80xx)"]},"spin|fairy":{"k":"untouched","lb":"","in":null}}},{"id":"bomb1arrow1","label":"1 bomb + arrow","desc":"Spin only. The explosion has to be over before the bottle press: a bomb still exploding is frozen in place and the result is the Nothing row.","shift":1232,"cells":{"seed|fish":{"k":"code","w":"02002025","op":"special","h":"n","l":"y","n":"y","f":"n","fn":null,"s":2,"v":0,"nt":[]},"seed|bug":{"k":"code","w":"1000000A","op":"beq","h":"n","l":"n","n":"n","f":"y","fn":12,"s":2,"v":0,"nt":[]},"seed|blue fire":{"k":"code","w":"0C03392F","op":"jal","h":"n","l":"y","n":"y","f":"y","fn":0,"s":1,"v":1,"nt":["a call into the main game code: its low bits are that function's address in this version"]},"seed|fairy":{"k":"untouched","lb":"","in":null},"spin|fish":{"k":"code","w":"0xxxxxxx","op":"jal","h":"m","l":"m","n":"m","f":"m","fn":0,"s":null,"v":0,"nt":["jump target bits depend on where the code loaded"]},"spin|bug":{"k":"code","w":"3C073F00","op":"lui","h":"n","l":"y","n":"n","f":"y","fn":3,"s":1,"v":1,"nt":[]},"spin|blue fire":{"k":"code","w":"34C6C5AC","op":"ori","h":"n","l":"n","n":"y","f":"y","fn":36,"s":1,"v":0,"nt":[]},"spin|fairy":{"k":"untouched","lb":"","in":null}}}]}}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById("matrix-data").textContent);
+  var BOTTLES = [["fish", "Fish"], ["bug", "Bug"], ["blue fire", "Blue fire"], ["fairy", "Fairy"]];
+  var ADULT_ONLY = { hook: 1, arrow1: 1, arrow2: 1, bomb1arrow1: 1 }; // seeds are child-only
+  function hx(n) { return "0x" + n.toString(16).toUpperCase(); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function chip(cls, txt) { return '<span class="chip ' + cls + '">' + txt + "</span>"; }
+
+  // setup table
+  var n64 = D.N64.rows, gc = D.GC.rows;
+  document.getElementById("setup-body").innerHTML = n64.map(function (r, i) {
+    return '<tr><th scope="row">' + esc(r.label) + '</th><td class="num">' + hx(r.shift) + '</td><td class="num">' + hx(gc[i].shift) + "</td><td class=\"small\">" + esc(r.desc) + "</td></tr>";
+  }).join("");
+
+  function chipsFor(c) {
+    var out = [];
+    if (c.f === "y" && c.fn !== null && c.fn !== undefined && c.fn >= 2) out.push(chip("freeze", "FREEZE " + c.fn));
+    else if (c.f === "y" && (c.fn === null || c.fn === undefined)) out.push(chip("freeze maybe", "FREEZE ?"));
+    else if (c.f === "m" && c.fn >= 2) out.push(chip("freeze maybe", "FREEZE? " + c.fn));
+    if (c.h === "y") out.push(chip("hit", "HAMMER")); else if (c.h === "m") out.push(chip("hit maybe", "HAMMER?"));
+    if (c.l === "y") out.push(chip("light", "LIGHT")); else if (c.l === "m") out.push(chip("light maybe", "LIGHT?"));
+    if (c.n === "y") out.push(chip("stun", "NUT/SEED")); else if (c.n === "m") out.push(chip("stun maybe", "NUT/SEED?"));
+    if (c.s) out.push(chip("", "S" + c.s));
+    return out.join("");
+  }
+  function cellHtml(c, row, weapon, first) {
+    var cls = first ? ' class="first"' : "";
+    if (ADULT_ONLY[row.id] && weapon === "seed") return '<td class="na' + (first ? " first" : "") + '">adult only</td>';
+    if (c.k === "code" || c.k === "fairy") {
+      var title = (c.nt || []).join("; ");
+      var op = (c.k === "fairy" ? "fairy actor" : c.op) + (c.v ? " · ver" : "");
+      return "<td" + cls + (title ? ' title="' + esc(title) + '"' : "") + '><span class="word">' + c.w + '</span><span class="op">' + esc(op) + '</span><div class="chips">' + chipsFor(c) + "</div></td>";
+    }
+    var dimCls = ' class="dim' + (first ? " first" : "") + '"';
+    if (c.k === "untouched") return "<td" + dimCls + ">Normal hit. Nothing lands on the slot.</td>";
+    if (c.k === "actor") return "<td" + dimCls + ">Inside a " + esc(c.lb) + " (+" + hx(c["in"]) + "). Varies.</td>";
+    return "<td" + dimCls + ">" + esc(c.lb.charAt(0).toUpperCase() + c.lb.slice(1)) + ". Varies.</td>";
+  }
+  function render(plat) {
+    var P = D[plat];
+    var head = '<thead><tr><th scope="col" rowspan="2" class="first">Setup</th><th scope="colgroup" colspan="4" class="grp">Slingshot seed</th><th scope="colgroup" colspan="4" class="grp">Magic spin</th></tr><tr>' +
+      BOTTLES.map(function (b, i) { return '<th scope="col"' + (i === 0 ? ' class="grp"' : "") + ">" + b[1] + "</th>"; }).join("") +
+      BOTTLES.map(function (b, i) { return '<th scope="col"' + (i === 0 ? ' class="grp"' : "") + ">" + b[1] + "</th>"; }).join("") + "</tr></thead>";
+    var body = "<tbody>" + P.rows.map(function (r) {
+      var cells = "";
+      ["seed", "spin"].forEach(function (w) {
+        BOTTLES.forEach(function (b) { cells += cellHtml(r.cells[w + "|" + b[0]], r, w, false); });
+      });
+      return '<tr><th scope="row" class="first">' + esc(r.label) + "<small>shift " + hx(r.shift) + "</small></th>" + cells + "</tr>";
+    }).join("") + "</tbody>";
+    document.getElementById("matrix-table").innerHTML = head + body;
+    document.getElementById("matrix-note").textContent = P.label + ". Hover a word for relocation notes. Words marked ver are calls into the main game code (or their damage byte is), so other versions of the game read a different address there.";
+    renderPicks(plat);
+  }
+  function renderPicks(plat) {
+    var P = D[plat], items = [];
+    P.rows.forEach(function (r) {
+      Object.keys(r.cells).forEach(function (k) {
+        var c = r.cells[k];
+        if (!(c.k === "code" || c.k === "fairy")) return;
+        var w = k.split("|")[0], b = k.split("|")[1];
+        if (ADULT_ONLY[r.id] && w === "seed") return;
+        items.push({ r: r, w: w, b: b, c: c });
+      });
+    });
+    function name(x) { return (x.w === "seed" ? "Seed + " : "Spin + ") + x.b + " · " + (x.r.id === "none" ? "no setup" : "after " + x.r.label); }
+    function list(arr, valueFn) {
+      if (!arr.length) return '<p class="small">None in these setups.</p>';
+      return '<ul class="picks">' + arr.map(function (x) { return "<li><span>" + esc(name(x)) + (x.c.v ? ' <span class="small mono">ver</span>' : "") + '</span><span class="num">' + valueFn(x) + "</span></li>"; }).join("") + "</ul>";
+    }
+    var freeze = function (w) {
+      return items.filter(function (x) { return x.w === w && x.c.f === "y" && x.c.fn >= 2; }).sort(function (a, b) { return b.c.fn - a.c.fn; }).slice(0, 6);
+    };
+    var hammer = items.filter(function (x) { return x.c.h === "y"; }).slice(0, 12);
+    var light = items.filter(function (x) { return x.c.l === "y" && x.w === "spin"; });
+    var cards = [
+      ["Longest enemy freeze, seed", list(freeze("seed"), function (x) { return x.c.fn + " frames"; })],
+      ["Longest enemy freeze, spin", list(freeze("spin"), function (x) { return x.c.fn + " frames"; })],
+      ["Hammer bit: boulders, armored Volvagia", list(hammer, function (x) { return x.c.w; })],
+      ["Light-arrow bit with the spin: Ganondorf, Ganon", list(light, function (x) { return x.c.w; })]
+    ];
+    document.getElementById("picks-plat").textContent = "For " + P.label + ". With no setup, spin + fish freezes for 164 frames on both platforms.";
+    document.getElementById("picks-cols").innerHTML = cards.map(function (c) { return '<div class="card"><h3>' + c[0] + "</h3>" + c[1] + "</div>"; }).join("");
+  }
+  var bN = document.getElementById("plat-n64"), bG = document.getElementById("plat-gc");
+  function pick(plat) {
+    bN.setAttribute("aria-pressed", plat === "N64" ? "true" : "false");
+    bG.setAttribute("aria-pressed", plat === "GC" ? "true" : "false");
+    render(plat);
+    try { localStorage.setItem("bsm-plat", plat); } catch (e) {}
+  }
+  bN.addEventListener("click", function () { pick("N64"); });
+  bG.addEventListener("click", function () { pick("GC"); });
+  var start = "N64";
+  try { if (localStorage.getItem("bsm-plat") === "GC") start = "GC"; } catch (e) {}
+  pick(start);
+})();
+</script>
+</body>
+</html>
