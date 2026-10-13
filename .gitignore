@@ -422,3 +422,8 @@ CLAUDE.local.md
 #
 # Safe to ignore for rebuilds — parse_goals.js, the first step, recreates the directory.
 rba-data/out/
+
+# Local-only research pages for the bottle damage glitch (Bottle Setup Matrix, Damage Flag Corruption). They are
+# built from sources kept outside this repo and are not published yet: GitHub Pages serves everything committed here.
+bottle-matrix/
+dfc/
